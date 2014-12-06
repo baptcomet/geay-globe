@@ -1,0 +1,130 @@
+<?php echo $this->doctype(); ?>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+
+    <?php
+    echo $this->headTitle();
+    echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0');
+    ?>
+
+    <!-- Le styles -->
+    <?php
+        echo $this->headLink(
+            array(
+                'rel' => 'shortcut icon',
+                'type' => 'image/vnd.microsoft.icon',
+                'href' => $this->basePath('/img/gg_favicon.ico')
+            )
+        )
+        ->prependStylesheet('http://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Condensed:300,400,700')
+        ->prependStylesheet('http://fonts.googleapis.com/css?familyOpen+Sans:400,300,700')
+        ->prependStylesheet($this->basePath('/css/bootstrap.css'))
+        ->prependStylesheet($this->basePath('/css/style.css'))
+        ->prependStylesheet($this->basePath('/css/default.css'))
+        ->prependStylesheet($this->basePath('/css/component.css'))
+        ->prependStylesheet($this->basePath('/css/font-awesome.min.css'))
+        ->prependStylesheet($this->basePath('/css/magnific-popup.css'))
+        ->prependStylesheet($this->basePath('/css/templatemo_style.css'));
+
+    ?>
+
+    <!-- Scripts -->
+    <?php
+    echo $this->headScript()
+        ->prependFile($this->basePath('/js/frontoffice.min.js'))
+        ->prependFile($this->basePath('/js/jquery.min.js'))
+        ->prependFile($this->basePath('/js/modernizr.custom.js'))
+        ->prependFile($this->basePath('/js/respond.min.js'), 'text/javascript', array('conditional' => 'lt IE 9'))
+        ->prependFile($this->basePath('/js/html5shiv.js'), 'text/javascript', array('conditional' => 'lt IE 9'));
+    ?>
+</head>
+<body>
+
+<script>
+    sfHover = function () {
+        var sfEls = document.getElementById("menuFront").getElementsByTagName("LI");
+        for (var i = 0; i < sfEls.length; i++) {
+            sfEls[i].onmouseover = function () {
+                this.className += " sfhover";
+            };
+            sfEls[i].onmouseout = function () {
+                this.className = this.className.replace(new RegExp(" sfhover\\b"), "");
+            }
+        }
+    };
+    if (window.attachEvent) window.attachEvent("onload", sfHover);
+</script>
+
+<div class="main-container">
+
+    <header>
+        <div id="logo" class="center text">
+            <a href="<?php echo $this->url('blog') ?>" class="yellowtitle">Geay Globe</a>
+        </div>
+        <nav class="main-nav">
+            <ul class="nav center text">
+                <li class="btn<?php echo $this->navigation('navigation')->findById('blog')->isActive(true) ? ' active' : '' ?>">
+                    <a href="<?php echo $this->url('blog') ?>" class="button border-fade">Accueil</a>
+                </li>
+                <li class="btn<?php echo $this->navigation('navigation')->findById('histo')->isActive(true) ? ' active' : '' ?>">
+                    <a href="<?php echo $this->url('blog', array('action' => 'historique')) ?>" class="button border-fade">Historique</a>
+                </li>
+                <li class="btn<?php echo $this->navigation('navigation')->findById('tags')->isActive(true) ? ' active' : '' ?>">
+                    <a href="<?php echo $this->url('blog', array('action' => 'tags')) ?>" class="button border-fade">#Tags</a>
+                </li>
+                <li class="btn<?php echo $this->navigation('navigation')->findById('contact')->isActive(true) ? ' active' : '' ?>">
+                    <a href="<?php echo $this->url('blog', array('action' => 'contact')) ?>" class="button border-fade">Contact</a>
+                </li>
+                <?php if (!is_null($this->identity())) : ?>
+                    <li class="btn<?php echo $this->navigation('navigation')->findById('manage')->isActive(true) ? ' active' : '' ?>">
+                        <a href="<?php echo $this->url('manage', array('action' => 'index')) ?>" class="button border-fade">Gestion</a>
+                    </li>
+                <?php endif ?>
+            </ul>
+        </nav>
+    </header>
+    <div class="content-container box">
+        <?php echo $this->content ?>
+    </div>
+</div>
+<?php echo $this->inlineScript() ?>
+
+<script src="js/masonry.pkgd.min.js"></script>
+<script src="js/imagesloaded.js"></script>
+<script src="js/classie.js"></script>
+<script src="js/AnimOnScroll.js"></script>
+<script>
+    new AnimOnScroll( document.getElementById( 'grid' ), {
+        minDuration : 0.4,
+        maxDuration : 0.7,
+        viewportFactor : 0.2
+    } );
+</script>
+
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="js/jquery.magnific-popup.min.js"></script>
+<script type="text/javascript" src="js/templatemo_script.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('.pagination li').click(changePage);
+        $('.portfolio-item').magnificPopup({
+            type: 'image',
+            gallery:{
+                enabled:true
+            }
+        });
+    });
+
+    // Auto semantic for text hovering images
+    $(function() {
+
+        $(".image").find("h2").wrapInner("<span>");
+        $("h2 br").before("<span class='spacer'>").after("<span class='spacer'>");
+
+    });
+</script>
+
+</body>
+</html>

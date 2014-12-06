@@ -1,0 +1,12 @@
+{
+    "name": "bluecomet/geayglobe",
+    "description": "Blog de Geay",
+    "require": {
+        "php": ">=5.4",
+        "zendframework/zendframework": "2.3.*",
+        "doctrine/doctrine-orm-module": "0.*",
+        "jpgraph/jpgraph": "dev-master",
+        "phpexcel/phpexcel": "dev-master",
+        "ensepar/html2pdf": "1.0.*@dev"
+    }
+}

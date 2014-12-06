@@ -1,0 +1,40 @@
+<?php
+
+/** @var Article[] $articles */
+
+use Blog\Entity\Article;
+
+$title = 'Gestion du Blog';
+$this->headTitle($title);
+
+?>
+
+<?php echo $this->partial('partial/flashmessenger') ?>
+
+<div class="row">
+    <div class="col-md-6">
+        <h1>Articles</h1>
+    </div>
+    <div class="col-md-6">
+        <a href="#" class="btn btn-default">Ajouter un article</a>
+    </div>
+</div>
+
+<?php if (count($articles)) : ?>
+
+    <ul>
+        <?php foreach ($articles as $article) : ?>
+            <li><?php echo $article->getCompleteTitle() ?></li>
+        <?php endforeach ?>
+    </ul>
+
+<?php else : ?>
+
+    <p class="center-text">
+        Aucun article à voir ici ! Circulez.
+    </p>
+    <br/>
+
+<?php endif ?>
+
+<hr/>

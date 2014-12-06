@@ -1,0 +1,37 @@
+<?php
+
+/** @var Article[] $articles */
+
+use Blog\Entity\Article;
+
+$title = 'Accueil';
+$this->headTitle($title);
+
+?>
+
+<?php echo $this->partial('partial/flashmessenger') ?>
+
+<?php if (count($articles)) : ?>
+    
+<ul class="grid effect-6" id="grid">
+
+    <?php foreach ($articles as $article) : ?>
+        <li>
+            <div class="image">
+                <a href="#">
+                    <img src="<?php echo $this->basePath('/img/articles/'.$article->getThumbnail()) ?>" alt="" />
+                    <h2><?php echo $article->getCompleteTitle(true) ?></h2>
+                </a>
+            </div>
+        </li>
+    <?php endforeach ?>
+</ul>
+
+<?php else : ?>
+
+    <p class="center-text">
+        Aucun article à voir ici ! Circulez.
+    </p>
+    <br/>
+
+<?php endif ?>

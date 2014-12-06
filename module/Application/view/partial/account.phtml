@@ -1,0 +1,20 @@
+<div class="account">
+    <?php if ($this->identity()) : ?>
+        <ul class="list-inline pull-right">
+            <li>
+                <a href="#" alt="Mon Profil" title="Mon Profil">
+                    <span class="glyphicon glyphicon-user"></span> <?php echo $this->identity()->getName() ?>
+                </a>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+        <a href="<?php echo $this->url('index', array('action' => 'logout')) ?>">
+            <span class="glyphicon glyphicon-log-out"></span> Déconnexion
+        </a>
+    <?php else : ?>
+        <div class="clearfix"></div>
+        <a href="<?php echo $this->url('index') ?>">
+            <span class="glyphicon glyphicon-log-out"></span> Connexion
+        </a>
+    <?php endif ?>
+</div>
