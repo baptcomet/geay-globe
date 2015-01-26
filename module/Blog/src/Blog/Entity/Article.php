@@ -12,6 +12,7 @@ use Zend\Feed\Writer\Writer;
  */
 class Article extends AbstractEntity
 {
+    const PHOTO_FOLDER = './public/img/articles/';
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -63,13 +64,14 @@ class Article extends AbstractEntity
 
     public function __construct()
     {
+        $this->date = new \DateTime();
         $this->tags = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
 
     /**
      * @param int $id
-     * @return $this
+     * @return Article $this
      */
     public function setId($id)
     {
@@ -87,7 +89,7 @@ class Article extends AbstractEntity
 
     /**
      * @param string $title
-     * @return $this
+     * @return Article $this
      */
     public function setTitle($title)
     {
@@ -113,7 +115,7 @@ class Article extends AbstractEntity
 
     /**
      * @param mixed $subtitle
-     * @return $this
+     * @return Article $this
      */
     public function setSubtitle($subtitle)
     {
@@ -148,10 +150,12 @@ class Article extends AbstractEntity
 
     /**
      * @param mixed $category
+     * @return Article $this
      */
     public function setCategory($category)
     {
         $this->category = $category;
+        return $this;
     }
 
     /**
@@ -164,14 +168,16 @@ class Article extends AbstractEntity
 
     /**
      * @param mixed $comments
+     * @return Article $this
      */
     public function setComments($comments)
     {
         $this->comments = $comments;
+        return $this;
     }
 
     /**
-     * @return mixed
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -179,11 +185,25 @@ class Article extends AbstractEntity
     }
 
     /**
+     * @return string
+     */
+    public function getDateString()
+    {
+        if ($this->date) {
+            return $this->getDate()->format('d/m/Y');
+        } else {
+            return '-';
+        }
+    }
+
+    /**
      * @param mixed $date
+     * @return Article $this
      */
     public function setDate($date)
     {
         $this->date = $date;
+        return $this;
     }
 
     /**
@@ -196,10 +216,12 @@ class Article extends AbstractEntity
 
     /**
      * @param mixed $photo
+     * @return Article $this
      */
     public function setPhoto($photo)
     {
         $this->photo = $photo;
+        return $this;
     }
 
     /**
@@ -212,10 +234,12 @@ class Article extends AbstractEntity
 
     /**
      * @param mixed $tags
+     * @return Article $this
      */
     public function setTags($tags)
     {
         $this->tags = $tags;
+        return $this;
     }
 
     /**
@@ -228,10 +252,12 @@ class Article extends AbstractEntity
 
     /**
      * @param mixed $text
+     * @return Article $this
      */
     public function setText($text)
     {
         $this->text = $text;
+        return $this;
     }
 
     /**
@@ -244,10 +270,12 @@ class Article extends AbstractEntity
 
     /**
      * @param mixed $thumbnail
+     * @return Article $this
      */
     public function setThumbnail($thumbnail)
     {
         $this->thumbnail = $thumbnail;
+        return $this;
     }
 
     /**
@@ -260,17 +288,20 @@ class Article extends AbstractEntity
 
     /**
      * @param User $writer
+     * @return Article $this
      */
     public function setWriter($writer)
     {
         $this->writer = $writer;
+        return $this;
     }
 
     public function exchangeArrayForm($data)
     {
         $this->id = (!empty($data['id'])) ? $data['id'] : null;
-        $this->status = (!empty($data['status'])) ? $data['status'] : self::STATUS_OFFLINE;
+        $this->status = (!empty($data['status'])) ? $data['status'] : self::STATUS_ONLINE;
         $this->title = (!empty($data['title'])) ? $data['title'] : null;
+        $this->subtitle = (!empty($data['subtitle'])) ? $data['subtitle'] : null;
         $this->text = (!empty($data['text'])) ? $data['text'] : null;
         $this->photo = (!empty($data['photo'])) ? $data['photo'] : null;
         $this->thumbnail = (!empty($data['thumbnail'])) ? $data['thumbnail'] : null;

@@ -4,7 +4,7 @@ namespace Blog\Controller;
 
 use Zend\View\Model\ViewModel;
 
-class WriterController extends AbstractActionController
+class UserController extends AbstractActionController
 {
 
     public function indexAction()

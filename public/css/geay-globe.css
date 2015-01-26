@@ -1,0 +1,31 @@
+/* 0. Imports
+--------------------------------------*/
+@import url(//fonts.googleapis.com/css?family=Yellowtail);
+
+/*  2. Styles
+--------------------------------------*/
+
+.yellowtitle {
+    font: 76px/76px 'Yellowtail';
+    color: #eb7093;
+}
+
+.yellowtitle:hover {
+    text-decoration: none;
+    color: #ea6891;
+}
+
+hr.long-hr {
+    max-width: none;
+    border-color: #777;
+    color: #777;
+}
+
+a.silent {
+    color: #333;
+}
+
+a.silent:hover {
+    text-decoration: none;
+    color: #6495ed;
+}

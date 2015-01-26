@@ -15,9 +15,8 @@ class UserFilter extends InputFilter
 {
     /**
      * @param EntityManager $entityManager
-     * @param bool $mustValidateCampaign
      */
-    public function __construct($entityManager = null, $mustValidateCampaign = false)
+    public function __construct($entityManager = null)
     {
         // LASTNAME
         $lastName = new Input('lastName');
