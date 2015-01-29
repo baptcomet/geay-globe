@@ -2,7 +2,8 @@
 
 namespace Blog\Form;
 
-use Blog\Form\Filter\ArticleFilter;
+use Blog\Entity\Article;
+use Doctrine\ORM\EntityManager;
 use Zend\Form\Element\File;
 use Zend\Form\Element\Hidden;
 use Zend\Form\Element\Select;
@@ -91,6 +92,19 @@ class ArticleForm extends Form
         $photoPosition->setLabel('Position Photo');
         $photoPosition->setLabelAttributes(array('class' => 'control-label'));
         $this->add($photoPosition);
+
+        // Catégorie
+        $categorie = new Select('category');
+        $categorie->setAttributes(
+            array(
+                'id' => 'category',
+                'class' => 'form-control',
+            )
+        );
+        $categorie->setValueOptions(Article::$categories);
+        $categorie->setLabel('Catégorie');
+        $categorie->setLabelAttributes(array('class' => 'control-label'));
+        $this->add($categorie);
 
         // Submit
         $submit = new Submit('submit');

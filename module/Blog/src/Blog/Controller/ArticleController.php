@@ -40,10 +40,29 @@ class ArticleController extends AbstractActionController
         /** @var Request $request */
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $form->setData($request->getPost());
+            $data = array_merge_recursive(
+                $request->getPost()->toArray(),
+                $request->getFiles()->toArray()
+            );
+            $form->setData($data);
 
             if ($form->isValid()) {
+                $article->setWriter($this->identity());
                 $entityManager->persist($article);
+                $entityManager->flush();
+
+                // Traite file si on en a un
+                if ($data['photofile']['name'] != '') {
+                    $extension = pathinfo($data['photofile']['name'], PATHINFO_EXTENSION);
+                    $oldfilename = Article::PHOTO_FOLDER . 'newphoto.' . $extension;
+                    $newfilename = Article::PHOTO_FOLDER . $article->getId() . '.' . $extension;
+
+                    rename($oldfilename, $newfilename);
+                    create_square_image($newfilename, Article::PHOTO_FOLDER . 'thumbnail' .$article->getId() . '.' . $extension, 50);
+
+                    $article->setPhoto($article->getId() . '.' . $extension);
+                    $article->setThumbnail('thumbnail' . $article->getId() . '.' . $extension);
+                }
                 $entityManager->flush();
 
                 $this->flashMessenger()->addSuccessMessage(
@@ -106,6 +125,7 @@ class ArticleController extends AbstractActionController
                     $article->setPhoto($article->getId() . '.' . $extension);
                     $article->setThumbnail('thumbnail' . $article->getId() . '.' . $extension);
                 }
+                $article->setWriter($this->identity());
                 $entityManager->flush();
 
                 $this->flashMessenger()->addSuccessMessage(

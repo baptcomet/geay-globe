@@ -16,6 +16,11 @@ class Article extends AbstractEntity
     const PHOTO_POSITION_LEFT = 'left';
     const PHOTO_POSITION_RIGHT = 'right';
     const PHOTO_POSITION_CENTER = 'center';
+    public static $categories = array(
+        '1' => 'Restaurant',
+        '2' => 'Voyage',
+        '3' => 'Place',
+    );
 
     /**
      * @ORM\Id
@@ -23,12 +28,6 @@ class Article extends AbstractEntity
      * @ORM\Column(type="integer")
      */
     protected $id;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="articles", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", nullable=true)
-     */
-    protected $category;
 
     /**
      * @ORM\ManyToMany(targetEntity="Tag", inversedBy="articles", cascade={"persist"})
@@ -55,6 +54,9 @@ class Article extends AbstractEntity
 
     /** @ORM\Column(name="text", type="text", nullable=false) */
     protected $text;
+
+    /** @ORM\Column(name="category", type="integer", nullable=true) */
+    protected $category;
 
     /** @ORM\Column(name="thumbnail", type="string", nullable=true) */
     protected $thumbnail;
@@ -149,7 +151,7 @@ class Article extends AbstractEntity
     }
 
     /**
-     * @return mixed
+     * @return integer
      */
     public function getCategory()
     {
@@ -157,7 +159,7 @@ class Article extends AbstractEntity
     }
 
     /**
-     * @param mixed $category
+     * @param integer $category
      * @return Article $this
      */
     public function setCategory($category)

@@ -11,6 +11,11 @@
     <!-- Scripts -->
     <?php
     echo $this->headScript()
+        ->prependFile($this->basePath('/js/AnimOnScroll.js'))
+        ->prependFile($this->basePath('/js/classie.js'))
+        ->prependFile($this->basePath('/js/imagesloaded.js'))
+        ->prependFile($this->basePath('/js/masonry.pkgd.min.js'))
+        ->prependFile($this->basePath('/js/modernizr.custom.js'))
         ->prependFile($this->basePath('/js/bootstrap/bootstrap.min.js'))
         ->prependFile($this->basePath('/js/bootstrap/jquery.js'))
         //->prependFile($this->basePath('/js/respond.min.js'), 'text/javascript', array('conditional' => 'lt IE 9'))
@@ -27,11 +32,12 @@
                 'href' => $this->basePath('/img/gg-favicon-white.png'),
             )
         )
+        ->prependStylesheet($this->basePath('/css/magnific-popup.css'))
+        ->prependStylesheet($this->basePath('/css/codrops/component.css'))
         ->prependStylesheet($this->basePath('/css/geay-globe.css'))
         ->prependStylesheet($this->basePath('/css/business-casual.css'))
         ->prependStylesheet($this->basePath('/css/bootstrap.min.css'))
         ->prependStylesheet('http://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Condensed:300,400,700')
-        ->prependStylesheet('http://fonts.googleapis.com/css?familyOpen+Sans:400,300,700')
         ->prependStylesheet('http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800')
         ->prependStylesheet('http://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic')
         ;

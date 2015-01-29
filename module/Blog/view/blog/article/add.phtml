@@ -7,6 +7,8 @@
 $title = 'Ajouter un Article';
 $this->headTitle($title);
 
+$form->prepare();
+
 ?>
 
 <?php echo $this->partial('partial/flashmessenger') ?>
@@ -32,25 +34,38 @@ $this->headTitle($title);
         <div class="row">
             <div class="col-lg-12">
 
+                <?php echo $this->form()->openTag($form) ?>
+
                 <div class="row">
                     <div class="col-lg-6">
-
                         <div class="form-group">
                             <?php echo $this->formRow($form->get('title')) ?>
                         </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <?php echo $this->formRow($form->get('photofile')) ?>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="row">
+                    <div class="col-lg-6">
                         <div class="form-group">
                             <?php echo $this->formRow($form->get('subtitle')) ?>
                         </div>
                     </div>
                     <div class="col-lg-6">
-
-                        <div class="form-group">
-                            <?php echo $this->formRow($form->get('photofile')) ?>
-                        </div>
-
                         <div class="form-group">
                             <?php echo $this->formRow($form->get('photoPosition')) ?>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <?php echo $this->formRow($form->get('category')) ?>
                         </div>
                     </div>
                 </div>
