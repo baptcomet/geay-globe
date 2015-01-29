@@ -94,15 +94,18 @@ class ArticleController extends AbstractActionController
             $form->setData($data);
 
             if ($form->isValid()) {
-                $extension = pathinfo($data['photofile']['name'], PATHINFO_EXTENSION);
-                $oldfilename = Article::PHOTO_FOLDER . 'newphoto.' . $extension;
-                $newfilename = Article::PHOTO_FOLDER . $article->getId() . '.' . $extension;
+                // Traite file si on en a un
+                if ($data['photofile']['name'] != '') {
+                    $extension = pathinfo($data['photofile']['name'], PATHINFO_EXTENSION);
+                    $oldfilename = Article::PHOTO_FOLDER . 'newphoto.' . $extension;
+                    $newfilename = Article::PHOTO_FOLDER . $article->getId() . '.' . $extension;
 
-                rename($oldfilename, $newfilename);
-                create_square_image($newfilename, Article::PHOTO_FOLDER . 'thumbnail' .$article->getId() . '.' . $extension, 50);
+                    rename($oldfilename, $newfilename);
+                    create_square_image($newfilename, Article::PHOTO_FOLDER . 'thumbnail' .$article->getId() . '.' . $extension, 50);
 
-                $article->setPhoto($article->getId() . '.' . $extension);
-                $article->setThumbnail('thumbnail' . $article->getId() . '.' . $extension);
+                    $article->setPhoto($article->getId() . '.' . $extension);
+                    $article->setThumbnail('thumbnail' . $article->getId() . '.' . $extension);
+                }
                 $entityManager->flush();
 
                 $this->flashMessenger()->addSuccessMessage(

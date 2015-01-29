@@ -51,7 +51,6 @@ class ArticleFilter extends InputFilter
 
         // TEXT
         $text = new Input('text');
-        $text->setRequired(true);
         $text->getFilterChain()
             ->attach(new StringTrim())
             ->attach(new StripTags());
@@ -67,6 +66,7 @@ class ArticleFilter extends InputFilter
 
         // PHOTO
         $photo = new FileInput('photofile');
+        $photo->setRequired(false);
         $photo->getValidatorChain()
             ->attach(new UploadFile());
         $photo->getFilterChain()

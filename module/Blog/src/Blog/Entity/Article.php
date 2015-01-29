@@ -13,6 +13,10 @@ use Zend\Feed\Writer\Writer;
 class Article extends AbstractEntity
 {
     const PHOTO_FOLDER = './public/img/articles/';
+    const PHOTO_POSITION_LEFT = 'left';
+    const PHOTO_POSITION_RIGHT = 'right';
+    const PHOTO_POSITION_CENTER = 'center';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -58,6 +62,9 @@ class Article extends AbstractEntity
     /** @ORM\Column(name="photo", type="string", nullable=true) */
     protected $photo;
 
+    /** @ORM\Column(name="photo_position", type="string", nullable=false) */
+    protected $photoPosition;
+
     /** @ORM\Column(name="date", type="datetime", nullable=false) */
     protected $date;
 
@@ -65,6 +72,7 @@ class Article extends AbstractEntity
     public function __construct()
     {
         $this->date = new \DateTime();
+        $this->photoPosition = self::PHOTO_POSITION_LEFT;
         $this->tags = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
@@ -207,7 +215,7 @@ class Article extends AbstractEntity
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getPhoto()
     {
@@ -215,12 +223,30 @@ class Article extends AbstractEntity
     }
 
     /**
-     * @param mixed $photo
+     * @param string $photo
      * @return Article $this
      */
     public function setPhoto($photo)
     {
         $this->photo = $photo;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhotoPosition()
+    {
+        return $this->photoPosition;
+    }
+
+    /**
+     * @param string $photoPosition
+     * @return Article $this
+     */
+    public function setPhotoPosition($photoPosition)
+    {
+        $this->photoPosition = $photoPosition;
         return $this;
     }
 

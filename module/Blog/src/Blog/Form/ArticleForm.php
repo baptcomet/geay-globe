@@ -5,6 +5,7 @@ namespace Blog\Form;
 use Blog\Form\Filter\ArticleFilter;
 use Zend\Form\Element\File;
 use Zend\Form\Element\Hidden;
+use Zend\Form\Element\Select;
 use Zend\Form\Element\Submit;
 use Zend\Form\Element\Text;
 use Zend\Form\Element\Textarea;
@@ -71,6 +72,25 @@ class ArticleForm extends Form
         $photo->setLabel('Photo');
         $photo->setLabelAttributes(array('class' => 'control-label'));
         $this->add($photo);
+
+        // Photo Position
+        $photoPosition = new Select('photoPosition');
+        $photoPosition->setAttributes(
+            array(
+                'id' => 'photoPosition',
+                'class' => 'form-control',
+            )
+        );
+        $photoPosition->setValueOptions(
+            array(
+                'left' => 'Gauche',
+                'right' => 'Droite',
+                'center' => 'Centrée',
+            )
+        );
+        $photoPosition->setLabel('Position Photo');
+        $photoPosition->setLabelAttributes(array('class' => 'control-label'));
+        $this->add($photoPosition);
 
         // Submit
         $submit = new Submit('submit');

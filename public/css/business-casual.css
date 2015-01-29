@@ -109,6 +109,17 @@ hr.short-hr {
     margin: 0 auto 0;
 }
 
+.img-right {
+    float: right;
+    margin: 0 auto 0;
+}
+
+.img-center {
+    float: right;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 footer {
     background: #fff;
     background: rgba(255,255,255,0.9);
@@ -140,6 +151,17 @@ footer p {
     .img-left {
         float: left;
         margin-right: 25px;
+    }
+
+    .img-right {
+        float: right;
+        margin-left: 25px;
+    }
+
+    .img-center {
+        float: none;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .address-bar {
