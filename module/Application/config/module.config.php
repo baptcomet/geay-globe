@@ -48,6 +48,16 @@ return array(
                     ),
                 ),
             ),
+            'tags' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/blog/tags',
+                    'defaults' => array(
+                        'controller' => 'Blog',
+                        'action' => 'tags',
+                    ),
+                ),
+            ),
             'error' => array(
                 'type' => 'segment',
                 'options' => array(
