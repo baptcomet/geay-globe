@@ -3,8 +3,10 @@
 namespace Blog\Controller;
 
 use Blog\Entity\Article;
+use Blog\Entity\Tag;
 use Blog\Form\ArticleForm;
 use Blog\Form\Filter\ArticleFilter;
+use Doctrine\Common\Collections\ArrayCollection;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 use Zend\Http\Request;
 use Zend\View\Model\ViewModel;
@@ -37,6 +39,14 @@ class ArticleController extends AbstractActionController
         $article = new Article();
         $form->bind($article);
 
+        $tags = $entityManager->getRepository('Blog\Entity\Tag')->findAll();
+        $allTags = array();
+        /** @var Tag $tag */
+        foreach ($tags as $tag) {
+            array_push($allTags, $tag->getTitle());
+        }
+        $autocompleteTagSource = json_encode($allTags);
+
         /** @var Request $request */
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -51,7 +61,7 @@ class ArticleController extends AbstractActionController
                 $entityManager->persist($article);
                 $entityManager->flush();
 
-                // Traite file si on en a un
+                // Traite file si on en a un todo fix bug
                 if ($data['photofile']['name'] != '') {
                     $extension = pathinfo($data['photofile']['name'], PATHINFO_EXTENSION);
                     $oldfilename = Article::PHOTO_FOLDER . 'newphoto.' . $extension;
@@ -62,6 +72,24 @@ class ArticleController extends AbstractActionController
 
                     $article->setPhoto($article->getId() . '.' . $extension);
                     $article->setThumbnail('thumbnail' . $article->getId() . '.' . $extension);
+                }
+                // Traite les Tags
+                if ($data['tagsString'] != '') {
+                    $tags = explode(' ', $data['tagsString']);
+                    $tagsObjects = new ArrayCollection();
+                    foreach ($tags as $tag) {
+                        /** @var Tag $existingTag */
+                        $existingTag = $entityManager->getRepository('BLog\Entity\Tag')
+                            ->findOneBy(array('title' => $tag));
+                        if (!is_null($existingTag)) {
+                            $tagsObjects->add($existingTag);
+                        } else {
+                            $tagObject = new Tag();
+                            $tagObject->setTitle($tag);
+                            $tagsObjects->add($tagObject);
+                        }
+                    }
+                    $article->setTags($tagsObjects);
                 }
                 $entityManager->flush();
 
@@ -79,6 +107,7 @@ class ArticleController extends AbstractActionController
         $this->layout('layout/front');
         return new ViewModel(array(
             'form' => $form,
+            'autocompleteTagSource' => $autocompleteTagSource,
         ));
     }
 
@@ -103,6 +132,16 @@ class ArticleController extends AbstractActionController
 
         $form->bind($article);
 
+        $tags = $entityManager->getRepository('Blog\Entity\Tag')->findAll();
+        $allTags = array();
+        /** @var Tag $tag */
+        foreach ($tags as $tag) {
+            array_push($allTags, $tag->getTitle());
+        }
+        $autocompleteTagSource = json_encode($allTags);
+
+        $form->get('tagsString')->setValue($article->getTagsString());
+
         /** @var Request $request */
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -125,6 +164,24 @@ class ArticleController extends AbstractActionController
                     $article->setPhoto($article->getId() . '.' . $extension);
                     $article->setThumbnail('thumbnail' . $article->getId() . '.' . $extension);
                 }
+                // Traite les Tags
+                if ($data['tagsString'] != '') {
+                    $tags = explode(' ', $data['tagsString']);
+                    $tagsObjects = new ArrayCollection();
+                    foreach ($tags as $tag) {
+                        /** @var Tag $existingTag */
+                        $existingTag = $entityManager->getRepository('BLog\Entity\Tag')
+                            ->findOneBy(array('title' => $tag));
+                        if (!is_null($existingTag)) {
+                            $tagsObjects->add($existingTag);
+                        } else {
+                            $tagObject = new Tag();
+                            $tagObject->setTitle($tag);
+                            $tagsObjects->add($tagObject);
+                        }
+                    }
+                    $article->setTags($tagsObjects);
+                }
                 $article->setWriter($this->identity());
                 $entityManager->flush();
 
@@ -143,6 +200,7 @@ class ArticleController extends AbstractActionController
         $this->layout('layout/front');
         return new ViewModel(array(
             'form' => $form,
+            'autocompleteTagSource' => $autocompleteTagSource,
         ));
     }
 }

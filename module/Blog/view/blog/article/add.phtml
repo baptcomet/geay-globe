@@ -2,6 +2,7 @@
 
 /**
  * @var Blog\Form\ArticleForm $form
+ * @var string $autocompleteTagSource
  */
 
 $title = 'Ajouter un Article';
@@ -68,6 +69,11 @@ $form->prepare();
                             <?php echo $this->formRow($form->get('category')) ?>
                         </div>
                     </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <?php echo $this->formRow($form->get('tagsString')) ?>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -95,3 +101,15 @@ $form->prepare();
 
     </div>
 </div>
+
+<script>
+    $('#tagsString').tagEditor({
+        autocomplete: {
+            delay: 1,
+            position: { collision: 'flip' },
+            source: <?php echo $autocompleteTagSource ?>
+        },
+        delimiter: ' ',
+        placeholder: 'Choisis tes #tags ...'
+    });
+</script>

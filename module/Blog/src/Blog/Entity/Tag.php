@@ -25,20 +25,9 @@ class Tag extends AbstractEntity
      */
     protected $articles;
 
-    /** @ORM\Column(name="color", type="integer") */
-    protected $color;
-
     public function __construct()
     {
         $this->articles = new ArrayCollection();
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
     }
 
     /**
@@ -50,11 +39,13 @@ class Tag extends AbstractEntity
     }
 
     /**
-     * @param string $title
+     * @param int $id
+     * @return Tag
      */
-    public function setTitle($title)
+    public function setId($id)
     {
-        $this->title = $title;
+        $this->id = $id;
+        return $this;
     }
 
     /**
@@ -63,6 +54,16 @@ class Tag extends AbstractEntity
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * @param string $title
+     * @return Tag
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+        return $this;
     }
 
     /**
@@ -75,37 +76,11 @@ class Tag extends AbstractEntity
 
     /**
      * @param mixed $articles
+     * @return Tag
      */
     public function setArticles($articles)
     {
         $this->articles = $articles;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getColor()
-    {
-        return $this->color;
-    }
-
-    /**
-     * @param mixed $color
-     */
-    public function setColor($color)
-    {
-        $this->color = $color;
-    }
-
-    public function exchangeArrayForm($data)
-    {
-        $this->id = (!empty($data['id'])) ? $data['id'] : null;
-        $this->title = (!empty($data['title'])) ? $data['title'] : null;
-        $this->color = (!empty($data['color'])) ? $data['color'] : null;
-    }
-
-    public function getArrayCopy()
-    {
-        return get_object_vars($this);
+        return $this;
     }
 }

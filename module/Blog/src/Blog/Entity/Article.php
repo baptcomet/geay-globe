@@ -5,9 +5,8 @@ namespace Blog\Entity;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Zend\Feed\Writer\Writer;
 
-/** @ORM\Entity
+/** @ORM\Entity(repositoryClass="Blog\Entity\Repository\ArticleRepository")
  * @ORM\Table(name="article")
  */
 class Article extends AbstractEntity
@@ -16,6 +15,7 @@ class Article extends AbstractEntity
     const PHOTO_POSITION_LEFT = 'left';
     const PHOTO_POSITION_RIGHT = 'right';
     const PHOTO_POSITION_CENTER = 'center';
+
     public static $categories = array(
         '1' => 'Restaurant',
         '2' => 'Voyage',
@@ -253,11 +253,24 @@ class Article extends AbstractEntity
     }
 
     /**
-     * @return mixed
+     * @return ArrayCollection
      */
     public function getTags()
     {
         return $this->tags;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTagsString()
+    {
+        $tags = array();
+        /** @var Tag $tagObject */
+        foreach ($this->tags as $tagObject) {
+            array_push($tags, $tagObject->getTitle());
+        }
+        return implode(' ', $tags);
     }
 
     /**
@@ -307,7 +320,7 @@ class Article extends AbstractEntity
     }
 
     /**
-     * @return Writer
+     * @return User
      */
     public function getWriter()
     {
@@ -322,37 +335,5 @@ class Article extends AbstractEntity
     {
         $this->writer = $writer;
         return $this;
-    }
-
-    public function exchangeArrayForm($data)
-    {
-        $this->id = (!empty($data['id'])) ? $data['id'] : null;
-        $this->status = (!empty($data['status'])) ? $data['status'] : self::STATUS_ONLINE;
-        $this->title = (!empty($data['title'])) ? $data['title'] : null;
-        $this->subtitle = (!empty($data['subtitle'])) ? $data['subtitle'] : null;
-        $this->text = (!empty($data['text'])) ? $data['text'] : null;
-        $this->photo = (!empty($data['photo'])) ? $data['photo'] : null;
-        $this->thumbnail = (!empty($data['thumbnail'])) ? $data['thumbnail'] : null;
-
-        if (!empty($data['date'])) {
-            $date = explode('/', $data['date']);
-            $data['date'] = $date[2] . '-' . $date[1] . '-' . $date[0];
-            $dateTime = $data['date'] . ' 00:00:00';
-            $this->date = new \DateTime($dateTime);
-        } else {
-            $this->date = new \DateTime('0000-00-00 00:00:00');
-        }
-    }
-
-    public function getArrayCopy()
-    {
-        $data = get_object_vars($this);
-
-        /** @var DateTime $dateData */
-        $dateData = $data['date'];
-        $date = $dateData->format('d/m/Y');
-        $data['date'] = $date;
-
-        return $data;
     }
 }

@@ -106,6 +106,18 @@ class ArticleForm extends Form
         $categorie->setLabelAttributes(array('class' => 'control-label'));
         $this->add($categorie);
 
+        // Tags
+        $tags = new Text('tagsString');
+        $tags->setAttributes(
+            array(
+                'id' => 'tagsString',
+                'class' => 'form-control',
+            )
+        );
+        $tags->setLabel('#Tags');
+        $tags->setLabelAttributes(array('class' => 'control-label'));
+        $this->add($tags);
+
         // Submit
         $submit = new Submit('submit');
         $submit->setAttribute('id', 'submit');

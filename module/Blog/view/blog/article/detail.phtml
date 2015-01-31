@@ -1,6 +1,9 @@
 <?php
 
-/** @var Blog\Entity\Article $article */
+/**
+ * @var Blog\Entity\Article $article
+ * @var Blog\Entity\Tag $tag
+ */
 
 $title = $article->getTitle();
 $subtitle = $article->getSubtitle();
@@ -29,12 +32,27 @@ $this->headTitle($title);
                 <hr class="short-hr"/>
             </div>
             <div class="col-lg-2">
-                <ul class="list-inline pull-right">
-                    <li>
-                        <a href="<?php echo $this->url('article', array('action' => 'edit', 'id' => $article->getId())) ?>">
-                            <span class="glyphicon glyphicon-pencil text-warning"></span>
-                        </a>
-                    </li>
+                <?php if (!is_null($this->identity())) : ?>
+                    <ul class="list-inline pull-right">
+                        <li>
+                            <a href="<?php echo $this->url('article', array('action' => 'edit', 'id' => $article->getId())) ?>">
+                                <span class="glyphicon glyphicon-pencil text-warning"></span>
+                            </a>
+                        </li>
+                    </ul>
+                    <br/>
+                    <br/>
+                <?php endif ?>
+                <ul class="list-unstyled pull-right text-right">
+                    <?php foreach ($article->getTags() as $tag) : ?>
+                        <li>
+                            <h4>
+                                <a href="#" style="text-decoration: none">
+                                    <span class="label label-info">#<?php echo $tag->getTitle() ?></span>
+                                </a>
+                            </h4>
+                        </li>
+                    <?php endforeach ?>
                 </ul>
             </div>
         </div>
