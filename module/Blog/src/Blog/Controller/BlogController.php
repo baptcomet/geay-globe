@@ -3,7 +3,8 @@
 namespace Blog\Controller;
 
 use Blog\Entity\Article;
-use Doctrine\Common\Collections\ArrayCollection;
+use Blog\Entity\Repository\ArticleRepository;
+use Blog\Entity\Repository\TagRepository;
 use Zend\View\Model\ViewModel;
 
 class BlogController extends AbstractActionController
@@ -21,29 +22,31 @@ class BlogController extends AbstractActionController
 
     public function tagsAction()
     {
-        $articles = new ArrayCollection();
+        $tagsUrl = $this->params()->fromRoute('names');
+        if ($tagsUrl === null) {
+            // Hack pour la navigation
+            return $this->redirect()->toRoute('tags', array('names' => ''));
+        }
 
-        $tags = $this->getEntityManager()->getRepository('\Blog\Entity\Tag')->findAll();
+        if ($tagsUrl != '') {
+            $selectedTagNames = explode('+', $tagsUrl);
+        } else {
+            $selectedTagNames = array();
+        }
+
+        /** @var ArticleRepository $articleRepository */
+        $articleRepository = $this->getEntityManager()->getRepository('\Blog\Entity\Article');
+        /** @var TagRepository $tagRepository */
+        $tagRepository = $this->getEntityManager()->getRepository('\Blog\Entity\Tag');
+
+        $articles = $articleRepository->findByTags($selectedTagNames);
+        $tags = $tagRepository->findAllActive();
 
         $this->layout('layout/front');
         return new ViewModel(array(
             'articles' => $articles,
             'tags' => $tags,
-        ));
-    }
-
-    public function ajaxLoadArticlesAction()
-    {
-        $articles = new ArrayCollection();
-
-        $tags = $this->getEntityManager()->getRepository('\Blog\Entity\Tag')->findAll();
-
-        // TODO Ajax call with tags in params, retrieve articles and return no viewmodel but the list partial
-
-        $this->layout('layout/front');
-        return new ViewModel(array(
-            'articles' => $articles,
-            'tags' => $tags,
+            'selectedTagNames' => $selectedTagNames,
         ));
     }
 }

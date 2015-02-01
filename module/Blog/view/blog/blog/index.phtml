@@ -35,28 +35,3 @@ $this->headTitle($title);
         </div>
     </div>
 </div>
-
-<script>
-    var container = $('#container');
-    // initialize
-    container.masonry({
-        columnWidth: 200,
-        itemSelector: '.item'
-    });
-</script>
-
-<script>
-    new AnimOnScroll( document.getElementById( 'grid' ), {
-        minDuration : 0.4,
-        maxDuration : 0.7,
-        viewportFactor : 0.2
-    } );
-</script>
-
-<script type="text/javascript">
-    // Auto semantic for text hovering images
-    $(function() {
-        $(".image").find("h2").wrapInner("<span>");
-        $("h2 br").before("<span class='spacer'>").after("<span class='spacer'>");
-    });
-</script>

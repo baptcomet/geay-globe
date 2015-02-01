@@ -5,11 +5,13 @@
  * @var Doctrine\Common\Collections\ArrayCollection $tags
  * @var Blog\Entity\Article $article
  * @var Blog\Entity\Tag $tag
+ * @var array $selectedTagNames
  */
 
 $title = '#TAGS';
 $this->headTitle($title);
 
+$clickedTags = json_encode($selectedTagNames);
 ?>
 <?php echo $this->partial('partial/flashmessenger') ?>
 
@@ -27,7 +29,9 @@ $this->headTitle($title);
                         <?php foreach ($tags as $tag) : ?>
                             <li>
                                 <h3>
-                                    <span class="label label-info clickableTag">#<?php echo $tag->getTitle() ?></span>
+                                    <span class="clickableTag label <?php echo in_array($tag->getTitle(), $selectedTagNames) ? 'label-primary' : 'label-info' ?>">
+                                        #<span class="tagname"><?php echo $tag->getTitle() ?></span>
+                                    </span>
                                 </h3>
                             </li>
                         <?php endforeach ?>
@@ -42,9 +46,7 @@ $this->headTitle($title);
 
             <?php if (count($articles)) : ?>
 
-                <div id="articlesList">
-                    <?php echo $this->partial('blog/blog/partial/articles-list') ?>
-                </div>
+                <?php echo $this->partial('blog/blog/partial/articles-list') ?>
 
             <?php else : ?>
 
@@ -54,44 +56,33 @@ $this->headTitle($title);
 
             <?php endif ?>
 
+
         </div>
     </div>
 </div>
 
 <script>
-    var container = $('#container');
-    // initialize
-    container.masonry({
-        columnWidth: 200,
-        itemSelector: '.item'
-    });
-</script>
-
-<script>
-    new AnimOnScroll( document.getElementById( 'grid' ), {
-        minDuration : 0.4,
-        maxDuration : 0.7,
-        viewportFactor : 0.2
-    } );
-</script>
-
-<script type="text/javascript">
-    // Auto semantic for text hovering images
-    $(function() {
-        $(".image").find("h2").wrapInner("<span>");
-        $("h2 br").before("<span class='spacer'>").after("<span class='spacer'>");
-    });
-</script>
-
-<script>
-
     var clickableTags = $('.clickableTag');
 
     clickableTags.css('cursor', 'pointer');
     clickableTags.css('user-select', 'none');
 
     clickableTags.click(function() {
-        $(this).toggleClass('label-info').toggleClass('label-primary');
-    })
+        var clickedTags = <?php echo $clickedTags ?>;
+        console.log(clickedTags);
+        var clickedTag = $(this).find('span.tagname').html();
 
+        var index = clickedTags.indexOf(clickedTag);
+        if ((index > -1)) {
+            // si tag déjà selectionné, on l'efface
+            clickedTags.splice(index, 1);
+        } else {
+            // sinon, on le sélectionne
+            clickedTags.push(clickedTag);
+        }
+
+        console.log(clickedTags);
+        var clickedTagsUrl = clickedTags.join('+');
+        window.location.href = "<?php echo $this->url('tags') ?>/" + clickedTagsUrl;
+    });
 </script>

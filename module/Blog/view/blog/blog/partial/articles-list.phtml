@@ -5,12 +5,9 @@
  * @var Blog\Entity\Article $article
  */
 
-$title = 'Accueil';
-$this->headTitle($title);
-
 ?>
 
-<div id="container">
+<div class="container">
     <ul class="grid effect-2" id="grid">
         <?php foreach ($articles as $article) : ?>
             <li>
@@ -25,13 +22,20 @@ $this->headTitle($title);
     </ul>
 </div>
 
+
+
 <script>
-    var container = $('#container');
-    // initialize
-    container.masonry({
-        columnWidth: 200,
-        itemSelector: '.item'
-    });
+    whenTilesReady();
+
+    function whenTilesReady() {
+        var container = $('#container');
+        // initialize
+        container.masonry({
+            columnWidth: 200,
+            itemSelector: '.item'
+        });
+    }
+
 </script>
 
 <script>
@@ -40,9 +44,6 @@ $this->headTitle($title);
         maxDuration : 0.7,
         viewportFactor : 0.2
     } );
-</script>
-
-<script type="text/javascript">
     // Auto semantic for text hovering images
     $(function() {
         $(".image").find("h2").wrapInner("<span>");

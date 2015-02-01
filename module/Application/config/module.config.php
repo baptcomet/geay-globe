@@ -51,10 +51,11 @@ return array(
             'tags' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/blog/tags',
+                    'route' => '/blog/tags[/:names]',
                     'defaults' => array(
                         'controller' => 'Blog',
                         'action' => 'tags',
+                        'names' => '',
                     ),
                 ),
             ),
