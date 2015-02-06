@@ -2,6 +2,7 @@
 
 namespace Blog\Entity;
 
+use Blog\Model\Calendar;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -70,10 +71,19 @@ class Article extends AbstractEntity
     /** @ORM\Column(name="date", type="datetime", nullable=false) */
     protected $date;
 
+    /** @ORM\Column(name="day", type="string", nullable=false) */
+    protected $day;
+
+    /** @ORM\Column(name="month", type="integer", nullable=false) */
+    protected $month;
+
+    /** @ORM\Column(name="year", type="string", nullable=false) */
+    protected $year;
+
 
     public function __construct()
     {
-        $this->date = new \DateTime();
+        $this->setDate(new \DateTime());
         $this->photoPosition = self::PHOTO_POSITION_LEFT;
         $this->tags = new ArrayCollection();
         $this->comments = new ArrayCollection();
@@ -207,13 +217,86 @@ class Article extends AbstractEntity
     }
 
     /**
-     * @param mixed $date
+     * @param \DateTime $date
      * @return Article $this
      */
     public function setDate($date)
     {
         $this->date = $date;
+        $this->day = $date->format('d');
+        $this->month = (int)$date->format('m');
+        $this->year = $date->format('Y');
         return $this;
+    }
+
+    /**
+     * @param string $day
+     * @return Article $this
+     */
+    public function setDay($day)
+    {
+        $this->day = $day;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDay()
+    {
+        return $this->day;
+    }
+
+    /**
+     * @param int $month
+     * @return Article $this
+     */
+    public function setMonth($month)
+    {
+        $this->month = $month;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMonth()
+    {
+        return $this->month;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMonthName()
+    {
+        return Calendar::getStaticMonthNames()[$this->month];
+    }
+
+    /**
+     * @return string
+     */
+    public function getMonthShortName()
+    {
+        return Calendar::getStaticMonthShortNames()[$this->month];
+    }
+
+    /**
+     * @param string $year
+     * @return Article $this
+     */
+    public function setYear($year)
+    {
+        $this->year = $year;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getYear()
+    {
+        return $this->year;
     }
 
     /**
