@@ -59,6 +59,19 @@ return array(
                     ),
                 ),
             ),
+            'histo' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/blog/historique[/:year]',
+                    'defaults' => array(
+                        'controller' => 'Blog',
+                        'action' => 'historique',
+                    ),
+                    'constraints' => array(
+                        'year' => '[0-9]*',
+                    ),
+                ),
+            ),
             'error' => array(
                 'type' => 'segment',
                 'options' => array(

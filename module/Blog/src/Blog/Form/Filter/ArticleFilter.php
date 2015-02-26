@@ -49,8 +49,8 @@ class ArticleFilter extends InputFilter
             ));
         $this->add($subtitle);
 
-        // TEXT
-        $text = new Input('text');
+        // TEXT 1
+        $text = new Input('text1');
         $text->getFilterChain()
             ->attach(new StringTrim())
             ->attach(new StripTags());
@@ -64,15 +64,64 @@ class ArticleFilter extends InputFilter
             ));
         $this->add($text);
 
-        // PHOTO
-        $photo = new FileInput('photofile');
+        // TEXT 2
+        $text = new Input('text2');
+        $text->setRequired(false);
+        $text->getFilterChain()
+            ->attach(new StringTrim())
+            ->attach(new StripTags());
+        $text->getValidatorChain()
+            ->attach(new NotEmpty())
+            ->attach(new StringLength(
+                array(
+                    'encoding' => 'UTF-8',
+                    'min' => 3,
+                )
+            ));
+        $this->add($text);
+
+        // TEXT 3
+        $text = new Input('text3');
+        $text->setRequired(false);
+        $text->getFilterChain()
+            ->attach(new StringTrim())
+            ->attach(new StripTags());
+        $text->getValidatorChain()
+            ->attach(new NotEmpty())
+            ->attach(new StringLength(
+                array(
+                    'encoding' => 'UTF-8',
+                    'min' => 3,
+                )
+            ));
+        $this->add($text);
+
+        // PHOTO 1
+        $photo = new FileInput('photofile1');
         $photo->setRequired(false);
         $photo->getValidatorChain()
             ->attach(new UploadFile());
         $photo->getFilterChain()
             ->attach(new RenameUpload(
                 array(
-                    'target' => './public/img/articles/newphoto',
+                    'target' => './public/img/articles/newphoto1',
+                    'overwrite' => true,
+                    'randomize' => false,
+                    'use_upload_name' => false,
+                    'use_upload_extension' => true,
+                )
+            ));
+        $this->add($photo);
+
+        // PHOTO 2
+        $photo = new FileInput('photofile2');
+        $photo->setRequired(false);
+        $photo->getValidatorChain()
+            ->attach(new UploadFile());
+        $photo->getFilterChain()
+            ->attach(new RenameUpload(
+                array(
+                    'target' => './public/img/articles/newphoto2',
                     'overwrite' => true,
                     'randomize' => false,
                     'use_upload_name' => false,

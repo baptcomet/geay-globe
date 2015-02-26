@@ -28,4 +28,24 @@ class ArticleRepository extends EntityRepository
         }
         return $articles;
     }
+
+    public function getAllYears()
+    {
+        $years = array();
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('a')
+            ->from('Blog\Entity\Article', 'a')
+            ->andWhere('a.status = ?1')
+            ->setParameter(1, Article::STATUS_ONLINE)
+            ->groupBy('a.year');
+
+        $result = $qb->getQuery()->getResult();
+
+        /** @var Article $article */
+        foreach ($result as $article) {
+            array_push($years, $article->getYear());
+        }
+        return $years;
+    }
 }

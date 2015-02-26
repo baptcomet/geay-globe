@@ -49,4 +49,41 @@ class BlogController extends AbstractActionController
             'selectedTagNames' => $selectedTagNames,
         ));
     }
+
+    public function historiqueAction()
+    {
+        $currentYear = date("Y");
+        $year = $this->params()->fromRoute('year', $currentYear);
+
+        /** @var ArticleRepository $articleRepository */
+        $articleRepository = $this->getEntityManager()->getRepository('\Blog\Entity\Article');
+        $articles = $articleRepository->findBy(
+            array(
+                'status' => Article::STATUS_ONLINE,
+                'year' => $year,
+            ),
+            array('month' => 'asc')
+        );
+
+        $years = $articleRepository->getAllYears();
+
+        $tree = array();
+        /** @var Article $article */
+        foreach ($articles as $article) {
+            $month = $article->getMonth();
+            if (!in_array($month, $tree)) {
+                $tree[$month] = array();
+            }
+            //$tree[$month][] = $article->getTitle();
+            array_push($tree[$month], $article);
+        }
+        debug(sizeof($tree[1])); // TODO find why bug
+
+        $this->layout('layout/front');
+        return new ViewModel(array(
+            'tree' => $tree,
+            'years' => $years,
+            'currentYear' => $year,
+        ));
+    }
 }

@@ -7,25 +7,24 @@
 
 ?>
 
-<div class="container">
-    <ul class="grid effect-2" id="grid">
-        <?php foreach ($articles as $article) : ?>
-            <li>
-                <div class="image">
-                    <a href="<?php echo $this->url('article', array('action' => 'detail', 'id' => $article->getId())) ?>">
-                        <img src="<?php echo $this->basePath('/img/articles/'.$article->getPhoto()) ?>" alt="" />
-                        <h2 class="gallery"><?php echo $article->getCompleteTitle(true) ?></h2>
-                    </a>
-                </div>
-            </li>
-        <?php endforeach ?>
+<ul class="grid effect-2" id="grid">
+    <?php foreach ($articles as $article) : ?>
+        <li>
+            <div class="image">
+                <a href="<?php echo $this->url('article', array('action' => 'detail', 'id' => $article->getId())) ?>">
+                    <img src="<?php echo $this->basePath('/img/articles/'.$article->getPhoto1()) ?>"
+                         alt="" class="img-polaroid-border-sm"/>
+                    <h2 class="gallery"><?php echo $article->getCompleteTitle(true) ?></h2>
+                </a>
+            </div>
+        </li>
+    <?php endforeach ?>
     </ul>
-</div>
 
 
 
 <script>
-    whenTilesReady();
+    //whenTilesReady();
 
     function whenTilesReady() {
         var container = $('#container');
@@ -40,8 +39,8 @@
 
 <script>
     new AnimOnScroll( document.getElementById( 'grid' ), {
-        minDuration : 0.4,
-        maxDuration : 0.7,
+        minDuration : 0.2,
+        maxDuration : 0.9,
         viewportFactor : 0.2
     } );
     // Auto semantic for text hovering images

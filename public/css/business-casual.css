@@ -104,6 +104,26 @@ hr.short-hr {
     border: #999999 solid 1px;
 }
 
+.img-polaroid-border {
+    float: none;
+    margin: 0 auto 0;
+    border-top: white solid 10px !important;
+    border-left: white solid 10px !important;
+    border-right: white solid 10px !important;
+    border-bottom: white solid 30px !important;
+    box-shadow: 2px 2px 10px #888888;
+}
+
+.img-polaroid-border-sm {
+    float: none;
+    margin: 0 auto 0;
+    border-top: white solid 8px !important;
+    border-left: white solid 8px !important;
+    border-right: white solid 8px !important;
+    border-bottom: white solid 20px !important;
+    box-shadow: 2px 2px 5px #888888;
+}
+
 .img-left {
     float: none;
     margin: 0 auto 0;

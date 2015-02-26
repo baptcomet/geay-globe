@@ -49,50 +49,6 @@ class ArticleForm extends Form
         $subtitle->setLabelAttributes(array('class' => 'control-label'));
         $this->add($subtitle);
 
-        // Texte
-        $text = new Textarea('text');
-        $text->setAttributes(
-            array(
-                'id' => 'text',
-                'class' => 'form-control',
-                'rows' => 5,
-                'required' => true,
-            )
-        );
-        $text->setLabel('Texte');
-        $text->setLabelAttributes(array('class' => 'control-label'));
-        $this->add($text);
-
-        // Photo
-        $photo = new File('photofile');
-        $photo->setAttributes(
-            array(
-                'id' => 'photofile',
-            )
-        );
-        $photo->setLabel('Photo');
-        $photo->setLabelAttributes(array('class' => 'control-label'));
-        $this->add($photo);
-
-        // Photo Position
-        $photoPosition = new Select('photoPosition');
-        $photoPosition->setAttributes(
-            array(
-                'id' => 'photoPosition',
-                'class' => 'form-control',
-            )
-        );
-        $photoPosition->setValueOptions(
-            array(
-                'left' => 'Gauche',
-                'right' => 'Droite',
-                'center' => 'Centrée',
-            )
-        );
-        $photoPosition->setLabel('Position Photo');
-        $photoPosition->setLabelAttributes(array('class' => 'control-label'));
-        $this->add($photoPosition);
-
         // Catégorie
         $categorie = new Select('category');
         $categorie->setAttributes(
@@ -117,6 +73,163 @@ class ArticleForm extends Form
         $tags->setLabel('#Tags');
         $tags->setLabelAttributes(array('class' => 'control-label'));
         $this->add($tags);
+
+        // Texte 1
+        $text = new Textarea('text1');
+        $text->setAttributes(
+            array(
+                'id' => 'text1',
+                'class' => 'form-control',
+                'rows' => 5,
+                'required' => true,
+            )
+        );
+        $text->setLabel('Texte 1');
+        $text->setLabelAttributes(array('class' => 'control-label'));
+        $this->add($text);
+
+        // Texte 2
+        $text = new Textarea('text2');
+        $text->setAttributes(
+            array(
+                'id' => 'text2',
+                'class' => 'form-control',
+                'rows' => 5,
+            )
+        );
+        $text->setLabel('Texte 2');
+        $text->setLabelAttributes(array('class' => 'control-label'));
+        $this->add($text);
+
+        // Texte 3
+        $text = new Textarea('text3');
+        $text->setAttributes(
+            array(
+                'id' => 'text3',
+                'class' => 'form-control',
+                'rows' => 5,
+            )
+        );
+        $text->setLabel('Texte 3');
+        $text->setLabelAttributes(array('class' => 'control-label'));
+        $this->add($text);
+
+        // Text Position 1
+        $photoPosition = new Select('textPosition1');
+        $photoPosition->setAttributes(
+            array(
+                'id' => 'textPosition1',
+                'class' => 'form-control',
+            )
+        );
+        $photoPosition->setValueOptions(
+            array(
+                'left' => 'Gauche',
+                'right' => 'Droite',
+                'center' => 'Centrée',
+            )
+        );
+        $photoPosition->setLabel('Position Texte 1');
+        $photoPosition->setLabelAttributes(array('class' => 'control-label'));
+        $this->add($photoPosition);
+
+        // Text Position 2
+        $photoPosition = new Select('textPosition2');
+        $photoPosition->setAttributes(
+            array(
+                'id' => 'textPosition2',
+                'class' => 'form-control',
+            )
+        );
+        $photoPosition->setValueOptions(
+            array(
+                'left' => 'Gauche',
+                'right' => 'Droite',
+                'center' => 'Centrée',
+            )
+        );
+        $photoPosition->setLabel('Position Texte 2');
+        $photoPosition->setLabelAttributes(array('class' => 'control-label'));
+        $this->add($photoPosition);
+
+        // Text Position 3
+        $photoPosition = new Select('textPosition3');
+        $photoPosition->setAttributes(
+            array(
+                'id' => 'textPosition3',
+                'class' => 'form-control',
+            )
+        );
+        $photoPosition->setValueOptions(
+            array(
+                'left' => 'Gauche',
+                'right' => 'Droite',
+                'center' => 'Centrée',
+            )
+        );
+        $photoPosition->setLabel('Position Texte 3');
+        $photoPosition->setLabelAttributes(array('class' => 'control-label'));
+        $this->add($photoPosition);
+
+        // Photo 1
+        $photo = new File('photofile1');
+        $photo->setAttributes(
+            array(
+                'id' => 'photofile1',
+            )
+        );
+        $photo->setLabel('Photo 1');
+        $photo->setLabelAttributes(array('class' => 'control-label'));
+        $this->add($photo);
+
+        // Photo 2
+        $photo = new File('photofile2');
+        $photo->setAttributes(
+            array(
+                'id' => 'photofile2',
+            )
+        );
+        $photo->setLabel('Photo 2');
+        $photo->setLabelAttributes(array('class' => 'control-label'));
+        $this->add($photo);
+
+        // Photo Position 1
+        $photoPosition = new Select('photoPosition1');
+        $photoPosition->setAttributes(
+            array(
+                'id' => 'photoPosition1',
+                'class' => 'form-control',
+            )
+        );
+        $photoPosition->setValueOptions(
+            array(
+                'left' => 'Gauche',
+                'right' => 'Droite',
+                'center' => 'Centrée',
+            )
+        );
+        $photoPosition->setLabel('Position Photo 1');
+        $photoPosition->setLabelAttributes(array('class' => 'control-label'));
+        $this->add($photoPosition);
+
+        // Photo Position 2
+        $photoPosition = new Select('photoPosition2');
+        $photoPosition->setAttributes(
+            array(
+                'id' => 'photoPosition2',
+                'class' => 'form-control',
+            )
+        );
+        $photoPosition->setValueOptions(
+            array(
+                'left' => 'Gauche',
+                'right' => 'Droite',
+                'center' => 'Centrée',
+            )
+        );
+        $photoPosition->setLabel('Position Photo 2');
+        $photoPosition->setLabelAttributes(array('class' => 'control-label'));
+        $this->add($photoPosition);
 
         // Submit
         $submit = new Submit('submit');

@@ -13,9 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
 class Article extends AbstractEntity
 {
     const PHOTO_FOLDER = './public/img/articles/';
-    const PHOTO_POSITION_LEFT = 'left';
-    const PHOTO_POSITION_RIGHT = 'right';
-    const PHOTO_POSITION_CENTER = 'center';
+    const POSITION_LEFT = 'left';
+    const POSITION_RIGHT = 'right';
+    const POSITION_CENTER = 'center';
 
     public static $categories = array(
         '1' => 'Restaurant',
@@ -53,20 +53,44 @@ class Article extends AbstractEntity
     /** @ORM\Column(name="subtitle", type="string", nullable=true) */
     protected $subtitle;
 
-    /** @ORM\Column(name="text", type="text", nullable=false) */
-    protected $text;
+    /** @ORM\Column(name="text1", type="text", nullable=false) */
+    protected $text1;
+
+    /** @ORM\Column(name="text2", type="text", nullable=false) */
+    protected $text2;
+
+    /** @ORM\Column(name="text3", type="text", nullable=false) */
+    protected $text3;
+
+    /** @ORM\Column(name="text_position1", type="text", nullable=false) */
+    protected $textPosition1;
+
+    /** @ORM\Column(name="text_position2", type="text", nullable=false) */
+    protected $textPosition2;
+
+    /** @ORM\Column(name="text_position3", type="text", nullable=false) */
+    protected $textPosition3;
 
     /** @ORM\Column(name="category", type="integer", nullable=true) */
     protected $category;
 
-    /** @ORM\Column(name="thumbnail", type="string", nullable=true) */
-    protected $thumbnail;
+    /** @ORM\Column(name="thumbnail1", type="string", nullable=true) */
+    protected $thumbnail1;
 
-    /** @ORM\Column(name="photo", type="string", nullable=true) */
-    protected $photo;
+    /** @ORM\Column(name="photo1", type="string", nullable=true) */
+    protected $photo1;
 
-    /** @ORM\Column(name="photo_position", type="string", nullable=false) */
-    protected $photoPosition;
+    /** @ORM\Column(name="thumbnail2", type="string", nullable=true) */
+    protected $thumbnail2;
+
+    /** @ORM\Column(name="photo2", type="string", nullable=true) */
+    protected $photo2;
+
+    /** @ORM\Column(name="photo_position1", type="string", nullable=false) */
+    protected $photoPosition1;
+
+    /** @ORM\Column(name="photo_position2", type="string", nullable=false) */
+    protected $photoPosition2;
 
     /** @ORM\Column(name="date", type="datetime", nullable=false) */
     protected $date;
@@ -84,7 +108,11 @@ class Article extends AbstractEntity
     public function __construct()
     {
         $this->setDate(new \DateTime());
-        $this->photoPosition = self::PHOTO_POSITION_LEFT;
+        $this->photoPosition1 = self::POSITION_LEFT;
+        $this->photoPosition2 = self::POSITION_LEFT;
+        $this->textPosition1 = self::POSITION_LEFT;
+        $this->textPosition2 = self::POSITION_LEFT;
+        $this->textPosition3 = self::POSITION_LEFT;
         $this->tags = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
@@ -302,36 +330,72 @@ class Article extends AbstractEntity
     /**
      * @return string
      */
-    public function getPhoto()
+    public function getPhoto1()
     {
-        return $this->photo;
+        return $this->photo1;
     }
 
     /**
      * @param string $photo
      * @return Article $this
      */
-    public function setPhoto($photo)
+    public function setPhoto1($photo)
     {
-        $this->photo = $photo;
+        $this->photo1 = $photo;
         return $this;
     }
 
     /**
      * @return string
      */
-    public function getPhotoPosition()
+    public function getPhoto2()
     {
-        return $this->photoPosition;
+        return $this->photo2;
+    }
+
+    /**
+     * @param string $photo
+     * @return Article $this
+     */
+    public function setPhoto2($photo)
+    {
+        $this->photo2 = $photo;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhotoPosition1()
+    {
+        return $this->photoPosition1;
     }
 
     /**
      * @param string $photoPosition
      * @return Article $this
      */
-    public function setPhotoPosition($photoPosition)
+    public function setPhotoPosition1($photoPosition)
     {
-        $this->photoPosition = $photoPosition;
+        $this->photoPosition1 = $photoPosition;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhotoPosition2()
+    {
+        return $this->photoPosition2;
+    }
+
+    /**
+     * @param string $photoPosition
+     * @return Article $this
+     */
+    public function setPhotoPosition2($photoPosition)
+    {
+        $this->photoPosition2 = $photoPosition;
         return $this;
     }
 
@@ -369,36 +433,90 @@ class Article extends AbstractEntity
     /**
      * @return mixed
      */
-    public function getText()
+    public function getText1()
     {
-        return $this->text;
+        return $this->text1;
     }
 
     /**
      * @param mixed $text
      * @return Article $this
      */
-    public function setText($text)
+    public function setText1($text)
     {
-        $this->text = $text;
+        $this->text1 = $text;
         return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getThumbnail()
+    public function getText2()
     {
-        return $this->thumbnail;
+        return $this->text2;
+    }
+
+    /**
+     * @param mixed $text
+     * @return Article $this
+     */
+    public function setText2($text)
+    {
+        $this->text2 = $text;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getText3()
+    {
+        return $this->text3;
+    }
+
+    /**
+     * @param mixed $text
+     * @return Article $this
+     */
+    public function setText3($text)
+    {
+        $this->text3 = $text;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getThumbnail1()
+    {
+        return $this->thumbnail1;
     }
 
     /**
      * @param mixed $thumbnail
      * @return Article $this
      */
-    public function setThumbnail($thumbnail)
+    public function setThumbnail1($thumbnail)
     {
-        $this->thumbnail = $thumbnail;
+        $this->thumbnail1 = $thumbnail;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getThumbnail2()
+    {
+        return $this->thumbnail2;
+    }
+
+    /**
+     * @param mixed $thumbnail
+     * @return Article $this
+     */
+    public function setThumbnail2($thumbnail)
+    {
+        $this->thumbnail2 = $thumbnail;
         return $this;
     }
 
@@ -418,5 +536,53 @@ class Article extends AbstractEntity
     {
         $this->writer = $writer;
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTextPosition1()
+    {
+        return $this->textPosition1;
+    }
+
+    /**
+     * @param mixed $textPosition1
+     */
+    public function setTextPosition1($textPosition1)
+    {
+        $this->textPosition1 = $textPosition1;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTextPosition2()
+    {
+        return $this->textPosition2;
+    }
+
+    /**
+     * @param mixed $textPosition2
+     */
+    public function setTextPosition2($textPosition2)
+    {
+        $this->textPosition2 = $textPosition2;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTextPosition3()
+    {
+        return $this->textPosition3;
+    }
+
+    /**
+     * @param mixed $textPosition3
+     */
+    public function setTextPosition3($textPosition3)
+    {
+        $this->textPosition3 = $textPosition3;
     }
 }
