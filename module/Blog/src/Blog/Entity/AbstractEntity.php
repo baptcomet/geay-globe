@@ -16,7 +16,7 @@ abstract class AbstractEntity
     const STATUS_ONLINE = 1;
     const STATUS_ARCHIVED = 2;
 
-    /** @ORM\Column(name="status", type="integer", nullable=false, options={"default" = 1, "comment" = "0 = Inactif\n1 = Publié\n2 = Archivé"}) */
+    /** @ORM\Column(name="status", type="integer", nullable=false, options={"default" = 1, "comment" = "0 = Inactif - 1 = Publié - 2 = Archivé"}) */
     protected $status = self::STATUS_ONLINE;
 
     /** @deprecated */
