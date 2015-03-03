@@ -57,7 +57,29 @@ class ArticleController extends AbstractActionController
             $form->setData($data);
 
             if ($form->isValid()) {
-                // Traite file si on en a un
+                // Traite les Tags
+                if ($data['tagsString'] != '') {
+                    $tags = explode(' ', $data['tagsString']);
+                    $tagsObjects = new ArrayCollection();
+                    foreach ($tags as $tag) {
+                        /** @var Tag $existingTag */
+                        $existingTag = $entityManager->getRepository('BLog\Entity\Tag')
+                            ->findOneBy(array('title' => $tag));
+                        if (!is_null($existingTag)) {
+                            $tagsObjects->add($existingTag);
+                        } else {
+                            $tagObject = new Tag();
+                            $tagObject->setTitle($tag);
+                            $tagsObjects->add($tagObject);
+                        }
+                    }
+                    $article->setTags($tagsObjects);
+                }
+                $article->setWriter($this->identity());
+                $entityManager->persist($article);
+                $entityManager->flush();
+
+                // Traite file si on en a un TODO fix bug
                 if ($data['photofile1']['name'] != '') {
                     $extension = pathinfo($data['photofile1']['name'], PATHINFO_EXTENSION);
                     $oldfilename = Article::PHOTO_FOLDER . 'newphoto1.' . $extension;
@@ -81,25 +103,6 @@ class ArticleController extends AbstractActionController
                     $article->setPhoto2($article->getId() . '_2.' . $extension);
                     $article->setThumbnail2('thumbnail' . $article->getId() . '_2.' . $extension);
                 }
-                // Traite les Tags
-                if ($data['tagsString'] != '') {
-                    $tags = explode(' ', $data['tagsString']);
-                    $tagsObjects = new ArrayCollection();
-                    foreach ($tags as $tag) {
-                        /** @var Tag $existingTag */
-                        $existingTag = $entityManager->getRepository('BLog\Entity\Tag')
-                            ->findOneBy(array('title' => $tag));
-                        if (!is_null($existingTag)) {
-                            $tagsObjects->add($existingTag);
-                        } else {
-                            $tagObject = new Tag();
-                            $tagObject->setTitle($tag);
-                            $tagsObjects->add($tagObject);
-                        }
-                    }
-                    $article->setTags($tagsObjects);
-                }
-                $article->setWriter($this->identity());
                 $entityManager->flush();
 
                 $this->flashMessenger()->addSuccessMessage(
