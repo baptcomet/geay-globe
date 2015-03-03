@@ -8,7 +8,7 @@ return array(
                     'host' => '178.62.66.77',
                     'port' => '3306',
                     'user' => 'root',
-                    'password' => 'F@fUK.He',
+                    'password' => '5cOsbYTTtJ',
                     'dbname' => 'blog',
                     'charset'  => 'utf8',
                 )
