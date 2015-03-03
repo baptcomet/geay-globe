@@ -57,21 +57,29 @@ class ArticleController extends AbstractActionController
             $form->setData($data);
 
             if ($form->isValid()) {
-                $article->setWriter($this->identity());
-                $entityManager->persist($article);
-                $entityManager->flush();
-
-                // Traite file si on en a un todo fix bug
-                if ($data['photofile']['name'] != '') {
-                    $extension = pathinfo($data['photofile']['name'], PATHINFO_EXTENSION);
-                    $oldfilename = Article::PHOTO_FOLDER . 'newphoto.' . $extension;
-                    $newfilename = Article::PHOTO_FOLDER . $article->getId() . '.' . $extension;
+                // Traite file si on en a un
+                if ($data['photofile1']['name'] != '') {
+                    $extension = pathinfo($data['photofile1']['name'], PATHINFO_EXTENSION);
+                    $oldfilename = Article::PHOTO_FOLDER . 'newphoto1.' . $extension;
+                    $newfilename = Article::PHOTO_FOLDER . $article->getId() . '_1.' . $extension;
 
                     rename($oldfilename, $newfilename);
-                    create_square_image($newfilename, Article::PHOTO_FOLDER . 'thumbnail' .$article->getId() . '.' . $extension, 50);
+                    create_square_image($newfilename, Article::PHOTO_FOLDER . 'thumbnail' .$article->getId() . '_1.' . $extension, 50);
 
-                    $article->setPhoto($article->getId() . '.' . $extension);
-                    $article->setThumbnail('thumbnail' . $article->getId() . '.' . $extension);
+                    $article->setPhoto1($article->getId() . '_1.' . $extension);
+                    $article->setThumbnail1('thumbnail' . $article->getId() . '_1.' . $extension);
+                }
+                // Traite file si on en a un
+                if ($data['photofile2']['name'] != '') {
+                    $extension = pathinfo($data['photofile2']['name'], PATHINFO_EXTENSION);
+                    $oldfilename = Article::PHOTO_FOLDER . 'newphoto2.' . $extension;
+                    $newfilename = Article::PHOTO_FOLDER . $article->getId() . '_2.' . $extension;
+
+                    rename($oldfilename, $newfilename);
+                    create_square_image($newfilename, Article::PHOTO_FOLDER . 'thumbnail' .$article->getId() . '_2.' . $extension, 50);
+
+                    $article->setPhoto2($article->getId() . '_2.' . $extension);
+                    $article->setThumbnail2('thumbnail' . $article->getId() . '_2.' . $extension);
                 }
                 // Traite les Tags
                 if ($data['tagsString'] != '') {
@@ -91,6 +99,7 @@ class ArticleController extends AbstractActionController
                     }
                     $article->setTags($tagsObjects);
                 }
+                $article->setWriter($this->identity());
                 $entityManager->flush();
 
                 $this->flashMessenger()->addSuccessMessage(
