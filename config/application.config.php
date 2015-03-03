@@ -6,6 +6,7 @@ if (!isset($_SERVER['SERVER_ADDR'])) {
 switch ($_SERVER['SERVER_ADDR']) {
     case '127.0.0.1':
     case '::1':
+    case '178.62.66.77':
         define('APPLICATION_ENV', 'development');
         define('APPLICATION_CACHE', false);
         break;
