@@ -40,24 +40,24 @@ a.silent:hover {
     color: #6495ed;
 }
 
-h2.gallery {
+span.gallery {
     position: absolute;
-    top: 50px;
-    left: 0;
+    bottom: 5px;
+    left: 15px;
     width: 100%;
     font-weight: 300;
-    font-size: 18px;
+    font-size: 24px;
 }
 
-h2.gallery span {
-    color: white;
-    font: bold 24px/45px Helvetica, Sans-Serif;
+span.gallery span {
+    color: black;
+    font: 24px 'Yellowtail';
     letter-spacing: -1px;
-    background: rgb(0, 0, 0); /* fallback color */
-    background: rgba(0, 0, 0, 0.7);
-    padding: 10px;
+    /*background: rgb(0, 0, 0); *//* fallback color */
+    /*background: rgba(0, 0, 0, 0.7);*/
+    /*padding: 10px;*/
 }
 
-h2.gallery span.spacer {
+span.gallery span.spacer {
     padding:0 5px;
 }

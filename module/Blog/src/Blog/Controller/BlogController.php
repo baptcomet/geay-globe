@@ -92,6 +92,5 @@ class BlogController extends AbstractActionController
  * TODO :
  *
  *  1. Entité photo + ManyToOne avec article
- *  3. Liste articles : Titre plus petit et sur le blanc du Polaroid
  *  4. Debug EXIT (logout)
  */

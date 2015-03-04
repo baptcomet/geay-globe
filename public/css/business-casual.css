@@ -107,7 +107,7 @@ hr.short-hr {
 .img-polaroid-border {
     float: none;
     margin: 0 auto 0;
-    border-top: white solid 10px !important;
+    border-top: white solid 12px !important;
     border-left: white solid 10px !important;
     border-right: white solid 10px !important;
     border-bottom: white solid 30px !important;
@@ -117,10 +117,10 @@ hr.short-hr {
 .img-polaroid-border-sm {
     float: none;
     margin: 0 auto 0;
-    border-top: white solid 8px !important;
+    border-top: white solid 12px !important;
     border-left: white solid 8px !important;
     border-right: white solid 8px !important;
-    border-bottom: white solid 20px !important;
+    border-bottom: white solid 40px !important;
     box-shadow: 2px 2px 5px #888888;
 }
 
