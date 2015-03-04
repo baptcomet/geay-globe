@@ -35,7 +35,7 @@ class PictureFilter extends InputFilter
 
         // LEGEND
         $legend = new Input('legend');
-        $legend->setRequired(true)
+        $legend->setRequired(false)
             ->getFilterChain()
                 ->attach(new StringTrim())
                 ->attach(new StripTags());

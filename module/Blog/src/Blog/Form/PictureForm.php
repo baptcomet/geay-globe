@@ -73,7 +73,7 @@ class PictureForm extends Form
                 'id' => 'text',
                 'class' => 'form-control',
                 'rows' => 5,
-                'required' => true,
+                'required' => true
             )
         );
         $text->setLabel('Texte');
