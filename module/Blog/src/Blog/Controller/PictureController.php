@@ -22,7 +22,7 @@ class PictureController extends AbstractActionController
         $imagePath = Article::BASE_UPLOAD_PATH . $id . '/' . Picture::FOLDER . '/' . $name;
         if (is_file($imagePath)) {
             $imageType = pathinfo($imagePath, PATHINFO_EXTENSION);
-            if (in_array($imageType, Picture::getStaticAuthorisedExtensionList())) {
+            if (in_array(strtolower($imageType), Picture::getStaticAuthorisedExtensionList())) {
                 $imageData = file_get_contents($imagePath);
                 /** @var \Zend\Http\Response $response */
                 $response = $this->getResponse();
