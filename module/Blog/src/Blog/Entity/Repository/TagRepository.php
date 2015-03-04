@@ -19,6 +19,7 @@ class TagRepository extends EntityRepository
             ->leftJoin('t.articles', 'a')
             ->where('t.status  = ?1')
             ->andWhere('a.status = ?2')
+            ->orderBy('t.title', 'asc')
             ->setParameter(1, Tag::STATUS_ONLINE)
             ->setParameter(2, Article::STATUS_ONLINE);
 

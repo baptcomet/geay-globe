@@ -12,7 +12,7 @@ class BlogController extends AbstractActionController
     public function indexAction()
     {
         $articles = $this->getEntityManager()->getRepository('\Blog\Entity\Article')
-            ->findBy(array('status' => Article::STATUS_ONLINE));
+            ->findBy(array('status' => Article::STATUS_ONLINE), array('date' => 'desc'));
 
         $this->layout('layout/front');
         return new ViewModel(array(
@@ -62,7 +62,7 @@ class BlogController extends AbstractActionController
                 'status' => Article::STATUS_ONLINE,
                 'year' => $year,
             ),
-            array('month' => 'asc')
+            array('date' => 'desc')
         );
 
         $years = $articleRepository->getAllYears();
@@ -77,7 +77,7 @@ class BlogController extends AbstractActionController
             //$tree[$month][] = $article->getTitle();
             array_push($tree[$month], $article);
         }
-        debug(sizeof($tree[1])); // TODO find why bug
+//        debug(sizeof($tree[1])); // TODO find why bug
 
         $this->layout('layout/front');
         return new ViewModel(array(
@@ -87,3 +87,11 @@ class BlogController extends AbstractActionController
         ));
     }
 }
+
+/*
+ * TODO :
+ *
+ *  1. Entité photo + ManyToOne avec article
+ *  3. Liste articles : Titre plus petit et sur le blanc du Polaroid
+ *  4. Debug EXIT (logout)
+ */

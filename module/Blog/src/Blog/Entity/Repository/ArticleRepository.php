@@ -18,6 +18,7 @@ class ArticleRepository extends EntityRepository
             ->leftJoin('a.tags', 't')
             ->where('t.title IN(?1)')
             ->andWhere('a.status = ?2')
+            ->orderBy('a.date', 'DESC')
             ->setParameter(1, $tags)
             ->setParameter(2, Article::STATUS_ONLINE);
 
