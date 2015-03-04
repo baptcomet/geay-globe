@@ -3,11 +3,14 @@
 namespace Blog\Controller;
 
 use Blog\Entity\Article;
+use Blog\Entity\Picture;
 use Blog\Entity\Tag;
 use Blog\Form\ArticleForm;
 use Blog\Form\Filter\ArticleFilter;
+use Blog\Form\PictureForm;
 use Doctrine\Common\Collections\ArrayCollection;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
+use Zend\Filter\File\RenameUpload;
 use Zend\Http\Request;
 use Zend\View\Model\ViewModel;
 
@@ -79,36 +82,8 @@ class ArticleController extends AbstractActionController
                 $entityManager->persist($article);
                 $entityManager->flush();
 
-                // Traite file si on en a un TODO fix bug
-                if ($data['photofile1']['name'] != '') {
-                    $extension = pathinfo($data['photofile1']['name'], PATHINFO_EXTENSION);
-                    $oldfilename = Article::PHOTO_FOLDER . 'newphoto1.' . $extension;
-                    $newfilename = Article::PHOTO_FOLDER . $article->getId() . '_1.' . $extension;
-
-                    rename($oldfilename, $newfilename);
-                    create_square_image($newfilename, Article::PHOTO_FOLDER . 'thumbnail' .$article->getId() . '_1.' . $extension, 50);
-
-                    $article->setPhoto1($article->getId() . '_1.' . $extension);
-                    $article->setThumbnail1('thumbnail' . $article->getId() . '_1.' . $extension);
-                }
-                // Traite file si on en a un
-                if ($data['photofile2']['name'] != '') {
-                    $extension = pathinfo($data['photofile2']['name'], PATHINFO_EXTENSION);
-                    $oldfilename = Article::PHOTO_FOLDER . 'newphoto2.' . $extension;
-                    $newfilename = Article::PHOTO_FOLDER . $article->getId() . '_2.' . $extension;
-
-                    rename($oldfilename, $newfilename);
-                    create_square_image($newfilename, Article::PHOTO_FOLDER . 'thumbnail' .$article->getId() . '_2.' . $extension, 50);
-
-                    $article->setPhoto2($article->getId() . '_2.' . $extension);
-                    $article->setThumbnail2('thumbnail' . $article->getId() . '_2.' . $extension);
-                }
-                $entityManager->flush();
-
-                $this->flashMessenger()->addSuccessMessage(
-                    "L'article a bien été créé"
-                );
-                $this->redirect()->toRoute('manage');
+                $this->flashMessenger()->addSuccessMessage("L'article a bien été créé. Au tour des photos.");
+                $this->redirect()->toRoute('article', array('action' => 'edit-pictures', 'id' => $article->getId()));
             } else {
                 $this->flashMessenger()->addErrorMessage(
                     "Erreur : Le formulaire n'est pas valide"
@@ -164,30 +139,6 @@ class ArticleController extends AbstractActionController
             $form->setData($data);
 
             if ($form->isValid()) {
-                // Traite file si on en a un
-                if ($data['photofile1']['name'] != '') {
-                    $extension = pathinfo($data['photofile1']['name'], PATHINFO_EXTENSION);
-                    $oldfilename = Article::PHOTO_FOLDER . 'newphoto1.' . $extension;
-                    $newfilename = Article::PHOTO_FOLDER . $article->getId() . '_1.' . $extension;
-
-                    rename($oldfilename, $newfilename);
-                    create_square_image($newfilename, Article::PHOTO_FOLDER . 'thumbnail' .$article->getId() . '_1.' . $extension, 50);
-
-                    $article->setPhoto1($article->getId() . '_1.' . $extension);
-                    $article->setThumbnail1('thumbnail' . $article->getId() . '_1.' . $extension);
-                }
-                // Traite file si on en a un
-                if ($data['photofile2']['name'] != '') {
-                    $extension = pathinfo($data['photofile2']['name'], PATHINFO_EXTENSION);
-                    $oldfilename = Article::PHOTO_FOLDER . 'newphoto2.' . $extension;
-                    $newfilename = Article::PHOTO_FOLDER . $article->getId() . '_2.' . $extension;
-
-                    rename($oldfilename, $newfilename);
-                    create_square_image($newfilename, Article::PHOTO_FOLDER . 'thumbnail' .$article->getId() . '_2.' . $extension, 50);
-
-                    $article->setPhoto2($article->getId() . '_2.' . $extension);
-                    $article->setThumbnail2('thumbnail' . $article->getId() . '_2.' . $extension);
-                }
                 // Traite les Tags
                 if ($data['tagsString'] != '') {
                     $tags = explode(' ', $data['tagsString']);
@@ -214,7 +165,6 @@ class ArticleController extends AbstractActionController
                 );
                 $this->redirect()->toRoute('manage');
             } else {
-                var_dump($form->getMessages());
                 $this->flashMessenger()->addErrorMessage(
                     "Erreur : Le formulaire n'est pas valide"
                 );
@@ -224,7 +174,104 @@ class ArticleController extends AbstractActionController
         $this->layout('layout/front');
         return new ViewModel(array(
             'form' => $form,
+            'article' => $article,
             'autocompleteTagSource' => $autocompleteTagSource,
         ));
+    }
+
+    public function editPicturesAction()
+    {
+        $entityManager = $this->getEntityManager();
+
+        $id = (int) $this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('manage');
+        }
+
+        /** @var Article $article */
+        $article = $entityManager->getRepository('Blog\Entity\Article')->find($id);
+        if (!$article) {
+            return $this->redirect()->toRoute('manage');
+        }
+
+        $picture = new Picture();
+        // Création du formulaire
+        $form = new PictureForm($entityManager);
+        $form->bind($picture);
+
+        /** @var Request $request */
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            /** @var \Zend\Stdlib\Parameters $data */
+            $data = $request->getPost();
+            $data->set('filename', $request->getFiles()->get('filename'));
+            $form->setData($data);
+
+            if ($form->isValid()) {
+                // TODO : resize image (http://php.net/manual/fr/function.imagecopyresized.php)
+                /** Déplacement de la photo */
+                $directory = Article::BASE_UPLOAD_PATH . $article->getId() . '/' . Picture::FOLDER . '/';
+                // Créé le répertoire s'il n'existe pas
+                if (!is_dir($directory)) {
+                    mkdir($directory, 0775, true);
+                }
+
+                $renameUpload = new RenameUpload(
+                    array(
+                        'target' => $directory . $picture->getFilename(),
+                        'randomize' => true,
+                    )
+                );
+                $newPath = $renameUpload->filter($picture->getTempFilename());
+                $newPathExplode = explode(DIRECTORY_SEPARATOR, $newPath);
+                $picture->setFilename($newPathExplode[sizeof($newPathExplode) - 1]);
+                $picture->setArticle($article);
+
+                $thumbnail = $directory . 'thumbnail_' . $picture->getFilename();
+                create_square_image($newPath, $thumbnail, 50);
+
+                $entityManager->persist($picture);
+                $entityManager->flush();
+
+                $this->flashMessenger()->addSuccessMessage('La photo a bien été ajoutée à l\'article');
+                return $this->redirect()->toRoute('article', array('action' => 'edit-pictures', 'id' => $id));
+            } else {
+                var_dump($form->getMessages());
+                $this->flashMessenger()->addSuccessMessage('Une erreur est survenue');
+            }
+        }
+
+        $this->layout('layout/front');
+        return new ViewModel(array(
+            'form' => $form,
+            'article' => $article,
+        ));
+    }
+
+    public function deletePictureAction()
+    {
+        $idArticle = (int)$this->params()->fromRoute('id', 0);
+        $idPicture = (int)$this->params()->fromRoute('picture', 0);
+
+        if (!$idPicture || !$idArticle) {
+            return $this->redirect()->toRoute('manage');
+        }
+
+        $entityManager = $this->getEntityManager();
+        /** @var Picture $picture */
+        $picture = $entityManager->getRepository('Blog\Entity\Picture')->find($idPicture);
+        if (is_null($picture)) {
+            return $this->redirect()->toRoute('project');
+        }
+
+        // Suppression du fichier
+        $file = Article::BASE_UPLOAD_PATH . $idArticle . '/' . Picture::FOLDER . '/' . $picture->getFilename();
+        unlink($file);
+        // Suppression de l'illustration en DB
+        $entityManager->remove($picture);
+        $entityManager->flush();
+
+        $this->flashMessenger()->addSuccessMessage('La photo a bien été retirée de l\'article');
+        return $this->redirect()->toRoute('article', array('action' => 'edit-pictures', 'id' => $idArticle));
     }
 }

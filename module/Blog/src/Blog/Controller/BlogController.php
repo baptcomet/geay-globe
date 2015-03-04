@@ -92,5 +92,8 @@ class BlogController extends AbstractActionController
  * TODO :
  *
  *  1. Entité photo + ManyToOne avec article
+ *  2. Une table 1 line "basics" et 1 form pour changer l'image background/une couleur, et le titre/sous-titre du blog
+ *  3. Un slug à chaque article pour l'URL
  *  4. Debug EXIT (logout)
+ *  5. Des security controls (via ACL)
  */

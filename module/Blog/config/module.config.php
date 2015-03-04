@@ -7,6 +7,7 @@ return array(
             'Article' => 'Blog\Controller\ArticleController',
             'Writer' => 'Blog\Controller\WriterController',
             'Manage' => 'Blog\Controller\ManageController',
+            'Picture' => 'Blog\Controller\PictureController',
         ),
     ),
     'router' => array(
@@ -42,16 +43,30 @@ return array(
             'article' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/article[/:action][/:id]',
+                    'route' => '/article[/:action][/:id][/:picture]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[0-9]*',
+                        'picture' => '[0-9]*',
                     ),
                     'defaults' => array(
                         'controller' => 'Article',
                         'action' => 'index',
                     ),
                 ),
+            ),
+            'picture' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/picture/[:action]/[:id]/[:name]',
+                    'contraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Picture',
+                    )
+                )
             ),
             'writer' => array(
                 'type' => 'segment',

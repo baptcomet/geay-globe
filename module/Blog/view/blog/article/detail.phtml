@@ -2,6 +2,7 @@
 
 /**
  * @var Blog\Entity\Article $article
+ * @var Blog\Entity\Picture $picture
  * @var Blog\Entity\Tag $tag
  */
 
@@ -51,44 +52,29 @@ $this->headTitle($title);
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <p class="text-<?php echo $article->getTextPosition1() ?>">
-                    <?php echo $article->getText1() ?>
+                <p class="text-<?php echo $article->getTextPosition() ?>">
+                    <?php echo $article->getText() ?>
                 </p>
             </div>
         </div>
         <br/>
-        <div class="row">
-            <div class="col-lg-12">
-                <img class="img-responsive img-polaroid-border img-<?php echo $article->getPhotoPosition1() ?>"
-                     alt="<?php echo $article->getCompleteTitle() ?>"
-                     style="max-width: 100%"
-                     src="<?php echo $this->basePath('/img/articles/'.$article->getPhoto1()) ?>">
-                <hr class="visible-xs">
-
-                <?php if ($article->getText2()) : ?>
-                    <p class="text-<?php echo $article->getTextPosition2() ?>">
-                        <br/><?php echo $article->getText2() ?>
-                    </p>
-                <?php endif ?>
-            </div>
-        </div>
-        <br/>
-        <div class="row">
-            <div class="col-lg-12">
-                <?php if ($article->getPhoto2()) : ?>
-                    <img class="img-responsive img-polaroid-border img-<?php echo $article->getPhotoPosition2() ?>"
-                         alt="<?php echo $article->getCompleteTitle() ?>"
+        <?php foreach ($article->getPictures() as $picture) : ?>
+            <div class="row">
+                <div class="col-lg-12">
+                    <img class="img-responsive img-polaroid-border img-<?php echo $picture->getPosition() ?>"
+                         alt="<?php echo $picture->getLegend() ?>"
                          style="max-width: 100%"
-                         src="<?php echo $this->basePath('/img/articles/'.$article->getPhoto2()) ?>">
+                         src="<?php echo $this->url('picture', array('action' => 'images', 'id' => $article->getId(), 'name' => $picture->getFilename())) ?>">
                     <hr class="visible-xs">
-                <?php endif ?>
 
-                <?php if ($article->getText3()) : ?>
-                    <p class="text-<?php echo $article->getTextPosition3() ?>">
-                        <br/><?php echo $article->getText3() ?>
-                    </p>
-                <?php endif ?>
+                    <?php if ($picture->getText()) : ?>
+                        <p class="text-<?php echo $picture->getTextPosition() ?>">
+                            <br/><?php echo $picture->getText() ?>
+                        </p>
+                    <?php endif ?>
+                </div>
             </div>
-        </div>
+            <br/>
+        <?php endforeach ?>
     </div>
 </div>

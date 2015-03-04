@@ -2,6 +2,7 @@
 
 /**
  * @var Blog\Form\ArticleForm $form
+ * @var Blog\Entity\Article $article
  * @var string $autocompleteTagSource
  */
 
@@ -23,6 +24,13 @@ $form->prepare();
                     <li>
                         <a href="<?php echo $this->url('manage') ?>" class="btn btn-default">
                             <span class="glyphicon glyphicon-chevron-left"></span>Retour
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $this->url('article', array('action' => 'edit-pictures', 'id' => $article->getId())) ?>"
+                           class="btn btn-primary">
+                            <span class="glyphicon glyphicon-picture"></span>
+                            Modifier les Photos
                         </a>
                     </li>
                 </ul>
@@ -68,64 +76,12 @@ $form->prepare();
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="form-group">
-                            <?php echo $this->formRow($form->get('text1')) ?>
+                            <?php echo $this->formRow($form->get('text')) ?>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
-                            <?php echo $this->formRow($form->get('textPosition1')) ?>
-                        </div>
-                    </div>
-                </div>
-                <hr/>
-                <div class="row">
-                    <div class="col-lg-8">
-                        <div class="form-group">
-                            <?php echo $this->formRow($form->get('photofile1')) ?>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            <?php echo $this->formRow($form->get('photoPosition1')) ?>
-                        </div>
-                    </div>
-                </div>
-                <hr/>
-                <div class="row">
-                    <div class="col-lg-8">
-                        <div class="form-group">
-                            <?php echo $this->formRow($form->get('text2')) ?>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            <?php echo $this->formRow($form->get('textPosition2')) ?>
-                        </div>
-                    </div>
-                </div>
-                <hr/>
-                <div class="row">
-                    <div class="col-lg-8">
-                        <div class="form-group">
-                            <?php echo $this->formRow($form->get('photofile2')) ?>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            <?php echo $this->formRow($form->get('photoPosition2')) ?>
-                        </div>
-                    </div>
-                </div>
-                <hr/>
-                <div class="row">
-                    <div class="col-lg-8">
-                        <div class="form-group">
-                            <?php echo $this->formRow($form->get('text3')) ?>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            <?php echo $this->formRow($form->get('textPosition3')) ?>
+                            <?php echo $this->formRow($form->get('textPosition')) ?>
                         </div>
                     </div>
                 </div>

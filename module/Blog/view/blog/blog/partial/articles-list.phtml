@@ -9,11 +9,12 @@
 
 <ul class="grid effect-2" id="grid">
     <?php foreach ($articles as $article) : ?>
+        <?php $picture = $article->getMainPicture() ?>
         <li>
             <div class="image">
                 <a href="<?php echo $this->url('article', array('action' => 'detail', 'id' => $article->getId())) ?>">
-                    <img src="<?php echo $this->basePath('/img/articles/'.$article->getPhoto1()) ?>"
-                         alt="" class="img-polaroid-border-sm"/>
+                    <img src="<?php echo $this->url('picture', array('action' => 'images', 'id' => $article->getId(), 'name' => $picture->getFilename())) ?>"
+                         alt="<?php $picture->getLegend() ?>" class="img-polaroid-border-sm">
                     <span class="gallery"><?php echo $article->getTitle() ?></span>
                 </a>
             </div>
