@@ -46,9 +46,9 @@ class PictureForm extends Form
         );
         $photoPosition->setValueOptions(
             array(
+                'center' => 'Centrée',
                 'left' => 'Gauche',
                 'right' => 'Droite',
-                'center' => 'Centrée',
             )
         );
         $photoPosition->setLabel('Position Photo');
