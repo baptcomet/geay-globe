@@ -248,7 +248,6 @@ class ArticleController extends AbstractActionController
                 $this->flashMessenger()->addSuccessMessage('La photo a bien été ajoutée à l\'article');
                 return $this->redirect()->toRoute('article', array('action' => 'edit-pictures', 'id' => $id));
             } else {
-                var_dump($form->getMessages());
                 $this->flashMessenger()->addSuccessMessage('Une erreur est survenue');
             }
         }

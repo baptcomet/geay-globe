@@ -19,7 +19,7 @@ class PictureFilter extends InputFilter
     {
         // FILE
         $file = new Input('filename');
-        $file->setRequired(true)
+        $file->setRequired(false)
             ->getFilterChain();
         $file->getValidatorChain()
             ->attach(new Extension(Picture::getStaticAuthorisedExtensionList()))

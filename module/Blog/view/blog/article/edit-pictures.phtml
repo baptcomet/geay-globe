@@ -40,15 +40,6 @@ $form->prepare();
         <hr class="long-hr"/>
 
         <div class="row">
-            <div class="col-lg-12">
-                <div class="alert alert-info" role="alert">
-                    Un bloc photo n'est pas modifiable.
-                    Pour supprimer l'image, sa légende, sa position ou son texte, je la supprime et la recrée.
-                </div>
-            </div>
-        </div>
-        <div class="row">
-
             <div class="col-lg-5">
                 <?php if ($article->getPictures()->count() == 0) : ?>
                     <div class="alert alert-warning" role="alert">
@@ -61,15 +52,14 @@ $form->prepare();
                         <div class="panel-heading">
                             <ul class="list-inline pull-right">
                                 <li>
-                                    <a href="<?php
-                                    echo $this->url(
-                                        'article',
-                                        array(
-                                            'action' => 'delete-picture',
-                                            'id' => $article->getId(),
-                                            'picture' => $picture->getId()
-                                        )
-                                    )?>" title="Supprimer">
+                                    <a href="<?php echo $this->url('picture', array('action' => 'edit', 'id' => $picture->getId()))?>"
+                                       title="Modifier">
+                                        <span class="glyphicon glyphicon-pencil text-warning"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo $this->url('article', array('action' => 'delete-picture', 'id' => $article->getId(), 'picture' => $picture->getId()))?>"
+                                       title="Supprimer">
                                         <span class="glyphicon glyphicon-trash text-danger"></span>
                                     </a>
                                 </li>
@@ -112,10 +102,10 @@ $form->prepare();
                     </div>
                     <div class="panel-body">
                         <?php if ($form->hasError()) : ?>
-                            <p>
+                            <div class="alert alert-warning">
                                 <span class="glyphicon glyphicon-exclamation-sign"></span>
                                 Une erreur est survenue. Je pense à recharger le fichier.
-                            </p>
+                            </div>
                         <?php endif ?>
 
                         <div class="row">
@@ -207,13 +197,4 @@ $form->prepare();
             image.src = URL.createObjectURL(e.target.files[0]);
         });
     });
-
-    function handleFiles(e) {
-        var ctx = document.getElementById('canvas').getContext('2d');
-        var img = new Image;
-        img.src = URL.createObjectURL(e.target.files[0]);
-        img.onload = function() {
-            ctx.drawImage(img, 20,20);
-        }
-    }
 </script>

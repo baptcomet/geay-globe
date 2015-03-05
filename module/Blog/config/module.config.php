@@ -58,7 +58,7 @@ return array(
             'picture' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/picture/[:action]/[:id]/[:name]',
+                    'route' => '/picture[/:action][/:id][/:name]',
                     'contraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[a-zA-Z][a-zA-Z0-9_-]*',
