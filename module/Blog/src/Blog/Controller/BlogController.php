@@ -52,7 +52,7 @@ class BlogController extends AbstractActionController
 
     public function historiqueAction()
     {
-        $currentYear = date("Y");
+        $currentYear = date('Y');
         $year = $this->params()->fromRoute('year', $currentYear);
 
         /** @var ArticleRepository $articleRepository */
@@ -74,10 +74,8 @@ class BlogController extends AbstractActionController
             if (!in_array($month, $tree)) {
                 $tree[$month] = array();
             }
-            //$tree[$month][] = $article->getTitle();
             array_push($tree[$month], $article);
         }
-//        debug(sizeof($tree[1])); // TODO find why bug
 
         $this->layout('layout/front');
         return new ViewModel(array(
@@ -94,4 +92,8 @@ class BlogController extends AbstractActionController
  *  1. Debug EXIT (logout)
  *  2. Une table 1 line "basics" et 1 form pour changer l'image background/une couleur, et le titre/sous-titre du blog
  *  3. Un slug à chaque article pour l'URL
+ *  4. Ranger Historique par année et catégories somehow
+ *  5. Naviguer entre articles
+ *  6. Suggestions d'articles dans une box "like this"
+ *  7. Manage : 1 premier bloc pour gérer les catégories etc
  */

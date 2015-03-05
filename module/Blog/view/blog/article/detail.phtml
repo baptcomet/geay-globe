@@ -14,6 +14,16 @@ $this->headTitle($title);
 
 <?php echo $this->partial('partial/flashmessenger') ?>
 
+<script>
+    function onImageLoad(pictureId) {
+        var div = $('#picture-'+pictureId);
+        var imgWidth = div.find('img').width();
+        if (imgWidth) {
+            div.css('width', (20+imgWidth)+'px');
+        }
+    }
+</script>
+
 <div class="row">
     <div class="box">
         <div class="row">
@@ -62,10 +72,12 @@ $this->headTitle($title);
             <div class="row">
                 <div class="col-lg-12">
 
-                    <div class="image img-<?php echo $picture->getPosition() ?>" style="max-width: 100%">
+                    <div id="picture-<?php echo $picture->getId() ?>"
+                         class="image img-<?php echo $picture->getPosition() ?>" style="max-width: 100%">
                         <img class="img-polaroid-border img-responsive"
                              alt="<?php echo $picture->getLegend() ?>"
                              style="max-width: 100%"
+                             onload="onImageLoad(<?php echo $picture->getId() ?>);"
                              src="<?php echo $this->url('picture', array('action' => 'images', 'id' => $article->getId(), 'name' => $picture->getFilename())) ?>">
                         <div class="caption">
                             <span class="book"><?php echo $picture->getLegend() ?></span>
@@ -83,15 +95,3 @@ $this->headTitle($title);
         <?php endforeach ?>
     </div>
 </div>
-
-<script>
-    $(document).ready(function() {
-        $('img.img-polaroid-border').each(function() {
-            var div = $(this).parent();
-            var imgWidth = $(this).width();
-            if (imgWidth) {
-                div.css('width', (20+imgWidth)+'px');
-            }
-        });
-    });
-</script>
