@@ -98,6 +98,16 @@ return array(
                     ),
                 ),
             ),
+            'logout' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/logout',
+                    'defaults' => array(
+                        'controller' => 'Index',
+                        'action' => 'logout',
+                    ),
+                ),
+            ),
         ),
     ),
     'service_manager' => array(
