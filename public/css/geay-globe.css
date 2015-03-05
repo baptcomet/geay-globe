@@ -40,24 +40,13 @@ a.silent:hover {
     color: #6495ed;
 }
 
-span.gallery {
+span.book {
     position: absolute;
     bottom: 5px;
     left: 15px;
     width: 100%;
     font-weight: 300;
-    font-size: 24px;
-}
-
-span.gallery span {
     color: black;
     font: 24px 'Yellowtail';
     letter-spacing: -1px;
-    /*background: rgb(0, 0, 0); *//* fallback color */
-    /*background: rgba(0, 0, 0, 0.7);*/
-    /*padding: 10px;*/
-}
-
-span.gallery span.spacer {
-    padding:0 5px;
 }

@@ -15,7 +15,7 @@
                 <a href="<?php echo $this->url('article', array('action' => 'detail', 'id' => $article->getId())) ?>">
                     <img src="<?php echo $this->url('picture', array('action' => 'images', 'id' => $article->getId(), 'name' => $picture->getFilename())) ?>"
                          alt="<?php $picture->getLegend() ?>" class="img-polaroid-border-sm">
-                    <span class="gallery"><?php echo $article->getTitle() ?></span>
+                    <span class="book"><?php echo $article->getTitle() ?></span>
                 </a>
             </div>
         </li>
@@ -44,9 +44,4 @@
         maxDuration : 0.9,
         viewportFactor : 0.2
     } );
-    // Auto semantic for text hovering images
-    $(function() {
-        $(".image").find("span.gallery").wrapInner("<span>");
-        $("span.gallery br").before("<span class='spacer'>").after("<span class='spacer'>");
-    });
 </script>
