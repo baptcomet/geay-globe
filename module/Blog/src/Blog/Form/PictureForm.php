@@ -51,8 +51,8 @@ class PictureForm extends Form
                 'right' => 'Droite',
             )
         );
-        $photoPosition->setLabel('Position Photo');
-        $photoPosition->setLabelAttributes(array('class' => 'control-label'));
+        $photoPosition->setLabel('Position Photo')
+            ->setLabelAttributes(array('class' => 'control-label'));
         $this->add($photoPosition);
 
         // LEGENDE
@@ -75,8 +75,8 @@ class PictureForm extends Form
                 'rows' => 5,
             )
         );
-        $text->setLabel('Texte');
-        $text->setLabelAttributes(array('class' => 'control-label'));
+        $text->setLabel('Texte')
+            ->setLabelAttributes(array('class' => 'control-label'));
         $this->add($text);
 
         // POSITION TEXTE
@@ -89,13 +89,13 @@ class PictureForm extends Form
         );
         $textPosition->setValueOptions(
             array(
+                'center' => 'Centrée',
                 'left' => 'Gauche',
                 'right' => 'Droite',
-                'center' => 'Centrée',
             )
         );
-        $textPosition->setLabel('Position Texte');
-        $textPosition->setLabelAttributes(array('class' => 'control-label'));
+        $textPosition->setLabel('Position Texte')
+            ->setLabelAttributes(array('class' => 'control-label'));
         $this->add($textPosition);
 
         // SUBMIT

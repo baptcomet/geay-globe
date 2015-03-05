@@ -9,13 +9,6 @@ class PictureController extends AbstractActionController
 {
     public function imagesAction()
     {
-        /** @var \Blog\Entity\User $user */
-        $user = $this->identity();
-
-        if (is_null($user)) {
-            return $this->notFoundAction();
-        }
-
         $id = $this->params()->fromRoute()['id'];
         $name = $this->params()->fromRoute()['name'];
 

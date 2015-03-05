@@ -87,23 +87,23 @@ class ArticleForm extends Form
         $this->add($text);
 
         // Text Position
-        $photoPosition = new Select('textPosition');
-        $photoPosition->setAttributes(
+        $textPosition = new Select('textPosition');
+        $textPosition->setAttributes(
             array(
                 'id' => 'textPosition',
                 'class' => 'form-control',
             )
         );
-        $photoPosition->setValueOptions(
+        $textPosition->setValueOptions(
             array(
+                'center' => 'Centrée',
                 'left' => 'Gauche',
                 'right' => 'Droite',
-                'center' => 'Centrée',
             )
         );
-        $photoPosition->setLabel('Position Texte');
-        $photoPosition->setLabelAttributes(array('class' => 'control-label'));
-        $this->add($photoPosition);
+        $textPosition->setLabel('Position Texte')
+            ->setLabelAttributes(array('class' => 'control-label'));
+        $this->add($textPosition);
 
         // Submit
         $submit = new Submit('submit');

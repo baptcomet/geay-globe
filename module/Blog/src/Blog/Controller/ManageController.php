@@ -10,6 +10,10 @@ class ManageController extends AbstractActionController
 
     public function indexAction()
     {
+        if (is_null($this->identity())) {
+            $this->redirect()->toRoute('blog');
+        }
+
         $articles = $this->getEntityManager()->getRepository('\Blog\Entity\Article')
             ->findBy(array('status' => Article::STATUS_ONLINE));
 
