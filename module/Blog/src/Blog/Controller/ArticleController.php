@@ -10,6 +10,8 @@ use Blog\Form\Filter\ArticleFilter;
 use Blog\Form\PictureForm;
 use Doctrine\Common\Collections\ArrayCollection;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
+use Imagick;
+use Zend\Filter\File\Rename;
 use Zend\Filter\File\RenameUpload;
 use Zend\Http\Request;
 use Zend\View\Model\ViewModel;
@@ -220,7 +222,6 @@ class ArticleController extends AbstractActionController
             $form->setData($data);
 
             if ($form->isValid()) {
-                // TODO : resize image (http://php.net/manual/fr/function.imagecopyresized.php)
                 /** Déplacement de la photo */
                 $directory = Article::BASE_UPLOAD_PATH . $article->getId() . '/' . Picture::FOLDER . '/';
                 // Créé le répertoire s'il n'existe pas
@@ -228,16 +229,29 @@ class ArticleController extends AbstractActionController
                     mkdir($directory, 0775, true);
                 }
 
-                $renameUpload = new RenameUpload(
+                // Redimentionnement de l'image
+                $image = new Imagick();
+                $image->readImage($picture->getTempFilename());
+                if ($image->getsize()['columns'] > 1120) {
+                    $image->resizeImage(1120, 0, Imagick::FILTER_LANCZOS, 1);
+                }
+                $image->writeImage(realpath($directory) . DIRECTORY_SEPARATOR . 'img.tmp');
+                $image->clear();
+
+                $renamer = new Rename(
                     array(
                         'target' => $directory . $picture->getFilename(),
                         'randomize' => true,
                     )
                 );
-                $newPath = $renameUpload->filter($picture->getTempFilename());
+
+                $newPath = $renamer->filter($directory . 'img.tmp');
                 $newPathExplode = explode(DIRECTORY_SEPARATOR, $newPath);
                 $picture->setFilename($newPathExplode[sizeof($newPathExplode) - 1]);
                 $picture->setArticle($article);
+
+                // Suppression du fichier temporaire
+                unlink($directory . 'img.tmp');
 
                 $thumbnail = $directory . 'thumbnail_' . $picture->getFilename();
                 create_square_image($newPath, $thumbnail, 50);

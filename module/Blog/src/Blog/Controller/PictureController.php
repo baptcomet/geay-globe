@@ -5,6 +5,8 @@ namespace Blog\Controller;
 use Blog\Entity\Article;
 use Blog\Entity\Picture;
 use Blog\Form\PictureForm;
+use Imagick;
+use Zend\Filter\File\Rename;
 use Zend\Filter\File\RenameUpload;
 use Zend\Http\Request;
 use Zend\View\Model\ViewModel;
@@ -20,13 +22,12 @@ class PictureController extends AbstractActionController
         if (is_file($imagePath)) {
             $imageType = pathinfo($imagePath, PATHINFO_EXTENSION);
             if (in_array(strtolower($imageType), Picture::getStaticAuthorisedExtensionList())) {
-                $imageData = file_get_contents($imagePath);
+                $image = new Imagick(realpath($imagePath));
                 /** @var \Zend\Http\Response $response */
                 $response = $this->getResponse();
                 $response->getHeaders()
-                    ->addHeaderLine('Content-Type', 'image/'.$imageType)
-                    ->addHeaderLine('Content-Length', mb_strlen($imageData));
-                $response->setContent($imageData);
+                    ->addHeaderLine('Content-Type', $image->getFormat());
+                $response->setContent($image->getImageBlob());
                 return $response;
             }
         }
@@ -69,7 +70,6 @@ class PictureController extends AbstractActionController
             if ($form->isValid()) {
                 // Si on upload une nouvelle photo
                 if ($picture->getFilename()) {
-                    // TODO : resize image (http://php.net/manual/fr/function.imagecopyresized.php)
                     /** Déplacement de la photo */
                     $directory = Article::BASE_UPLOAD_PATH . $picture->getArticle()->getId() . '/' . Picture::FOLDER . '/';
                     // Créé le répertoire s'il n'existe pas
@@ -77,15 +77,28 @@ class PictureController extends AbstractActionController
                         mkdir($directory, 0775, true);
                     }
 
-                    $renameUpload = new RenameUpload(
+                    // Redimensionnement de l'image
+                    $image = new Imagick();
+                    $image->readImage($picture->getTempFilename());
+                    if ($image->getsize()['columns'] > 1120) {
+                        $image->resizeImage(1120, 0, Imagick::FILTER_LANCZOS, 1);
+                    }
+                    $image->writeImage(realpath($directory) . DIRECTORY_SEPARATOR . 'img.tmp');
+                    $image->clear();
+
+                    $renamer = new Rename(
                         array(
                             'target' => $directory . $picture->getFilename(),
                             'randomize' => true,
                         )
                     );
-                    $newPath = $renameUpload->filter($picture->getTempFilename());
+
+                    $newPath = $renamer->filter($directory . 'img.tmp');
                     $newPathExplode = explode(DIRECTORY_SEPARATOR, $newPath);
                     $picture->setFilename($newPathExplode[sizeof($newPathExplode) - 1]);
+
+                    // Suppression du fichier temporaire
+                    unlink($directory . 'img.tmp');
 
                     $thumbnail = $directory . 'thumbnail_' . $picture->getFilename();
                     create_square_image($newPath, $thumbnail, 50);
