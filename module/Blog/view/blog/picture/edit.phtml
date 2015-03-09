@@ -10,7 +10,7 @@ $this->headTitle($title);
 
 $articleId = $picture->getArticle()->getId();
 
-$pictureSource = $this->url('picture', array('action' => 'images', 'id' => $articleId, 'name' => $picture->getFilename()));
+$pictureSource = $this->url('picture', array('action' => 'images', 'id' => $articleId, 'name' => 'thumbnail_' . $picture->getFilename()));
 
 $form->prepare();
 ?>
