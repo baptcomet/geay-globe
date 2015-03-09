@@ -84,7 +84,6 @@ class PictureController extends AbstractActionController
                     $image = new Imagick();
                     $image->readImage($picture->getTempFilename());
 
-                    var_dump($image->getsize());
                     if ($image->getsize()['columns'] > 1120) {
                         $image->resizeImage(1120, 0, Imagick::FILTER_LANCZOS, 1);
                     } else {
