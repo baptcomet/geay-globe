@@ -67,6 +67,7 @@ class PictureController extends AbstractActionController
             $data = $request->getPost();
             $data->set('filename', $request->getFiles()->get('filename'));
             $form->setData($data);
+            debug($data['filename']);
 
             if ($form->isValid()) {
                 // Si on upload une nouvelle photo
