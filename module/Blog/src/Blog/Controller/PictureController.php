@@ -81,7 +81,7 @@ class PictureController extends AbstractActionController
                     // Redimensionnement de l'image
                     $image = new Imagick();
                     $image->readImage($picture->getTempFilename());
-                    var_dump($image->getsize()['columns']);
+                    var_dump($image->getsize());
                     if ($image->getsize()['columns'] > 1120) {
                         var_dump('> 1120');
                         $image->resizeImage(1120, 0, Imagick::FILTER_LANCZOS, 1);
@@ -90,12 +90,14 @@ class PictureController extends AbstractActionController
                     $image->writeImage(realpath($directory) . DIRECTORY_SEPARATOR . 'img.tmp');
                     $image->clear();
 
+                    echo '<br/>before Rename<br/>';
                     $renamer = new Rename(
                         array(
                             'target' => $directory . $picture->getFilename(),
                             'randomize' => true,
                         )
                     );
+                    echo '<br/>after Rename<br/>';
 
                     $newPath = $renamer->filter($directory . 'img.tmp');
                     $newPathExplode = explode(DIRECTORY_SEPARATOR, $newPath);
@@ -105,7 +107,9 @@ class PictureController extends AbstractActionController
                     unlink($directory . 'img.tmp');
 
                     $thumbnail = $directory . 'thumbnail_' . $picture->getFilename();
+                    echo '<br/>before Square<br/>';
                     create_square_image($newPath, $thumbnail, 50);
+                    echo '<br/>after Square<br/>';
 
                     // Suppression du fichier écrasé
                     $oldFile = $directory . $savedFilename;
