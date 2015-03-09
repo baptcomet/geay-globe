@@ -122,8 +122,8 @@ class PictureController extends AbstractActionController
                     $picture->setFilename($savedFilename);
                 }
 
-                //$entityManager->flush();
-                debug('photo modifiée');
+                $entityManager->flush();
+                //debug('photo modifiée');
 
                 $this->flashMessenger()->addSuccessMessage('La photo a bien été modifiée');
                 return $this->redirect()
