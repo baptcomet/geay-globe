@@ -105,7 +105,8 @@ class Picture
         if (is_array($file) && isset($file['name']) && isset($file['tmp_name'])) {
             $this->tmpName = $file['tmp_name'];
             $file = $file['name'];
-            echo '<br/>setting tmpName : ' . $file['tmp_name'] . '<br/>';
+            echo '<br/>sett tmpName : ' . $file['tmp_name'] . '...<br/>';
+            debug($file);
         }
         $this->filename = $file;
         return $this;
