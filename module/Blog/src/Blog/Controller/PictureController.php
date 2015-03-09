@@ -80,7 +80,7 @@ class PictureController extends AbstractActionController
 
                     // Redimensionnement de l'image
                     $image = new Imagick();
-                    $read = $image->readImage($picture->getTempFilename());
+                    $image->readImage($picture->getTempFilename());
                     var_dump($picture->getTempFilename());
                     echo '<br/>';
                     var_dump($image->getsize());
