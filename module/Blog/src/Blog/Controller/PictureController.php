@@ -105,6 +105,8 @@ class PictureController extends AbstractActionController
                     unlink($directory . 'img.tmp');
 
                     $thumbnail = $directory . 'thumbnail_' . $picture->getFilename();
+                    chmod($newPath, 0777);
+                    chmod($thumbnail, 0777);
 
                     echo '<br/>'.$thumbnail.'<br/>';
                     create_square_image($newPath, $thumbnail, 50);
