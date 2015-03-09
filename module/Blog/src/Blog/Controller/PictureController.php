@@ -89,9 +89,10 @@ class PictureController extends AbstractActionController
                         $image->resizeImage(1120, 0, Imagick::FILTER_LANCZOS, 1);
                     }
                     var_dump('< 1120');
-                    $image->writeImage(realpath($directory) . DIRECTORY_SEPARATOR . 'img.tmp');
+                    //$image->writeImage(realpath($directory) . DIRECTORY_SEPARATOR . 'img.tmp');
                     $image->clear();
 
+                    /*
                     $renamer = new Rename(
                         array(
                             'target' => $directory . $picture->getFilename(),
@@ -115,12 +116,13 @@ class PictureController extends AbstractActionController
                     // Suppression du fichier écrasé
                     $oldFile = $directory . $savedFilename;
                     unlink($oldFile);
+                    */
                 } else {
                     // Sinon on doit juste ne pas perdre le filename de la photo existante
                     $picture->setFilename($savedFilename);
                 }
 
-                $entityManager->flush();
+                //$entityManager->flush();
                 debug('photo modifiée');
 
                 $this->flashMessenger()->addSuccessMessage('La photo a bien été modifiée');
