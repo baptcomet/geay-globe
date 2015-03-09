@@ -78,21 +78,19 @@ class PictureController extends AbstractActionController
                         mkdir($directory, 0775, true);
                     }
 
-                    var_dump($data['filename']['tmp_name']);
                     // Redimensionnement de l'image
                     $image = new Imagick();
                     $image->readImage($picture->getTempFilename());
-                    echo '<br/>';
-                    var_dump($picture->getTempFilename());
-                    echo '<br/>';
+                    /*
                     var_dump($image->getsize());
-                    die;
                     if ($image->getsize()['columns'] > 1120) {
                         var_dump('> 1120');
                         $image->resizeImage(1120, 0, Imagick::FILTER_LANCZOS, 1);
                     }
+                    */
+                    $image->resizeImage(1120, 0, Imagick::FILTER_LANCZOS, 1);
                     var_dump('< 1120');
-                    //$image->writeImage(realpath($directory) . DIRECTORY_SEPARATOR . 'img.tmp');
+                    $image->writeImage(realpath($directory) . DIRECTORY_SEPARATOR . 'img.tmp');
                     $image->clear();
 
                     /*
