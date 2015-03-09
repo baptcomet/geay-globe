@@ -80,18 +80,17 @@ class PictureController extends AbstractActionController
                     // Redimensionnement de l'image
                     $image = new Imagick();
                     $image->readImage($picture->getTempFilename());
-                    /*
+
                     var_dump($image->getsize());
                     if ($image->getsize()['columns'] > 1120) {
-                        var_dump('> 1120');
+                        $image->resizeImage(1120, 0, Imagick::FILTER_LANCZOS, 1);
+                    } else {
+                        // TODO réussir ce test sur la taille du fichier temp, sinon on resize les photos plus petites...
                         $image->resizeImage(1120, 0, Imagick::FILTER_LANCZOS, 1);
                     }
-                    */
-                    $image->resizeImage(1120, 0, Imagick::FILTER_LANCZOS, 1);
-                    var_dump('< 1120');
+
                     $image->writeImage(realpath($directory) . DIRECTORY_SEPARATOR . 'img.tmp');
                     $image->clear();
-
 
                     $renamer = new Rename(
                         array(
@@ -123,7 +122,6 @@ class PictureController extends AbstractActionController
                 }
 
                 $entityManager->flush();
-                //debug('photo modifiée');
 
                 $this->flashMessenger()->addSuccessMessage('La photo a bien été modifiée');
                 return $this->redirect()
