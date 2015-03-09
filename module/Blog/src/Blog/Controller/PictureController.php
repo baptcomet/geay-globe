@@ -90,14 +90,12 @@ class PictureController extends AbstractActionController
                     $image->writeImage(realpath($directory) . DIRECTORY_SEPARATOR . 'img.tmp');
                     $image->clear();
 
-                    echo '<br/>before Rename<br/>';
                     $renamer = new Rename(
                         array(
                             'target' => $directory . $picture->getFilename(),
                             'randomize' => true,
                         )
                     );
-                    echo '<br/>after Rename<br/>';
 
                     $newPath = $renamer->filter($directory . 'img.tmp');
                     $newPathExplode = explode(DIRECTORY_SEPARATOR, $newPath);
@@ -107,7 +105,8 @@ class PictureController extends AbstractActionController
                     unlink($directory . 'img.tmp');
 
                     $thumbnail = $directory . 'thumbnail_' . $picture->getFilename();
-                    echo '<br/>before Square<br/>';
+
+                    echo '<br/>'.$thumbnail.'<br/>';
                     create_square_image($newPath, $thumbnail, 50);
                     echo '<br/>after Square<br/>';
 
