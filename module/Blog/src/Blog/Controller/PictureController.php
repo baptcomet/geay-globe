@@ -67,7 +67,6 @@ class PictureController extends AbstractActionController
             $data = $request->getPost();
             $data->set('filename', $request->getFiles()->get('filename'));
             $form->setData($data);
-            debug($data['filename']);
 
             if ($form->isValid()) {
                 // Si on upload une nouvelle photo
@@ -120,7 +119,7 @@ class PictureController extends AbstractActionController
                     */
                 } else {
                     // Sinon on doit juste ne pas perdre le filename de la photo existante
-                    $picture->setFilename($savedFilename);
+                    //$picture->setFilename($savedFilename);
                 }
 
                 //$entityManager->flush();
