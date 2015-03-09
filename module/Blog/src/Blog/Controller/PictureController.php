@@ -15,7 +15,7 @@ class PictureController extends AbstractActionController
 {
     public function imagesAction()
     {
-        //die;
+        die;
         $id = $this->params()->fromRoute()['id'];
         $name = $this->params()->fromRoute()['name'];
 
