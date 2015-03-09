@@ -1,4 +1,4 @@
-<?php echo $this->doctype(); ?>
+<?php echo $this->doctype() ?>
 <html lang="fr">
 <head>
     <meta charset="utf-8">
@@ -50,7 +50,7 @@
 <body>
 
 <div class="brand">
-    <a class="yellowtitle" href="<?php echo $this->url('blog') ?>">Geay's Globe</a>
+    <a class="yellowtitle" href="<?php echo $this->url('home') ?>">Geay's Globe</a>
 </div>
 <div class="address-bar">No Filter, No Problem.</div>
 
@@ -66,22 +66,22 @@
                 <span class="icon-bar"></span>
             </button>
             <!-- navbar-brand is hidden on larger screens, but visible when the menu is collapsed -->
-            <a class="navbar-brand yellowtail" href="<?php echo $this->url('blog') ?>">Geay's Globe</a>
+            <a class="navbar-brand yellowtail" href="<?php echo $this->url('home') ?>">Geay's Globe</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="<?php echo $this->navigation('navigation')->findById('blog')->isActive(true) ? 'active' : '' ?>">
-                    <a href="<?php echo $this->url('blog') ?>" class="button border-fade">Accueil</a>
+                <li class="<?php echo $this->navigation('navigation')->findById('home')->isActive(true) ? 'active' : '' ?>">
+                    <a href="<?php echo $this->url('home') ?>" class="button border-fade">Accueil</a>
                 </li>
                 <li class="<?php echo $this->navigation('navigation')->findById('histo')->isActive(true) ? 'active' : '' ?>">
-                    <a href="<?php echo $this->url('blog', array('action' => 'historique')) ?>">Historique</a>
+                    <a href="<?php echo $this->url('histo') ?>">Historique</a>
                 </li>
                 <li class="<?php echo $this->navigation('navigation')->findById('tags')->isActive(true) ? 'active' : '' ?>">
-                    <a href="<?php echo $this->url('blog', array('action' => 'tags')) ?>">#Tags</a>
+                    <a href="<?php echo $this->url('tags') ?>">#Tags</a>
                 </li>
                 <li class="<?php echo $this->navigation('navigation')->findById('contact')->isActive(true) ? 'active' : '' ?>">
-                    <a href="<?php echo $this->url('blog', array('action' => 'contact')) ?>">Contact</a>
+                    <a href="<?php echo $this->url('contact') ?>">Contact</a>
                 </li>
             <?php if (!is_null($this->identity())) : ?>
                 <li class="<?php echo $this->navigation('navigation')->findById('manage')->isActive(true) ? 'active' : '' ?>">

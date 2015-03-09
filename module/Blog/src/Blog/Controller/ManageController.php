@@ -11,7 +11,7 @@ class ManageController extends AbstractActionController
     public function indexAction()
     {
         if (is_null($this->identity())) {
-            $this->redirect()->toRoute('blog');
+            return $this->redirect()->toRoute('home');
         }
 
         $articles = $this->getEntityManager()->getRepository('\Blog\Entity\Article')

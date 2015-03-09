@@ -22,7 +22,7 @@ class ArticleController extends AbstractActionController
     {
         $id = (int) $this->params()->fromRoute('id', 0);
         if (!$id) {
-            return $this->redirect()->toRoute('blog');
+            return $this->redirect()->toRoute('home');
         }
 
         $entityManager = $this->getEntityManager();
@@ -37,7 +37,7 @@ class ArticleController extends AbstractActionController
     public function addAction()
     {
         if (is_null($this->identity())) {
-            $this->redirect()->toRoute('blog');
+            return $this->redirect()->toRoute('home');
         }
 
         $entityManager = $this->getEntityManager();
@@ -107,7 +107,7 @@ class ArticleController extends AbstractActionController
     public function editAction()
     {
         if (is_null($this->identity())) {
-            $this->redirect()->toRoute('blog');
+            return $this->redirect()->toRoute('home');
         }
 
         $entityManager = $this->getEntityManager();
@@ -192,7 +192,7 @@ class ArticleController extends AbstractActionController
     public function editPicturesAction()
     {
         if (is_null($this->identity())) {
-            $this->redirect()->toRoute('blog');
+            return $this->redirect()->toRoute('home');
         }
 
         $entityManager = $this->getEntityManager();
@@ -276,7 +276,7 @@ class ArticleController extends AbstractActionController
     public function deletePictureAction()
     {
         if (is_null($this->identity())) {
-            $this->redirect()->toRoute('blog');
+            return $this->redirect()->toRoute('home');
         }
 
         $idArticle = (int)$this->params()->fromRoute('id', 0);

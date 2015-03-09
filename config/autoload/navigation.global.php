@@ -4,6 +4,11 @@ return array(
     'navigation' => array(
         'default' => array(
             array(
+                'id' => 'home',
+                'label' => 'Accueil',
+                'route' => 'home',
+            ),
+            array(
                 'id' => 'login',
                 'label' => 'Connexion',
                 'route' => 'home',

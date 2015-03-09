@@ -29,7 +29,7 @@ return array(
                 'options' => array(
                     'route' => '/',
                     'defaults' => array(
-                        'controller' => 'Index',
+                        'controller' => 'Blog',
                         'action' => 'index',
                     ),
                 ),
@@ -51,7 +51,7 @@ return array(
             'tags' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/blog/tags[/:names]',
+                    'route' => '/tags[/:names]',
                     'defaults' => array(
                         'controller' => 'Blog',
                         'action' => 'tags',
@@ -62,13 +62,23 @@ return array(
             'histo' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/blog/historique[/:year]',
+                    'route' => '/historique[/:year]',
                     'defaults' => array(
                         'controller' => 'Blog',
                         'action' => 'historique',
                     ),
                     'constraints' => array(
                         'year' => '[0-9]*',
+                    ),
+                ),
+            ),
+            'contact' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/contact',
+                    'defaults' => array(
+                        'controller' => 'Blog',
+                        'action' => 'contact',
                     ),
                 ),
             ),
@@ -105,6 +115,16 @@ return array(
                     'defaults' => array(
                         'controller' => 'Index',
                         'action' => 'logout',
+                    ),
+                ),
+            ),
+            'login' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/login',
+                    'defaults' => array(
+                        'controller' => 'Index',
+                        'action' => 'index',
                     ),
                 ),
             ),

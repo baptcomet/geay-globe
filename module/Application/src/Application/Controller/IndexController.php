@@ -26,7 +26,7 @@ class IndexController extends AbstractActionController
         $identity = $this->identity();
 
         if (isset($identity) && $identity->getId() > 0) {
-            $this->redirect()->toRoute('blog');
+            $this->redirect()->toRoute('home');
         }
         if ($request->isPost()) {
             //recuperation des valeurs postées et des filtres
@@ -47,12 +47,12 @@ class IndexController extends AbstractActionController
                     $objectManager->persist($this->identity());
                     $objectManager->flush();
 
-                    return $this->redirect()->toRoute('blog');
+                    return $this->redirect()->toRoute('home');
                 } else { // Si erreur d'authentification
                     $this->flashMessenger()->addErrorMessage(
                         'La connexion a échoué. Le pseudo ou le mot de passe sont invalides'
                     );
-                    return $this->redirect()->toRoute('home');
+                    return $this->redirect()->toRoute('login');
                 }
             }
         }

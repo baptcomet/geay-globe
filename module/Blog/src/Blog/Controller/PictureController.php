@@ -37,7 +37,7 @@ class PictureController extends AbstractActionController
     public function editAction()
     {
         if (is_null($this->identity())) {
-            $this->redirect()->toRoute('blog');
+            return $this->redirect()->toRoute('home');
         }
 
         $entityManager = $this->getEntityManager();

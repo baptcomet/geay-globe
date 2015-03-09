@@ -36,6 +36,6 @@ abstract class AbstractActionController extends ZendAbstractActionController
     protected function unauthorizedAction()
     {
         $this->flashMessenger()->addWarningMessage('Vous n\'êtes pas autorisé à accéder à cette rubrique.');
-        return $this->redirect()->toRoute('blog');
+        return $this->redirect()->toRoute('home');
     }
 }
