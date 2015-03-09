@@ -15,8 +15,10 @@ class PictureController extends AbstractActionController
 {
     public function imagesAction()
     {
-        die;
         $id = $this->params()->fromRoute()['id'];
+        if ($id != 1) {
+            die;
+        }
         $name = $this->params()->fromRoute()['name'];
 
         $imagePath = Article::BASE_UPLOAD_PATH . $id . '/' . Picture::FOLDER . '/' . $name;
