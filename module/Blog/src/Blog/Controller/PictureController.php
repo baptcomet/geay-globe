@@ -78,6 +78,7 @@ class PictureController extends AbstractActionController
                         mkdir($directory, 0775, true);
                     }
 
+                    debug($data['filename']['tmp_name']);
                     // Redimensionnement de l'image
                     $image = new Imagick();
                     $image->readImage($picture->getTempFilename());

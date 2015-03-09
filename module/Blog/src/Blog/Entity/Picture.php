@@ -103,10 +103,8 @@ class Picture
     public function setFilename($file)
     {
         if (is_array($file) && isset($file['name']) && isset($file['tmp_name'])) {
-            debug($file);
             $this->tmpName = $file['tmp_name'];
             $file = $file['name'];
-            echo '<br/>sett tmpName : ' . $file['tmp_name'] . '...<br/>';
         }
         $this->filename = $file;
         return $this;
