@@ -69,19 +69,25 @@ $this->headTitle($title);
         </div>
         <br/>
         <?php foreach ($article->getPictures() as $picture) : ?>
+            <?php $pictureSource = $this->url('picture', array('action' => 'images', 'id' => $article->getId(), 'name' => $picture->getFilename())) ?>
             <div class="row">
                 <div class="col-lg-12">
 
                     <div id="picture-<?php echo $picture->getId() ?>"
                          class="image img-<?php echo $picture->getPosition() ?>" style="max-width: 100%">
-                        <img class="img-polaroid-border img-responsive"
-                             alt="<?php echo $picture->getLegend() ?>"
-                             style="max-width: 100%"
-                             onload="onImageLoad(<?php echo $picture->getId() ?>);"
-                             src="<?php echo $this->url('picture', array('action' => 'images', 'id' => $article->getId(), 'name' => $picture->getFilename())) ?>">
-                        <div class="caption">
-                            <span class="book"><?php echo $picture->getLegend() ?></span>
-                        </div>
+
+                        <a class="imagelightbox" href="<?php echo $pictureSource ?>"
+                           alt="<?php echo $picture->getLegend() ?>">
+                            <img class="img-polaroid-border img-responsive"
+                                 alt="<?php echo $picture->getLegend() ?>"
+                                 style="max-width: 100%"
+                                 onload="onImageLoad(<?php echo $picture->getId() ?>);"
+                                 src="<?php echo $pictureSource ?>">
+                            <div class="caption">
+                                <span class="book"><?php echo $picture->getLegend() ?></span>
+                            </div>
+                        </a>
+
                     </div>
 
                     <?php if ($picture->getText()) : ?>
@@ -95,3 +101,36 @@ $this->headTitle($title);
         <?php endforeach ?>
     </div>
 </div>
+
+<script>
+    captionOn = function () {
+        var description = $('a[href="' + $('#imagelightbox').attr('src') + '"] img').attr('alt');
+        if (description.length > 0) {
+            $('<div id="imagelightbox-caption">' + description + '</div>').appendTo('body');
+        }
+    };
+    captionOff = function () {
+        $('#imagelightbox-caption').remove();
+    };
+
+    $('a.imagelightbox').imageLightbox({
+        selector:       'id="imagelightbox"',   // string;
+        allowedTypes:   'png|jpg|jpeg|gif',     // string;
+        animationSpeed: 250,                    // integer;
+        preloadNext:    true,                   // bool;            silently preload the next image
+        enableKeyboard: true,                   // bool;            enable keyboard shortcuts (arrows Left/Right and Esc)
+        quitOnEnd:      false,                  // bool;            quit after viewing the last image
+        quitOnImgClick: false,                  // bool;            quit when the viewed image is clicked
+        quitOnDocClick: true,                   // bool;            quit when anything but the viewed image is clicked
+        onStart:        false,                  // function/bool;   calls function when the lightbox starts
+        onLoadStart: function () {
+            captionOff();
+        },
+        onLoadEnd: function () {
+            captionOn();
+        },
+        onEnd: function () {
+            captionOff();
+        }
+    });
+</script>
