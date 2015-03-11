@@ -76,7 +76,7 @@ $this->headTitle($title);
                     <div id="picture-<?php echo $picture->getId() ?>"
                          class="image img-<?php echo $picture->getPosition() ?>" style="max-width: 100%">
 
-                        <a class="fancybox" href="<?php echo $pictureSource ?>"
+                        <a class="fancybox" href="<?php echo $pictureSource ?>" rel="gallery"
                            title="<?php echo $picture->getLegend() ?>">
                             <img class="img-polaroid-border img-responsive"
                                  alt="<?php echo $picture->getLegend() ?>"
@@ -104,7 +104,9 @@ $this->headTitle($title);
 
 <script>
     $("a.fancybox").fancybox({
-        'titlePositon'  :   'over'
+        'titlePositon' : 'inside',
+        'showNavArrows' : true,
+        'overlayShow'	:	false
     });
 </script>
 
