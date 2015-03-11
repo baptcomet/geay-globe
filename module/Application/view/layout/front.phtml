@@ -11,6 +11,8 @@
     <!-- Scripts -->
     <?php
     echo $this->headScript()
+        ->prependFile($this->basePath('/js/bootstrap-switch.min.js'))
+        ->prependFile($this->basePath('/js/imagelightbox.min.js'))
         ->prependFile($this->basePath('/js/tagEditor/jquery.caret.min.js'))
         ->prependFile($this->basePath('/js/tagEditor/jquery.tag-editor.min.js'))
         ->prependFile($this->basePath('/js/AnimOnScroll.js'))
@@ -33,6 +35,8 @@
                 'href' => $this->basePath('/img/gg-favicon-white.png'),
             )
         )
+        ->prependStylesheet($this->basePath('/css/imagelightbox.css'))
+        ->prependStylesheet($this->basePath('/css/bootstrap-switch.min.css'))
         ->prependStylesheet($this->basePath('/css/magnific-popup.css'))
         ->prependStylesheet($this->basePath('/css/codrops/component.css'))
         ->prependStylesheet($this->basePath('/css/geay-globe.css'))

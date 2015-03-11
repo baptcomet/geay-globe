@@ -16,7 +16,7 @@ abstract class AbstractEntity
     const STATUS_ONLINE = 1;
     const STATUS_ARCHIVED = 2;
 
-    /** @ORM\Column(name="status", type="integer", nullable=false, options={"default" = 1, "comment" = "0 = Inactif - 1 = Publié - 2 = Archivé"}) */
+    /** @ORM\Column(name="status", type="integer", nullable=false, options={"default" = 1}) */
     protected $status = self::STATUS_ONLINE;
 
     /** @deprecated */
@@ -86,6 +86,41 @@ abstract class AbstractEntity
     public function delete()
     {
         $this->status = self::STATUS_OFFLINE;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPublished()
+    {
+        return $this->status == self::STATUS_ONLINE;
+    }
+
+    /**
+     * @return $this
+     */
+    public function publish()
+    {
+        $this->status = self::STATUS_ONLINE;
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function unpublish()
+    {
+        $this->status = self::STATUS_ARCHIVED;
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function switchPublication()
+    {
+        $this->status = $this->isPublished() ? self::STATUS_ARCHIVED : self::STATUS_ONLINE;
         return $this;
     }
 

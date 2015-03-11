@@ -85,6 +85,7 @@ class ArticleController extends AbstractActionController
                     $article->setTags($tagsObjects);
                 }
                 $article->setWriter($this->identity());
+                $article->unpublish();
                 $entityManager->persist($article);
                 $entityManager->flush();
 
@@ -302,5 +303,25 @@ class ArticleController extends AbstractActionController
 
         $this->flashMessenger()->addSuccessMessage('La photo a bien été retirée de l\'article');
         return $this->redirect()->toRoute('article', array('action' => 'edit-pictures', 'id' => $idArticle));
+    }
+
+    public function ajaxSwitchPublicationAction()
+    {
+        /** @var Request $request */
+        $request = $this->getRequest();
+        $data = $request->getPost();
+
+        $entityManager = $this->getEntityManager();
+        /** @var Article $article */
+        $article = $entityManager->getRepository('Blog\Entity\Article')->find($data['id']);
+
+        if (is_null($this->identity()) || !$article) {
+            die;
+        }
+
+        // Switch l'état de publication de l'article
+        $article->switchPublication();
+
+        return true;
     }
 }
