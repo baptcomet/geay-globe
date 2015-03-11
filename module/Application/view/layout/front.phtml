@@ -13,7 +13,7 @@
     echo $this->headScript()
         ->prependFile($this->basePath('/js/bootstrap-switch.min.js'))
         ->prependFile($this->basePath('/js/jquery.mousewheel.pack.js'))
-        ->prependFile($this->basePath('/css/fancybox/jquery.fancybox.pack.js'))
+        ->prependFile($this->basePath('/css/jquery.fancybox.pack.js'))
         ->prependFile($this->basePath('/js/tagEditor/jquery.caret.min.js'))
         ->prependFile($this->basePath('/js/tagEditor/jquery.tag-editor.min.js'))
         ->prependFile($this->basePath('/js/AnimOnScroll.js'))
@@ -36,7 +36,7 @@
                 'href' => $this->basePath('/img/gg-favicon-white.png'),
             )
         )
-        ->prependStylesheet($this->basePath('/css/fancybox/jquery.fancybox.css'))
+        ->prependStylesheet($this->basePath('/css/jquery.fancybox.css'))
         ->prependStylesheet($this->basePath('/css/bootstrap-switch.min.css'))
         ->prependStylesheet($this->basePath('/css/magnific-popup.css'))
         ->prependStylesheet($this->basePath('/css/codrops/component.css'))
