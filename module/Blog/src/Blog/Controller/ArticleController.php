@@ -232,14 +232,9 @@ class ArticleController extends AbstractActionController
                 // Redimentionnement de l'image
                 $image = new Imagick();
                 $image->readImage($picture->getTempFilename());
-
-                if ($image->getsize()['columns'] > 1120) {
-                    $image->resizeImage(1120, 0, Imagick::FILTER_LANCZOS, 1);
-                } else {
-                    // TODO réussir ce test sur la taille du fichier temp, sinon on resize les photos plus petites...
+                if ($image->getImageWidth() > 1120) {
                     $image->resizeImage(1120, 0, Imagick::FILTER_LANCZOS, 1);
                 }
-
                 $image->writeImage(realpath($directory) . DIRECTORY_SEPARATOR . 'img.tmp');
                 $image->clear();
 
