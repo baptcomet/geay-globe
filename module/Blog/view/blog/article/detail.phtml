@@ -104,9 +104,12 @@ $this->headTitle($title);
 
 <script>
     $("a.fancybox").fancybox({
-        'titlePositon' : 'over',
-        'showNavArrows' : true,
-        'overlayShow' : false
+        'overlayShow' : false,
+        helpers : {
+            title : {
+                type : 'inside'
+            }
+        }
     });
 </script>
 
