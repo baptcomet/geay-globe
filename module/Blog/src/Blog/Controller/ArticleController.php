@@ -322,6 +322,8 @@ class ArticleController extends AbstractActionController
         // Switch l'état de publication de l'article
         $article->switchPublication();
 
+        $entityManager->flush();
+
         return true;
     }
 }
