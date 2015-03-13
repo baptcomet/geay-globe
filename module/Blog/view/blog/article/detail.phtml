@@ -112,36 +112,3 @@ $this->headTitle($title);
         }
     });
 </script>
-
-<!--<script>-->
-<!--    captionOn = function () {-->
-<!--        var description = $('a[href="' + $('#imagelightbox').attr('src') + '"] img').attr('alt');-->
-<!--        if (description.length > 0) {-->
-<!--            $('<div id="imagelightbox-caption">' + description + '</div>').appendTo('body');-->
-<!--        }-->
-<!--    };-->
-<!--    captionOff = function () {-->
-<!--        $('#imagelightbox-caption').remove();-->
-<!--    };-->
-<!---->
-<!--    $('a.imagelightbox').imageLightbox({-->
-<!--        selector:       'id="imagelightbox"',   // string;-->
-<!--        allowedTypes:   'png|jpg|jpeg|gif',     // string;-->
-<!--        animationSpeed: 250,                    // integer;-->
-<!--        preloadNext:    true,                   // bool;            silently preload the next image-->
-<!--        enableKeyboard: true,                   // bool;            enable keyboard shortcuts (arrows Left/Right and Esc)-->
-<!--        quitOnEnd:      false,                  // bool;            quit after viewing the last image-->
-<!--        quitOnImgClick: false,                  // bool;            quit when the viewed image is clicked-->
-<!--        quitOnDocClick: true,                   // bool;            quit when anything but the viewed image is clicked-->
-<!--        onStart:        false,                  // function/bool;   calls function when the lightbox starts-->
-<!--        onLoadStart: function () {-->
-<!--            captionOff();-->
-<!--        },-->
-<!--        onLoadEnd: function () {-->
-<!--            captionOn();-->
-<!--        },-->
-<!--        onEnd: function () {-->
-<!--            captionOff();-->
-<!--        }-->
-<!--    });-->
-<!--</script>-->

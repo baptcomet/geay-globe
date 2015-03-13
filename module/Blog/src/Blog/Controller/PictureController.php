@@ -34,6 +34,41 @@ class PictureController extends AbstractActionController
         die;
     }
 
+    public function imagesMediumAction()
+    {
+        $id = $this->params()->fromRoute()['id'];
+        $name = $this->params()->fromRoute()['name'];
+
+        $imagePath = Article::BASE_UPLOAD_PATH . $id . '/' . Picture::FOLDER . '/medium_' . $name;
+        if (is_file($imagePath)) {
+            $imageType = pathinfo($imagePath, PATHINFO_EXTENSION);
+            if (in_array(strtolower($imageType), Picture::getStaticAuthorisedExtensionList())) {
+                $image = new Imagick(realpath($imagePath));
+                /** @var \Zend\Http\Response $response */
+                $response = $this->getResponse();
+                $response->getHeaders()
+                    ->addHeaderLine('Content-Type', $image->getFormat());
+                $response->setContent($image->getImageBlob());
+                return $response;
+            }
+        } else {
+            $imagePath = Article::BASE_UPLOAD_PATH . $id . '/' . Picture::FOLDER . '/' . $name;
+            if (is_file($imagePath)) {
+                $imageType = pathinfo($imagePath, PATHINFO_EXTENSION);
+                if (in_array(strtolower($imageType), Picture::getStaticAuthorisedExtensionList())) {
+                    $image = new Imagick(realpath($imagePath));
+                    /** @var \Zend\Http\Response $response */
+                    $response = $this->getResponse();
+                    $response->getHeaders()
+                        ->addHeaderLine('Content-Type', $image->getFormat());
+                    $response->setContent($image->getImageBlob());
+                    return $response;
+                }
+            }
+        }
+        die;
+    }
+
     public function editAction()
     {
         if (is_null($this->identity())) {
@@ -102,9 +137,12 @@ class PictureController extends AbstractActionController
                     unlink($directory . 'img.tmp');
 
                     $thumbnail = $directory . 'thumbnail_' . $picture->getFilename();
+                    $medium_thumbnail = $directory . 'medium_' . $picture->getFilename();
 
                     create_square_image($newPath, $thumbnail, 50);
                     chmod($thumbnail, 0775);
+                    create_square_image($newPath, $medium_thumbnail, 460);
+                    chmod($medium_thumbnail, 0775);
 
                     // Suppression du fichier écrasé
                     $oldFile = $directory . $savedFilename;

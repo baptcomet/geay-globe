@@ -256,6 +256,11 @@ class ArticleController extends AbstractActionController
 
                 $thumbnail = $directory . 'thumbnail_' . $picture->getFilename();
                 create_square_image($newPath, $thumbnail, 50);
+                chmod($thumbnail, 0775);
+
+                $medium_thumbnail = $directory . 'medium_' . $picture->getFilename();
+                create_square_image($newPath, $medium_thumbnail, 460);
+                chmod($medium_thumbnail, 0775);
 
                 $entityManager->persist($picture);
                 $entityManager->flush();
@@ -294,9 +299,14 @@ class ArticleController extends AbstractActionController
             return $this->redirect()->toRoute('project');
         }
 
-        // Suppression du fichier
+        // Suppression des fichiers
         $file = Article::BASE_UPLOAD_PATH . $idArticle . '/' . Picture::FOLDER . '/' . $picture->getFilename();
+        $medium_file = Article::BASE_UPLOAD_PATH . $idArticle . '/' . Picture::FOLDER . '/medium_' . $picture->getFilename();
+        $thumbnail_file = Article::BASE_UPLOAD_PATH . $idArticle . '/' . Picture::FOLDER . '/thumbnail_' . $picture->getFilename();
         unlink($file);
+        unlink($medium_file);
+        unlink($thumbnail_file);
+
         // Suppression de l'illustration en DB
         $entityManager->remove($picture);
         $entityManager->flush();
