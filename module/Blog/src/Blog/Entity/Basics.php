@@ -10,6 +10,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Basics
 {
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
+
     /** @ORM\Column(name="color", type="string", length=256) */
     protected $color;
 
@@ -18,6 +25,24 @@ class Basics
 
     /** @ORM\Column(name="subtitle", type="string", nullable=false) */
     protected $subtitle;
+
+    /**
+     * @param int $id
+     * @return Basics $this
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * @param array $categories
