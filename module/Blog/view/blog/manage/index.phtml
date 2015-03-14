@@ -50,7 +50,7 @@ $this->headTitle($title);
                                 <td>
                                     <?php if ($article->getMainPicture()) : ?>
                                         <?php $picture = $article->getMainPicture() ?>
-                                        <img src="<?php echo $this->url('picture', array('action' => 'images', 'id' => $article->getId(), 'name' => $picture->getThumbnail())) ?>"
+                                        <img src="<?php echo $this->url('picture', array('action' => 'images-medium', 'id' => $article->getId(), 'name' => $picture->getThumbnail())) ?>"
                                              alt="<?php $article->getCompleteTitle() ?>" class="img-responsive img-left">
                                     <?php endif ?>
                                 </td>
