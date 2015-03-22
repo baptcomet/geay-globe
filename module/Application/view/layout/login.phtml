@@ -15,6 +15,9 @@
                 )
             )
             ->prependStylesheet($this->basePath('/css/signin.min.css'))
+            ->prependStylesheet($this->basePath('/css/geay-globe.css'))
+            ->prependStylesheet($this->basePath('/css/business-casual.css'))
+            ->prependStylesheet($this->basePath('/css/bootstrap.min.css'))
             ->prependStylesheet('http://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic');
         ?>
 
@@ -29,7 +32,9 @@
     <div class="container-fluid">
         <div class="signin">
             <div class="row">
-                <img src="<?php echo $this->basePath('/img/logo-gg.png'); ?>" alt="Geay Globe"/>
+                <div class="brand">
+                    <a class="yellowtitle" href="<?php echo $this->url('home') ?>">Geay's Globe</a>
+                </div>
             </div>
             <?php echo $this->content ?>
         </div>
