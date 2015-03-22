@@ -76,4 +76,25 @@ class ArticleRepository extends EntityRepository
         }
         return $years;
     }
+
+    public function getAllCategories()
+    {
+        $categories = array();
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('a')
+            ->from('Blog\Entity\Article', 'a')
+            ->andWhere('a.status = ?1')
+            ->setParameter(1, Article::STATUS_ONLINE)
+            ->orderBy('a.category', 'ASC')
+            ->groupBy('a.category');
+
+        $result = $qb->getQuery()->getResult();
+
+        /** @var Article $article */
+        foreach ($result as $article) {
+            array_push($categories, $article->getCategory());
+        }
+        return $categories;
+    }
 }

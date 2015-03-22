@@ -58,7 +58,12 @@ class BlogController extends AbstractActionController
             return $this->redirect()->toRoute('histo', array('categories' => ''));
         }
 
-        $allCategories = Article::getCategoryKeys();
+        /** @var ArticleRepository $articleRepository */
+        $articleRepository = $this->getEntityManager()->getRepository('\Blog\Entity\Article');
+
+        // TODO get all categories used
+        $allCategories = $articleRepository->getAllCategories();
+        //$allCategories = Article::getCategoryKeys();
 
         if ($categoriesUrl != '') {
             $selectedCategories = explode('+', $categoriesUrl);
@@ -68,9 +73,6 @@ class BlogController extends AbstractActionController
         foreach ($selectedCategories as $key => $selectedCategory) {
             $selectedCategories[$key] = (int)$selectedCategory;
         }
-
-        /** @var ArticleRepository $articleRepository */
-        $articleRepository = $this->getEntityManager()->getRepository('\Blog\Entity\Article');
 
         $tree = array();
         $years = $articleRepository->getAllYears($selectedCategories);
