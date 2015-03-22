@@ -69,7 +69,6 @@ $clickedTags = json_encode($selectedTagNames);
 
     clickableTags.click(function() {
         var clickedTags = <?php echo $clickedTags ?>;
-        console.log(clickedTags);
         var clickedTag = $(this).find('span.tagname').html();
 
         var index = clickedTags.indexOf(clickedTag);
@@ -81,8 +80,11 @@ $clickedTags = json_encode($selectedTagNames);
             clickedTags.push(clickedTag);
         }
 
-        console.log(clickedTags);
         var clickedTagsUrl = clickedTags.join('+');
-        window.location.href = "<?php echo $this->url('tags') ?>/" + clickedTagsUrl;
+        if (clickedTagsUrl != '') {
+            window.location.href = "<?php echo $this->url('tags') ?>/" + clickedTagsUrl;
+        } else {
+            window.location.href = "<?php echo $this->url('tags') ?>";
+        }
     });
 </script>

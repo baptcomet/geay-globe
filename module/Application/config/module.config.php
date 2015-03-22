@@ -62,13 +62,11 @@ return array(
             'histo' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/historique[/:year]',
+                    'route' => '/historique[/:categories]',
                     'defaults' => array(
                         'controller' => 'Blog',
                         'action' => 'historique',
-                    ),
-                    'constraints' => array(
-                        'year' => '[0-9]*',
+                        'categories' => '',
                     ),
                 ),
             ),

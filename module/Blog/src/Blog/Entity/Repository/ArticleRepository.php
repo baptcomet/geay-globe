@@ -30,7 +30,28 @@ class ArticleRepository extends EntityRepository
         return $articles;
     }
 
-    public function getAllYears()
+    public function findByCategories($categories)
+    {
+        $articles = new ArrayCollection();
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('a')
+            ->from('Blog\Entity\Article', 'a')
+            ->where('a.category IN(?1)')
+            ->andWhere('a.status = ?2')
+            ->orderBy('a.date', 'DESC')
+            ->setParameter(1, $categories)
+            ->setParameter(2, Article::STATUS_ONLINE);
+
+        $result = $qb->getQuery()->getResult();
+
+        foreach ($result as $article) {
+            $articles->add($article);
+        }
+        return $articles;
+    }
+
+    public function getAllYears($categories = null)
     {
         $years = array();
 
@@ -39,7 +60,13 @@ class ArticleRepository extends EntityRepository
             ->from('Blog\Entity\Article', 'a')
             ->andWhere('a.status = ?1')
             ->setParameter(1, Article::STATUS_ONLINE)
+            ->orderBy('a.date', 'DESC')
             ->groupBy('a.year');
+
+        if (sizeof($categories)) {
+            $qb->andWhere('a.category IN(?2)')
+                ->setParameter(2, $categories);
+        }
 
         $result = $qb->getQuery()->getResult();
 

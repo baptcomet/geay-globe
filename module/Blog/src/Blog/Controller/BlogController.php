@@ -52,36 +52,50 @@ class BlogController extends AbstractActionController
 
     public function historiqueAction()
     {
-        $currentYear = date('Y');
-        $year = $this->params()->fromRoute('year', $currentYear);
+        $categoriesUrl = $this->params()->fromRoute('categories');
+        if ($categoriesUrl === null) {
+            // Hack pour la navigation
+            return $this->redirect()->toRoute('histo', array('categories' => ''));
+        }
+
+        $allCategories = Article::getCategoryKeys();
+
+        if ($categoriesUrl != '') {
+            $selectedCategories = explode('+', $categoriesUrl);
+        } else {
+            $selectedCategories = array();
+        }
+        foreach ($selectedCategories as $key => $selectedCategory) {
+            $selectedCategories[$key] = (int)$selectedCategory;
+        }
 
         /** @var ArticleRepository $articleRepository */
         $articleRepository = $this->getEntityManager()->getRepository('\Blog\Entity\Article');
-        $articles = $articleRepository->findBy(
-            array(
-                'status' => Article::STATUS_ONLINE,
-                'year' => $year,
-            ),
-            array('date' => 'desc')
-        );
-
-        $years = $articleRepository->getAllYears();
 
         $tree = array();
-        /** @var Article $article */
-        foreach ($articles as $article) {
-            $month = $article->getMonth();
-            if (!in_array($month, $tree)) {
-                $tree[$month] = array();
+        $years = $articleRepository->getAllYears($selectedCategories);
+
+        foreach ($years as $year) {
+            $tree[$year] = array();
+            $articles = $articleRepository->findBy(
+                array(
+                    'status' => Article::STATUS_ONLINE,
+                    'year' => $year,
+                    'category' => sizeof($selectedCategories) ? $selectedCategories : Article::getCategoryKeys(),
+                ),
+                array('date' => 'desc')
+            );
+            /** @var Article $article */
+            foreach ($articles as $article) {
+                array_push($tree[$year], $article);
             }
-            array_push($tree[$month], $article);
         }
 
         $this->layout('layout/front');
         return new ViewModel(array(
             'tree' => $tree,
-            'years' => $years,
-            'currentYear' => $year,
+            'allCategories' => $allCategories,
+            'selectedCategories' => $selectedCategories,
         ));
     }
 }

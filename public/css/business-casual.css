@@ -124,6 +124,16 @@ hr.short-hr {
     box-shadow: 2px 2px 5px #888888;
 }
 
+.img-polaroid-border-xs {
+    float: none;
+    margin: 0 auto 0;
+    border-top: white solid 2px !important;
+    border-left: white solid 2px !important;
+    border-right: white solid 2px !important;
+    border-bottom: white solid 6px !important;
+    box-shadow: 2px 2px 5px #888888;
+}
+
 .img-left {
     float: none;
     margin: 0 auto 0;

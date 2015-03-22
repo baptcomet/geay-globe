@@ -17,10 +17,14 @@ class Article extends AbstractEntity
     const POSITION_RIGHT = 'right';
     const POSITION_CENTER = 'center';
 
+    const CATEGORY_RESTAURANT = '1';
+    const CATEGORY_TRIP = '2';
+    const CATEGORY_PLACE = '3';
+
     public static $categories = array(
-        '1' => 'Restaurant',
-        '2' => 'Voyage',
-        '3' => 'Place',
+        self::CATEGORY_RESTAURANT => 'Restaurant',
+        self::CATEGORY_TRIP => 'Voyage',
+        self::CATEGORY_PLACE => 'Place',
     );
 
     public static $positions = array(
@@ -173,6 +177,14 @@ class Article extends AbstractEntity
     }
 
     /**
+     * @return string
+     */
+    public function getCategoryLib()
+    {
+        return self::$categories[$this->category];
+    }
+
+    /**
      * @param integer $category
      * @return Article $this
      */
@@ -215,6 +227,18 @@ class Article extends AbstractEntity
     {
         if ($this->date) {
             return $this->getDate()->format('d/m/Y');
+        } else {
+            return '-';
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getDateFullString()
+    {
+        if ($this->date) {
+            return $this->day . ' ' . $this->getMonthName() . ' ' . $this->year;
         } else {
             return '-';
         }
@@ -466,5 +490,13 @@ class Article extends AbstractEntity
     {
         $this->pictures->removeElement($picture);
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getCategoryKeys()
+    {
+        return array_keys(self::$categories);
     }
 }
