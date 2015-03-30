@@ -64,7 +64,7 @@ $form->prepare();
                                     </a>
                                 </li>
                             </ul>
-                            <h3 class="panel-title"><?php echo $picture->getLegend() ?></h3>
+                            <h3 class="panel-title"><?php echo $picture->getLegend() ?>&nbsp;</h3>
                         </div>
                         <img src="<?php echo $this->url('picture', array('action' => 'images', 'id' => $article->getId(), 'name' => $picture->getFilename())) ?>"
                              alt="<?php $picture->getLegend() ?>" class="img-responsive">
