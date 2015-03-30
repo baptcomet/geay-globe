@@ -24,7 +24,7 @@ class Article extends AbstractEntity
     public static $categories = array(
         self::CATEGORY_RESTAURANT => 'Restaurant',
         self::CATEGORY_TRIP => 'Voyage',
-        self::CATEGORY_PLACE => 'Place',
+        self::CATEGORY_PLACE => 'Place To Be',
     );
 
     public static $positions = array(
