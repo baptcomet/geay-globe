@@ -26,7 +26,7 @@ class PictureFilter extends InputFilter
             ->attach(
                 new Size(
                     array(
-                        'max' => '8MB'
+                        'max' => '16MB'
                     )
                 )
             )
