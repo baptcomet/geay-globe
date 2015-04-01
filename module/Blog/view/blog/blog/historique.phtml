@@ -62,7 +62,7 @@ $clickedCategories = json_encode($selectedCategories);
                                         </td>
                                         <td>
                                             <a class="silent"
-                                               href="<?php echo $this->url('article', array('action' => 'edit', 'id' => $article->getId())) ?>">
+                                               href="<?php echo $this->url('article', array('action' => 'detail', 'id' => $article->getId())) ?>">
                                                 <?php echo $article->getCompleteTitle() ?>
                                             </a>
                                         </td>
