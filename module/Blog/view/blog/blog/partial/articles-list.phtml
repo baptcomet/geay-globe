@@ -13,9 +13,14 @@
         <li>
             <div class="image">
                 <a href="<?php echo $this->url('article', array('action' => 'detail', 'id' => $article->getId())) ?>">
-                    <img src="<?php echo $this->url('picture', array('action' => 'images', 'id' => $article->getId(), 'name' => $picture->getFilename())) ?>"
-                         alt="<?php $picture->getLegend() ?>" class="img-polaroid-border-sm">
-                    <span class="book"><?php echo $article->getTitle() ?></span>
+                    <?php if (!is_null($picture)) : ?>
+                        <img src="<?php echo $this->url('picture', array('action' => 'images', 'id' => $article->getId(), 'name' => $picture->getFilename())) ?>"
+                             alt="<?php $picture->getLegend() ?>" class="img-polaroid-border-sm">
+                        <span class="book"><?php echo $article->getTitle() ?></span>
+                    <?php else : ?>
+                        <img src="#" alt="<?php $picture->getLegend() ?>" class="img-polaroid-border-sm">
+                        <span class="book"><?php echo $article->getTitle() ?></span>
+                    <?php endif ?>
                 </a>
             </div>
         </li>
