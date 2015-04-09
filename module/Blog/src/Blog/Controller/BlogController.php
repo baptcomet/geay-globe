@@ -20,6 +20,12 @@ class BlogController extends AbstractActionController
         ));
     }
 
+    public function contactAction()
+    {
+        $this->layout('layout/front');
+        return new ViewModel();
+    }
+
     public function tagsAction()
     {
         $tagsUrl = $this->params()->fromRoute('names');
