@@ -18,7 +18,7 @@ return array(
     'mail' => array(
         'transport' => array(
             'options' => array(
-                'host' => '',
+                'host' => '178.62.66.77',
             ),
         ),
     ),
