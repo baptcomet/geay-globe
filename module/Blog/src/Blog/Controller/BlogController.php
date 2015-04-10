@@ -57,7 +57,7 @@ class BlogController extends AbstractActionController
                 // TODO changer après tests
                 $emailTo = 'baptiste.comet@gmail.com';
 
-                $body = '<p>Ce message a été envoyé depuis le <a href="http://gs.cstb.fr/public" target="_blank">Site Public des Candidatures aux Groupes Spécialisés du <abbr title="Centre Scientifique et Technique du Bâtiment">CSTB</abbr></a> le ' . date('d/m/Y à H:i') . '.</p>' . PHP_EOL;
+                $body = '<p>Ce message a été envoyé depuis <a href="http://geays-globe.fr" target="_blank">Geay\'s Globe</a> le ' . date('d/m/Y à H:i') . '.</p>' . PHP_EOL;
                 $body .= '<h2 style="font-size:16px;border-bottom:1px solid #AAA;">Informations du Contact</h2>' . PHP_EOL;
                 $body .= '<p>' . PHP_EOL;
                 $body .= "\t" . '<b>Prénom :</b> ' . $firstname . '<br />' . PHP_EOL;
@@ -187,9 +187,15 @@ class BlogController extends AbstractActionController
             ->setSubject($title)
             ->setBody($bodyMessage);
 
-        $options = new SmtpOptions($config['mail']['transport']['options']);
-        $transport = new Smtp($options);
-        $transport->send($message);
+        $mailSent = mail($to, $title, $message);
+
+        if (!$mailSent) {
+            debug("error occured.... snif");
+        }
+
+//        $options = new SmtpOptions($config['mail']['transport']['options']);
+//        $transport = new Smtp($options);
+//        $transport->send($message);
     }
 }
 

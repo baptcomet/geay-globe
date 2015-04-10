@@ -18,7 +18,15 @@ return array(
     'mail' => array(
         'transport' => array(
             'options' => array(
-                'host' => '',
+                'name' => 'smtp.gmail.com',
+                'host' => 'smtp.gmail.com',
+                'connection_class' => 'login',
+                'port' => 465,
+                'connection_config' => array(
+                    'ssl' => 'ssl',
+                    'username' => 'contact@geays-globe.fr',
+                    'password' => 'flowerandguns',
+                ),
             ),
         ),
     ),
