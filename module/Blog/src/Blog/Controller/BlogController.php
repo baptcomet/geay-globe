@@ -187,7 +187,7 @@ class BlogController extends AbstractActionController
             ->setSubject($title)
             ->setBody($bodyMessage);
 
-        $mailSent = mail($to, $title, $message);
+        $mailSent = mail($to, $title, 'test message');
 
         if (!$mailSent) {
             debug("error occured.... snif");
