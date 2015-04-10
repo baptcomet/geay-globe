@@ -5,7 +5,13 @@ namespace Blog\Controller;
 use Blog\Entity\Article;
 use Blog\Entity\Repository\ArticleRepository;
 use Blog\Entity\Repository\TagRepository;
+use Blog\Form\ContactForm;
+use Zend\Http\Request;
 use Zend\View\Model\ViewModel;
+use Zend\Mail\Message;
+use Zend\Mail\Transport\Smtp;
+use Zend\Mail\Transport\SmtpOptions;
+use Zend\Mime\Part;
 
 class BlogController extends AbstractActionController
 {
@@ -23,7 +29,57 @@ class BlogController extends AbstractActionController
     public function contactAction()
     {
         $this->layout('layout/front');
-        return new ViewModel();
+
+        $form = new ContactForm();
+
+        $user = $this->identity();
+        if ($user) {
+            $form->get('firstname')->setValue($user->getFirstName());
+            $form->get('lastname')->setValue($user->getLastName());
+            $form->get('email')->setValue($user->getEmail());
+        }
+
+        /** @var Request $request */
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            //recuperation des valeurs postées et des filtres
+            $form->setData($request->getPost());
+
+            if ($form->isValid()) {
+                $formData = $form->getData();
+
+                $firstname = $formData['firstname'];
+                $lastname = $formData['lastname'];
+                $emailFrom = $formData['email'];
+                $subject = $formData['subject'];
+                $message = $formData['message'];
+
+                // TODO changer après tests
+                $emailTo = 'baptiste.comet@gmail.com';
+
+                $body = '<p>Ce message a été envoyé depuis le <a href="http://gs.cstb.fr/public" target="_blank">Site Public des Candidatures aux Groupes Spécialisés du <abbr title="Centre Scientifique et Technique du Bâtiment">CSTB</abbr></a> le ' . date('d/m/Y à H:i') . '.</p>' . PHP_EOL;
+                $body .= '<h2 style="font-size:16px;border-bottom:1px solid #AAA;">Informations du Contact</h2>' . PHP_EOL;
+                $body .= '<p>' . PHP_EOL;
+                $body .= "\t" . '<b>Prénom :</b> ' . $firstname . '<br />' . PHP_EOL;
+                $body .= "\t" . '<b>Nom :</b> ' . $lastname . '<br />' . PHP_EOL;
+                $body .= "\t" . '<b>Email :</b> <a href="mailto:' . $emailFrom . '">' . $emailFrom . '</a>' . PHP_EOL;
+                $body .= '</p>' . PHP_EOL;
+                $body .= '<h2 style="font-size:16px;border-bottom:1px solid #AAA;">Message</h2>' . PHP_EOL;
+                $body .= '<p><b>Objet :</b> ' . $subject . '</p>' . PHP_EOL;
+                $body .= '<p>' . nl2br($message) . '</p>';
+
+                $this->sendMail($emailTo, $body, $subject);
+
+                $this->flashMessenger()->addSuccessMessage('Merci pour votre message! ;)');
+                return $this->redirect()->toRoute('public', array('action' => 'index'));
+            } else {
+                $this->flashMessenger()->addErrorMessage('Un problème est survenu : le formulaire n\'est pas valide.');
+            }
+        }
+
+        return new ViewModel(array(
+            'form' => $form,
+        ));
     }
 
     public function tagsAction()
@@ -103,6 +159,38 @@ class BlogController extends AbstractActionController
             'allCategories' => $allCategories,
             'selectedCategories' => $selectedCategories,
         ));
+    }
+
+
+    public function sendMail($to, $message, $title)
+    {
+        $html = '<html>' . PHP_EOL;
+        $html .= "\t" . '<head>' . PHP_EOL;
+        $html .= "\t" . '</head>' . PHP_EOL;
+        $html .= "\t" . '<body>' . PHP_EOL;
+        $html .= $message;
+        $html .= "\t" . '</body>' . PHP_EOL;
+        $html .= '</html>' . PHP_EOL;
+
+        $bodyMessage = new \Zend\Mime\Message();
+        $bodyPart = new Part($html);
+        $bodyPart->type = 'text/html';
+        $bodyPart->charset = 'utf-8';
+
+        $bodyMessage->setParts(array($bodyPart));
+
+        $config = $this->getServiceLocator()->get('Configuration');
+
+        $message = new Message();
+        $message->addTo($to)
+            ->addFrom('contact@geays-globe.fr')
+            ->setSubject($title)
+            ->setBody($bodyMessage);
+
+        $transport = new Smtp();
+        $options = new SmtpOptions($config['mail']['transport']['options']);
+        $transport->setOptions($options);
+        $transport->send($message);
     }
 }
 

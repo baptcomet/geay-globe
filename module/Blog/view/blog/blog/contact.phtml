@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @var Blog\Form\ContactForm $form
+ */
+
 $title = 'Contactez moi';
 $this->headTitle($title);
 
@@ -7,18 +11,58 @@ $this->headTitle($title);
 
 <?php echo $this->partial('partial/flashmessenger') ?>
 
-
 <div class="row">
     <div class="box">
-        <div class="col-lg-12">
-            <hr class="short-hr"/>
-            <h2 class="text-center"><?php echo $title ?></h2>
-            <hr class="short-hr"/>
+        <hr class="short-hr"/>
+        <h2 class="text-center"><?php echo $title ?></h2>
+        <hr class="short-hr"/>
 
-            <p class="text-center">
-                <a href="mailto:fcaminade@hotmail.fr">Envoyez moi un mail !</a>
-            </p>
+        <?php echo $this->form()->openTag($form) ?>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <?php echo $this->formRow($form->get('firstname')) ?>
+                </div>
 
+                <div class="form-group">
+                    <?php echo $this->formRow($form->get('lastname')) ?>
+                </div>
+
+                <div class="form-group">
+                    <?php echo $this->formRow($form->get('email')) ?>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="form-group">
+                    <?php echo $this->formRow($form->get('subject_id')) ?>
+                </div>
+
+                <div class="form-group">
+                    <?php echo $this->formRow($form->get('message')) ?>
+                </div>
+            </div>
         </div>
+        <div class="form-group">
+            <ul class="list-inline">
+                <li><a class="btn btn-default" href="<?php echo $this->url('public', array('action' => 'contact')) ?>">Annuler</a></li>
+                <li><?php echo $this->formSubmit($form->get('send_mail')) ?></li>
+            </ul>
+        </div>
+        <?php echo $this->form()->closeTag() ?>
     </div>
 </div>
+
+<!--<div class="row">-->
+<!--    <div class="box">-->
+<!--        <div class="col-lg-12">-->
+<!--            <hr class="short-hr"/>-->
+<!--            <h2 class="text-center">--><?php //echo $title ?><!--</h2>-->
+<!--            <hr class="short-hr"/>-->
+<!---->
+<!--            <p class="text-center">-->
+<!--                <a href="mailto:fcaminade@hotmail.fr">Envoyez moi un mail !</a>-->
+<!--            </p>-->
+<!---->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
