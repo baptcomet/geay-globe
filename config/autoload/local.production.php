@@ -18,7 +18,7 @@ return array(
     'mail' => array(
         'transport' => array(
             'options' => array(
-                'name' => 'geays-globe.fr',
+                'name' => 'smtp.gmail.com',
                 'host' => 'smtp.gmail.com',
                 'connection_class' => 'login',
                 'port' => '465',
