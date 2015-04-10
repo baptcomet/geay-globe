@@ -187,9 +187,8 @@ class BlogController extends AbstractActionController
             ->setSubject($title)
             ->setBody($bodyMessage);
 
-        $transport = new Smtp();
         $options = new SmtpOptions($config['mail']['transport']['options']);
-        $transport->setOptions($options);
+        $transport = new Smtp($options);
         $transport->send($message);
     }
 }
