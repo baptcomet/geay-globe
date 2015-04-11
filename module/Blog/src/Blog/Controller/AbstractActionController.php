@@ -73,7 +73,7 @@ abstract class AbstractActionController extends ZendAbstractActionController
 
         // Check if a text file exists. If not create one and initialize it to zero.
         if (file_exists($counter_name)) {
-            $f = fopen($counter_name,"w");
+            $f = fopen($counter_name,"r");
             $counterVal = fread($f, filesize($counter_name));
             fclose($f);
         }
