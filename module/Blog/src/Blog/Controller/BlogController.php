@@ -55,6 +55,7 @@ class BlogController extends AbstractActionController
                 //$emailTo = 'contact@geays-globe.fr';
                 $emailTo = 'geays.globe@yahoo.com';
 
+                date_default_timezone_set("Europe/Paris");
                 $body = 'Ce message a été envoyé depuis Geay\'s Globe le ' . date('d/m/Y à H:i') . '.' . PHP_EOL;
                 $body .= 'Informations du Contact :' . PHP_EOL;
                 $body .= PHP_EOL;
