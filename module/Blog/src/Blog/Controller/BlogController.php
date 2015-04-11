@@ -34,8 +34,7 @@ class BlogController extends AbstractActionController
 
         $user = $this->identity();
         if ($user) {
-            $form->get('firstname')->setValue($user->getFirstName());
-            $form->get('lastname')->setValue($user->getLastName());
+            $form->get('name')->setValue($user->getFirstName());
             $form->get('email')->setValue($user->getEmail());
         }
 
@@ -48,8 +47,7 @@ class BlogController extends AbstractActionController
             if ($form->isValid()) {
                 $formData = $form->getData();
 
-                $firstname = $formData['firstname'];
-                $lastname = $formData['lastname'];
+                $name = $formData['name'];
                 $emailFrom = $formData['email'];
                 $subject = $formData['subject'];
                 $message = $formData['message'];
@@ -60,8 +58,7 @@ class BlogController extends AbstractActionController
                 $body = 'Ce message a été envoyé depuis Geay\'s Globe le ' . date('d/m/Y à H:i') . '.' . PHP_EOL;
                 $body .= 'Informations du Contact :' . PHP_EOL;
                 $body .= PHP_EOL;
-                $body .= "\t" . 'Prénom : ' . $firstname . PHP_EOL;
-                $body .= "\t" . 'Nom : ' . $lastname . PHP_EOL;
+                $body .= "\t" . 'Nom : ' . $name . PHP_EOL;
                 $body .= "\t" . 'Email : ' . $emailFrom . PHP_EOL;
                 $body .= PHP_EOL;
                 $body .= '------------------------------------------------------------------------------------------------------';

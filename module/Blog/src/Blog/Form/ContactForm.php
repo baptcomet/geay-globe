@@ -16,26 +16,13 @@ class ContactForm extends Form
         $this->setAttribute('role', 'form');
         $this->addInputFilter();
 
-        // Prénom input
-        $firstname = new Element\Text('firstname');
-        $firstname->setLabel('Prénom')
-            ->setLabelAttributes(array('class' => 'control-label'))
-            ->setAttributes(
-                array(
-                    'id' => 'firstname',
-                    'class' => 'form-control',
-                    'placeholder' => 'Votre prénom'
-                )
-            );
-        $this->add($firstname);
-
         // Nom input
-        $lastname = new Element\Text('lastname');
+        $lastname = new Element\Text('name');
         $lastname->setLabel('Nom')
             ->setLabelAttributes(array('class' => 'control-label'))
             ->setAttributes(
                 array(
-                    'id' => 'lastname',
+                    'id' => 'name',
                     'class' => 'form-control',
                     'placeholder' => 'Votre nom'
                 )
@@ -98,33 +85,10 @@ class ContactForm extends Form
     {
         $inputFilter = new InputFilter();
 
-        // FIRSTNAME
+        // NAME
         $inputFilter->add(
             array(
-                'name' => 'firstname',
-                'required' => true,
-                'filters' => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array('name' => 'NotEmpty'),
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 100,
-                        ),
-                    ),
-                ),
-            )
-        );
-
-        // LASTNAME
-        $inputFilter->add(
-            array(
-                'name' => 'lastname',
+                'name' => 'name',
                 'required' => true,
                 'filters' => array(
                     array('name' => 'StripTags'),
