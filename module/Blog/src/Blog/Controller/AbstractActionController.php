@@ -41,12 +41,12 @@ abstract class AbstractActionController extends ZendAbstractActionController
 
     protected function countVisit()
     {
-        $counter_name = "./data/counter.txt";
+        $counter_name = "./data/counterVisit.txt";
 
         // Check if a text file exists. If not create one and initialize it to zero.
         if (!file_exists($counter_name)) {
             $f = fopen($counter_name, "w");
-            fwrite($f,"0");
+            fwrite($f, "1");
             fclose($f);
         }
 
@@ -57,7 +57,7 @@ abstract class AbstractActionController extends ZendAbstractActionController
 
             // Read the current value of our counter file
             $f = fopen($counter_name,"wr");
-            $counterVal = fread($f, filesize($counter_name));
+            $counterVal = (int) fread($f, filesize($counter_name));
             $counterVal++;
             fwrite($f, $counterVal);
             fclose($f);
