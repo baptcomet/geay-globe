@@ -77,6 +77,7 @@ class BlogController extends AbstractActionController
 
                 if ($sentMail) {
                     $this->flashMessenger()->addSuccessMessage('Merci pour votre message! ;)');
+                    return $this->redirect()->toRoute('contact');
                 } else {
                     $this->flashMessenger()->addErrorMessage('Oups, le mail n\'est pas parti...');
                 }
