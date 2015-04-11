@@ -20,6 +20,7 @@ class ArticleController extends AbstractActionController
 {
     public function detailAction()
     {
+        $this->countVisit();
         $id = (int) $this->params()->fromRoute('id', 0);
         if (!$id) {
             return $this->redirect()->toRoute('home');

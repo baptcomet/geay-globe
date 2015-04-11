@@ -8,15 +8,13 @@ use Blog\Entity\Repository\TagRepository;
 use Blog\Form\ContactForm;
 use Zend\Http\Request;
 use Zend\View\Model\ViewModel;
-use Zend\Mail\Message;
-use Zend\Mail\Transport\Smtp;
-use Zend\Mail\Transport\SmtpOptions;
-use Zend\Mime\Part;
 
 class BlogController extends AbstractActionController
 {
     public function indexAction()
     {
+        $this->countVisit();
+
         $articles = $this->getEntityManager()->getRepository('\Blog\Entity\Article')
             ->findBy(array('status' => Article::STATUS_ONLINE), array('date' => 'desc'));
 
@@ -28,6 +26,7 @@ class BlogController extends AbstractActionController
 
     public function contactAction()
     {
+        $this->countVisit();
         $this->layout('layout/front');
 
         $form = new ContactForm();
@@ -92,6 +91,7 @@ class BlogController extends AbstractActionController
 
     public function tagsAction()
     {
+        $this->countVisit();
         $tagsUrl = $this->params()->fromRoute('names');
         if ($tagsUrl === null) {
             // Hack pour la navigation
@@ -122,6 +122,7 @@ class BlogController extends AbstractActionController
 
     public function historiqueAction()
     {
+        $this->countVisit();
         $categoriesUrl = $this->params()->fromRoute('categories');
         if ($categoriesUrl === null) {
             // Hack pour la navigation
