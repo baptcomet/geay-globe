@@ -27,6 +27,24 @@ $clickedCategories = json_encode($selectedCategories);
         </div>
     </div>
 
+    <div class="col-lg-3 pull-right">
+        <div class="box">
+            <h5>Filtrer par catégories</h5>
+            <ul class="list-unstyled">
+                <?php foreach ($allCategories as $category) : ?>
+                    <li>
+                        <h3>
+                            <span class="clickableCategory label <?php echo in_array($category, $selectedCategories) ? 'label-primary' : 'label-info' ?>">
+                                <span class="category" data-category="<?php echo $category ?>">
+                                    <?php echo Article::$categories[$category] ?>
+                                </span>
+                            </span>
+                        </h3>
+                    </li>
+                <?php endforeach ?>
+            </ul>
+        </div>
+    </div>
     <div class="col-lg-9">
         <?php if (count($tree)) : ?>
 
@@ -91,24 +109,6 @@ $clickedCategories = json_encode($selectedCategories);
             </div>
 
         <?php endif ?>
-    </div>
-    <div class="col-lg-3">
-        <div class="box">
-            <h5>Filtrer par catégories</h5>
-            <ul class="list-unstyled">
-                <?php foreach ($allCategories as $category) : ?>
-                    <li>
-                        <h3>
-                            <span class="clickableCategory label <?php echo in_array($category, $selectedCategories) ? 'label-primary' : 'label-info' ?>">
-                                <span class="category" data-category="<?php echo $category ?>">
-                                    <?php echo Article::$categories[$category] ?>
-                                </span>
-                            </span>
-                        </h3>
-                    </li>
-                <?php endforeach ?>
-            </ul>
-        </div>
     </div>
 
 </div>
