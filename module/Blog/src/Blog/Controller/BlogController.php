@@ -54,8 +54,7 @@ class BlogController extends AbstractActionController
                 $subject = $formData['subject'];
                 $message = $formData['message'];
 
-                // TODO changer après tests
-                $emailTo = 'baptiste.comet@gmail.com';
+                $emailTo = 'contact@geays-globe.fr';
 
                 $body = '<p>Ce message a été envoyé depuis <a href="http://geays-globe.fr" target="_blank">Geay\'s Globe</a> le ' . date('d/m/Y à H:i') . '.</p>' . PHP_EOL;
                 $body .= '<h2 style="font-size:16px;border-bottom:1px solid #AAA;">Informations du Contact</h2>' . PHP_EOL;
@@ -68,10 +67,13 @@ class BlogController extends AbstractActionController
                 $body .= '<p><b>Objet :</b> ' . $subject . '</p>' . PHP_EOL;
                 $body .= '<p>' . nl2br($message) . '</p>';
 
-                $this->sendMail($emailTo, $body, $subject);
+                $sentMail = $this->sendMail($emailTo, $body, $subject);
 
-                $this->flashMessenger()->addSuccessMessage('Merci pour votre message! ;)');
-                return $this->redirect()->toRoute('public', array('action' => 'index'));
+                if ($sentMail) {
+                    $this->flashMessenger()->addSuccessMessage('Merci pour votre message! ;)');
+                } else {
+                    $this->flashMessenger()->addErrorMessage('Oups, le mail n\'est pas parti...');
+                }
             } else {
                 $this->flashMessenger()->addErrorMessage('Un problème est survenu : le formulaire n\'est pas valide.');
             }
@@ -179,7 +181,7 @@ class BlogController extends AbstractActionController
 
         $bodyMessage->setParts(array($bodyPart));
 
-        $config = $this->getServiceLocator()->get('Configuration');
+        //$config = $this->getServiceLocator()->get('Configuration');
 
         $message = new Message();
         $message->addTo($to)
@@ -189,9 +191,7 @@ class BlogController extends AbstractActionController
 
         $mailSent = mail($to, $title, 'test message');
 
-        if (!$mailSent) {
-            debug("error occured.... snif");
-        }
+        return $mailSent;
 
 //        $options = new SmtpOptions($config['mail']['transport']['options']);
 //        $transport = new Smtp($options);
@@ -200,7 +200,7 @@ class BlogController extends AbstractActionController
 }
 
 /*
- * TODO :
+ * TODO Boite à idées :
  *
  *  1. Manage : 1 premier bloc pour gérer les catégories etc
  *  2. Une table 1 line "basics" et 1 form pour changer l'image background/une couleur, et le titre/sous-titre du blog

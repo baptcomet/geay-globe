@@ -24,6 +24,7 @@ class ContactForm extends Form
                 array(
                     'id' => 'firstname',
                     'class' => 'form-control',
+                    'placeholder' => 'Votre prénom'
                 )
             );
         $this->add($firstname);
@@ -36,6 +37,7 @@ class ContactForm extends Form
                 array(
                     'id' => 'lastname',
                     'class' => 'form-control',
+                    'placeholder' => 'Votre nom'
                 )
             );
         $this->add($lastname);
@@ -48,18 +50,20 @@ class ContactForm extends Form
                 array(
                     'id' => 'email',
                     'class' => 'form-control',
+                    'placeholder' => 'Votre adresse mail'
                 )
             );
         $this->add($email);
 
         // Sujet input
         $subject = new Element\Text('subject');
-        $subject->setLabel('Sujet')
+        $subject->setLabel('Objet')
             ->setLabelAttributes(array('class' => 'control-label'))
             ->setAttributes(
                 array(
                     'id' => 'subject',
                     'class' => 'form-control',
+                    'placeholder' => 'Objet du mail'
                 )
             );
         $this->add($subject);
@@ -72,7 +76,7 @@ class ContactForm extends Form
                 array(
                     'id' => 'message',
                     'class' => 'form-control',
-                    'rows' => 6,
+                    'rows' => 5,
                     'cols' => 75
                 )
             );
@@ -84,7 +88,7 @@ class ContactForm extends Form
         $submit->setValue('Envoyer')
             ->setAttributes(
                 array(
-                    'class' => 'btn btn-success'
+                    'class' => 'btn btn-primary'
                 )
             );
         $this->add($submit);
