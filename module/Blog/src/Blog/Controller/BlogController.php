@@ -55,7 +55,7 @@ class BlogController extends AbstractActionController
                 $message = $formData['message'];
 
                 //$emailTo = 'contact@geays-globe.fr';
-                $emailTo = 'geays.globe@yahoo.fr';
+                $emailTo = 'geays.globe@yahoo.com';
 
                 $body = 'Ce message a été envoyé depuis Geay\'s Globe le ' . date('d/m/Y à H:i') . '.' . PHP_EOL;
                 $body .= 'Informations du Contact :' . PHP_EOL;
