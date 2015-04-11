@@ -66,7 +66,7 @@ abstract class AbstractActionController extends ZendAbstractActionController
 
     protected function getCountVisit()
     {
-        $counter_name = "./data/counter.txt";
+        $counter_name = "./data/counterVisit.txt";
         $counterVal = 0;
 
         // Check if a text file exists. If not create one and initialize it to zero.
