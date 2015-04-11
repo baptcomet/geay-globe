@@ -63,7 +63,7 @@ class BlogController extends AbstractActionController
                 $body .= "\t" . 'Nom : ' . $lastname . PHP_EOL;
                 $body .= "\t" . 'Email : ' . $emailFrom . PHP_EOL;
                 $body .= PHP_EOL;
-                $body .= '----------------------------------------------------------------------------';
+                $body .= '-----------------------------------------------------------------------------';
                 $body .= PHP_EOL;
                 $body .= 'Objet : ' . $subject . PHP_EOL;
                 $body .= PHP_EOL;
