@@ -56,18 +56,22 @@ class BlogController extends AbstractActionController
 
                 $emailTo = 'contact@geays-globe.fr';
 
-                $body = '<p>Ce message a été envoyé depuis <a href="http://geays-globe.fr" target="_blank">Geay\'s Globe</a> le ' . date('d/m/Y à H:i') . '.</p>' . PHP_EOL;
-                $body .= '<h2 style="font-size:16px;border-bottom:1px solid #AAA;">Informations du Contact</h2>' . PHP_EOL;
-                $body .= '<p>' . PHP_EOL;
-                $body .= "\t" . '<b>Prénom :</b> ' . $firstname . '<br />' . PHP_EOL;
-                $body .= "\t" . '<b>Nom :</b> ' . $lastname . '<br />' . PHP_EOL;
-                $body .= "\t" . '<b>Email :</b> <a href="mailto:' . $emailFrom . '">' . $emailFrom . '</a>' . PHP_EOL;
-                $body .= '</p>' . PHP_EOL;
-                $body .= '<h2 style="font-size:16px;border-bottom:1px solid #AAA;">Message</h2>' . PHP_EOL;
-                $body .= '<p><b>Objet :</b> ' . $subject . '</p>' . PHP_EOL;
-                $body .= '<p>' . nl2br($message) . '</p>';
+                $body = 'Ce message a été envoyé depuis Geay\'s Globe le ' . date('d/m/Y à H:i') . '.' . PHP_EOL;
+                $body .= 'Informations du Contact :' . PHP_EOL;
+                $body .= PHP_EOL;
+                $body .= "\t" . 'Prénom : ' . $firstname . PHP_EOL;
+                $body .= "\t" . 'Nom : ' . $lastname . PHP_EOL;
+                $body .= "\t" . 'Email : ' . $emailFrom . PHP_EOL;
+                $body .= PHP_EOL;
+                $body .= 'Message :' . PHP_EOL;
+                $body .= PHP_EOL;
+                $body .= 'Objet : ' . $subject . PHP_EOL;
+                $body .= $message;
 
-                $sentMail = $this->sendMail($emailTo, $body, $subject);
+
+                $headers = "From: " . $emailFrom;
+
+                $sentMail = mail($emailTo, $subject, $body, $headers);
 
                 if ($sentMail) {
                     $this->flashMessenger()->addSuccessMessage('Merci pour votre message! ;)');
@@ -161,22 +165,6 @@ class BlogController extends AbstractActionController
             'allCategories' => $allCategories,
             'selectedCategories' => $selectedCategories,
         ));
-    }
-
-
-    public function sendMail($to, $message, $title)
-    {
-        $html = '<html>' . PHP_EOL;
-        $html .= "\t" . '<head>' . PHP_EOL;
-        $html .= "\t" . '</head>' . PHP_EOL;
-        $html .= "\t" . '<body>' . PHP_EOL;
-        $html .= $message;
-        $html .= "\t" . '</body>' . PHP_EOL;
-        $html .= '</html>' . PHP_EOL;
-
-        $mailSent = mail($to, $title, $html);
-
-        return $mailSent;
     }
 }
 
