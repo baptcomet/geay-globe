@@ -174,28 +174,9 @@ class BlogController extends AbstractActionController
         $html .= "\t" . '</body>' . PHP_EOL;
         $html .= '</html>' . PHP_EOL;
 
-        $bodyMessage = new \Zend\Mime\Message();
-        $bodyPart = new Part($html);
-        $bodyPart->type = 'text/html';
-        $bodyPart->charset = 'utf-8';
-
-        $bodyMessage->setParts(array($bodyPart));
-
-        //$config = $this->getServiceLocator()->get('Configuration');
-
-        $message = new Message();
-        $message->addTo($to)
-            ->addFrom('contact@geays-globe.fr')
-            ->setSubject($title)
-            ->setBody($bodyMessage);
-
-        $mailSent = mail($to, $title, 'test message');
+        $mailSent = mail($to, $title, $html);
 
         return $mailSent;
-
-//        $options = new SmtpOptions($config['mail']['transport']['options']);
-//        $transport = new Smtp($options);
-//        $transport->send($message);
     }
 }
 
