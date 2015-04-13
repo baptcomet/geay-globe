@@ -27,7 +27,12 @@ class ArticleController extends AbstractActionController
         }
 
         $entityManager = $this->getEntityManager();
+        /** @var Article $article */
         $article = $entityManager->getRepository('Blog\Entity\Article')->find($id);
+
+        if (!$article->isPublished()) {
+            return $this->redirect()->toRoute('blog');
+        }
 
         $this->layout('layout/front');
         return new ViewModel(array(
