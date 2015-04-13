@@ -2,6 +2,8 @@
 
 /**
  * @var Blog\Entity\Article $article
+ * @var Blog\Entity\Article $articleRecent
+ * @var Blog\Entity\Article $articleAncien
  * @var Blog\Entity\Picture $picture
  * @var Blog\Entity\Tag $tag
  */
@@ -99,6 +101,25 @@ $this->headTitle($title);
             </div>
             <br/>
         <?php endforeach ?>
+
+        <!-- NAVIGATION -->
+        <hr class=""/>
+        <div class="row">
+            <div class="col-lg-6">
+                <?php if (!is_null($articleRecent)) : ?>
+                    <a class="inbox-link" href="<?php echo $this->url('article', array('action' => 'detail', 'id' => $articleRecent->getId())) ?>">
+                        << Article plus récent : <?php echo $articleRecent->getTitle() ?>
+                    </a>
+                <?php endif ?>
+            </div>
+            <div class="col-lg-6">
+                <?php if (!is_null($articleAncien)) : ?>
+                    <a class="inbox-link pull-right" href="<?php echo $this->url('article', array('action' => 'detail', 'id' => $articleAncien->getId())) ?>">
+                        Article plus ancien : <?php echo $articleAncien->getTitle() ?> >>
+                    </a>
+                <?php endif ?>
+            </div>
+        </div>
     </div>
 </div>
 

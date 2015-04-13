@@ -40,6 +40,15 @@ a.silent:hover {
     color: #6495ed;
 }
 
+a.inbox-link {
+    color: #fff;
+}
+
+a.inbox-link:hover {
+    text-decoration: none;
+    color: #3465bd;
+}
+
 span.book {
     position: absolute;
     bottom: 5px;

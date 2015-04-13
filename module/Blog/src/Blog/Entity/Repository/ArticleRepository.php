@@ -97,4 +97,50 @@ class ArticleRepository extends EntityRepository
         }
         return $categories;
     }
+
+    /**
+     * @param Article $article
+     * @return Article
+     */
+    public function getRecentArticleFrom($article)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('a')
+            ->from('Blog\Entity\Article', 'a')
+            ->where('a.date > ?1')
+            ->andWhere('a.status = ?2')
+            ->setParameter(1, $article->getDate())
+            ->setParameter(2, Article::STATUS_ONLINE)
+            ->orderBy('a.date', 'ASC')
+            ->setMaxResults(1);
+        $result = $qb->getQuery()->getResult();
+        if (sizeof($result)) {
+            return $result[0];
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * @param Article $article
+     * @return Article
+     */
+    public function getOldArticleFrom($article)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('a')
+            ->from('Blog\Entity\Article', 'a')
+            ->where('a.date < ?1')
+            ->andWhere('a.status = ?2')
+            ->setParameter(1, $article->getDate())
+            ->setParameter(2, Article::STATUS_ONLINE)
+            ->orderBy('a.date', 'DESC')
+            ->setMaxResults(1);
+        $result = $qb->getQuery()->getResult();
+        if (sizeof($result)) {
+            return $result[0];
+        } else {
+            return null;
+        }
+    }
 }
