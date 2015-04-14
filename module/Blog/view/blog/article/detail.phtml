@@ -108,14 +108,14 @@ $this->headTitle($title);
             <div class="col-lg-6">
                 <?php if (!is_null($articleRecent)) : ?>
                     <a class="inbox-link" href="<?php echo $this->url('article', array('action' => 'detail', 'id' => $articleRecent->getId())) ?>">
-                        << Article plus récent : <?php echo $articleRecent->getTitle() ?>
+                        << <?php echo $articleRecent->getTitle() ?>
                     </a>
                 <?php endif ?>
             </div>
             <div class="col-lg-6">
                 <?php if (!is_null($articleAncien)) : ?>
                     <a class="inbox-link pull-right" href="<?php echo $this->url('article', array('action' => 'detail', 'id' => $articleAncien->getId())) ?>">
-                        Article plus ancien : <?php echo $articleAncien->getTitle() ?> >>
+                        <?php echo $articleAncien->getTitle() ?> >>
                     </a>
                 <?php endif ?>
             </div>
