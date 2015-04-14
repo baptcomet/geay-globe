@@ -33,7 +33,7 @@ class ArticleController extends AbstractActionController
         /** @var Article $article */
         $article = $articleRepository->find($id);
 
-        if (!$article->isPublished()) {
+        if (!$article->isPublished() && is_null($this->identity())) {
             return $this->redirect()->toRoute('blog');
         }
 
