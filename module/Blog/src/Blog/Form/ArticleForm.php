@@ -72,6 +72,18 @@ class ArticleForm extends Form
         $tags->setLabelAttributes(array('class' => 'control-label'));
         $this->add($tags);
 
+        // Youtube
+        $youtube = new Text('tagsString');
+        $youtube->setAttributes(
+            array(
+                'id' => 'youtube',
+                'class' => 'form-control',
+            )
+        );
+        $youtube->setLabel('Vidéo YouTube (copier après ...watch?v=)');
+        $youtube->setLabelAttributes(array('class' => 'control-label'));
+        $this->add($youtube);
+
         // Texte
         $text = new Textarea('text');
         $text->setAttributes(

@@ -99,6 +99,14 @@ $this->headTitle($title);
             </div>
             <br/>
         <?php endforeach ?>
+        <?php if ($article->getYoutube()) : ?>
+            <div class="row">
+                <div class="col-lg-12">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/<?php echo $article->getYoutube() ?>" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+            <br/>
+        <?php endif ?>
     </div>
 </div>
 

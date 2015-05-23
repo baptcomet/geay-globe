@@ -87,6 +87,9 @@ class Article extends AbstractEntity
     /** @ORM\Column(name="year", type="string", nullable=false) */
     protected $year;
 
+    /** @ORM\Column(name="youtube", type="string", nullable=true) */
+    protected $youtube;
+
 
     public function __construct()
     {
@@ -374,6 +377,22 @@ class Article extends AbstractEntity
     {
         $this->text = $text;
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getYoutube()
+    {
+        return $this->youtube;
+    }
+
+    /**
+     * @param mixed $youtube
+     */
+    public function setYoutube($youtube)
+    {
+        $this->youtube = $youtube;
     }
 
     /**
