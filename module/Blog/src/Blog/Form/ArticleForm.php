@@ -73,7 +73,7 @@ class ArticleForm extends Form
         $this->add($tags);
 
         // Youtube
-        $youtube = new Text('tagsString');
+        $youtube = new Text('youtube');
         $youtube->setAttributes(
             array(
                 'id' => 'youtube',
