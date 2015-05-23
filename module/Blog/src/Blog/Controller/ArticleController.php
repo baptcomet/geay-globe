@@ -4,6 +4,7 @@ namespace Blog\Controller;
 
 use Blog\Entity\Article;
 use Blog\Entity\Picture;
+use Blog\Entity\Repository\ArticleRepository;
 use Blog\Entity\Tag;
 use Blog\Form\ArticleForm;
 use Blog\Form\Filter\ArticleFilter;
@@ -27,11 +28,23 @@ class ArticleController extends AbstractActionController
         }
 
         $entityManager = $this->getEntityManager();
-        $article = $entityManager->getRepository('Blog\Entity\Article')->find($id);
+        /** @var ArticleRepository $articleRepository */
+        $articleRepository = $entityManager->getRepository('Blog\Entity\Article');
+        /** @var Article $article */
+        $article = $articleRepository->find($id);
+
+        if (!$article->isPublished() && is_null($this->identity())) {
+            return $this->redirect()->toRoute('blog');
+        }
+
+        $articleRecent = $articleRepository->getRecentArticleFrom($article);
+        $articleAncien = $articleRepository->getOldArticleFrom($article);
 
         $this->layout('layout/front');
         return new ViewModel(array(
             'article' => $article,
+            'articleRecent' => $articleRecent,
+            'articleAncien' => $articleAncien,
         ));
     }
 
