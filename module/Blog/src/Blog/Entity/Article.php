@@ -375,8 +375,7 @@ class Article extends AbstractEntity
      */
     public function setText($text)
     {
-        $textToStore = nl2br(htmlentities($text, ENT_QUOTES, 'UTF-8'));
-        $this->text = $textToStore;
+        $this->text = nl2br($text);
         return $this;
     }
 
