@@ -20,11 +20,13 @@ class Article extends AbstractEntity
     const CATEGORY_RESTAURANT = '1';
     const CATEGORY_TRIP = '2';
     const CATEGORY_PLACE = '3';
+    const CATEGORY_VIDEO = '4';
 
     public static $categories = array(
         self::CATEGORY_RESTAURANT => 'Restaurant',
         self::CATEGORY_TRIP => 'Voyage',
         self::CATEGORY_PLACE => 'Place To Be',
+        self::CATEGORY_VIDEO => 'Video',
     );
 
     public static $positions = array(
