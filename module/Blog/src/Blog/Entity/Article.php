@@ -26,7 +26,7 @@ class Article extends AbstractEntity
         self::CATEGORY_RESTAURANT => 'Restaurant',
         self::CATEGORY_TRIP => 'Voyage',
         self::CATEGORY_PLACE => 'Place To Be',
-        self::CATEGORY_VIDEO => 'Video',
+        self::CATEGORY_VIDEO => 'Vidéo',
     );
 
     public static $positions = array(
