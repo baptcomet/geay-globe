@@ -96,7 +96,7 @@ $this->headTitle($title);
 
                         <?php if ($picture->getText()) : ?>
                             <p class="text-<?php echo $picture->getTextPosition() ?>">
-                                <br/><?php echo $picture->getText() ?>
+                                <br/><?php echo nl2br($picture->getText()) ?>
                             </p>
                         <?php endif ?>
                     </div>

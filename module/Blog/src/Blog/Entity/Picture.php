@@ -151,7 +151,7 @@ class Picture
      */
     public function setText($text)
     {
-        $this->text = nl2br($text);
+        $this->text = $text;
         return $this;
     }
 
