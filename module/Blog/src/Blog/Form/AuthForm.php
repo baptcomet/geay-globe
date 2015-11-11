@@ -24,7 +24,7 @@ class AuthForm extends Form
         // Nickname
         $nickname = new Text('nickname');
         $nickname->setLabel('Pseudo');
-        $nickname->setLabelAttributes(array('class' => 'col-md-4 control-label'));
+        $nickname->setLabelAttributes(array('class' => 'col-md-4 control-label text-white'));
         $nickname->setAttributes(
             array(
                 'id' =>'nickname',
@@ -37,7 +37,7 @@ class AuthForm extends Form
         // Password
         $password = new Password('password');
         $password->setLabel('Mot de Passe');
-        $password->setLabelAttributes(array('class' => 'col-md-4 control-label'));
+        $password->setLabelAttributes(array('class' => 'col-md-4 control-label text-white'));
         $password->setAttributes(
             array(
                 'id' => 'password',
@@ -53,7 +53,7 @@ class AuthForm extends Form
         $submit->setAttributes(
             array(
                 'id' => 'submitbutton',
-                'class' => 'btn btn-primary btn-lg btn-block'
+                'class' => 'btn btn-default btn-lg btn-block'
             )
         );
         $this->add($submit);

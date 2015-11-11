@@ -7,22 +7,22 @@
 
 .yellowtitle {
     font: 76px/76px 'Yellowtail';
-    color: #eb7093;
+    color: #ccc;
 }
 
 .yellowtitle:hover {
     text-decoration: none;
-    color: #ea6891;
+    color: #aaa;
 }
 
 .yellowtail {
     font: 'Yellowtail' !important;
-    color: #eb7093 !important;
+    color: #ccc !important;
 }
 
 .yellowtail:hover {
     text-decoration: none !important;
-    color: #ea6891 !important;
+    color: #aaa !important;
 }
 
 hr.long-hr {
@@ -57,4 +57,8 @@ span.book {
     font-weight: 300;
     color: black;
     font: 24px 'Yellowtail';
+}
+
+.text-white {
+    color: #ffffff;
 }
