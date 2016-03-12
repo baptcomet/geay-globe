@@ -55,14 +55,16 @@ abstract class AbstractActionController extends ZendAbstractActionController
         $counterVal = fread($f, filesize($counter_name));
         fclose($f);
 
-        // Has visitor been counted in this session?
-        // If not, increase counter value by one
-        if(!isset($_SESSION['hasVisited'])){
-            $_SESSION['hasVisited']="yes";
-            $counterVal++;
-            $f = fopen($counter_name, "w");
-            fwrite($f, $counterVal);
-            fclose($f);
+        if ($counterVal) {
+            // Has visitor been counted in this session?
+            // If not, increase counter value by one
+            if(!isset($_SESSION['hasVisited'])){
+                $_SESSION['hasVisited']="yes";
+                $counterVal++;
+                $f = fopen($counter_name, "w");
+                fwrite($f, $counterVal);
+                fclose($f);
+            }
         }
     }
 
