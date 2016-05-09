@@ -1,0 +1,117 @@
+<?php
+/**
+ * @var \Blog\Entity\Article $article
+ * @var \Blog\Entity\Picture $picture
+ * @var array $displayedCollection
+ */
+
+$title = $this->translate('Edition des Photos');
+$this->headTitle($title);
+?>
+
+<?php echo $this->partial('partial/flashmessenger') ?>
+
+<div class="row">
+    <div class="box">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="list-inline pull-right">
+                    <li>
+                        <a href="<?php echo $this->url('manage') ?>" class="btn btn-default">
+                            <span class="glyphicon glyphicon-chevron-left"></span>Retour
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $this->url('article', array('action' => 'edit', 'id' => $article->getId())) ?>"
+                           class="btn btn-primary">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                            Modifier l'article
+                        </a>
+                    </li>
+                </ul>
+                <h4><?php echo $title ?></h4>
+            </div>
+        </div>
+
+        <hr class="long-hr"/>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <?php if ($article->getPictures()->count() == 0) : ?>
+                    <div class="alert alert-warning" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign"></span>
+                        Il n'y a pas encore de bloc photo.
+                    </div>
+                <?php endif ?>
+                <?php foreach ($article->getPictures() as $picture) : ?>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <ul class="list-inline pull-right">
+                                <li>
+                                    <a href="<?php echo $this->url('picture', array('action' => 'edit', 'id' => $picture->getId()))?>"
+                                       title="Modifier">
+                                        <span class="glyphicon glyphicon-pencil text-warning"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo $this->url('article', array('action' => 'delete-picture', 'id' => $article->getId(), 'picture' => $picture->getId()))?>"
+                                       title="Supprimer">
+                                        <span class="glyphicon glyphicon-trash text-danger"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <h3 class="panel-title"><?php echo $picture->getLegend() ?>&nbsp;</h3>
+                        </div>
+                        <img src="<?php echo $this->url('picture', array('action' => 'images', 'id' => $article->getId(), 'name' => $picture->getFilename())) ?>"
+                             alt="<?php $picture->getLegend() ?>" class="img-responsive">
+                        <table class="table">
+                            <tbody>
+                            <tr>
+                                <th>Légende</th>
+                                <td><?php echo $picture->getLegend() ?></td>
+                            </tr>
+                            <tr>
+                                <th>Position</th>
+                                <td><?php echo $picture->getPositionLabel() ?></td>
+                            </tr>
+                            <tr>
+                                <th>Texte</th>
+                                <td><?php echo $picture->getText() ?></td>
+                            </tr>
+                            <tr>
+                                <th>Position texte</th>
+                                <td><?php echo $picture->getTextPositionLabel() ?></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                <?php endforeach ?>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>Gallerie</h4>
+                    </div>
+                    <div class="panel-body">
+                        <form name="uploadFiles" id="uploadFiles" method="post"
+                              action="<?php echo $this->url('article', array('action' => 'upload-gallery', 'id' => $article->getId())) ?>" enctype="multipart/form-data">
+                            <input type="file" name="files[]" multiple>
+                            <hr/>
+                            <button type="submit" class="btn btn-primary">Uploader les photos</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+</script>

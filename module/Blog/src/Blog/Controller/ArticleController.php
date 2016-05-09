@@ -8,17 +8,24 @@ use Blog\Entity\Repository\ArticleRepository;
 use Blog\Entity\Tag;
 use Blog\Form\ArticleForm;
 use Blog\Form\Filter\ArticleFilter;
+use Blog\Form\Filter\FilesInputFilter;
+use Blog\Form\Filter\FilesOptions;
 use Blog\Form\PictureForm;
 use Doctrine\Common\Collections\ArrayCollection;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
+use Exception;
 use Imagick;
+use InvalidArgumentException;
 use Zend\Filter\File\Rename;
-use Zend\Filter\File\RenameUpload;
 use Zend\Http\Request;
+use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 
 class ArticleController extends AbstractActionController
 {
+    const CODE_SUCCESS = 'success';
+    const CODE_ERROR = 'error';
+    
     public function detailAction()
     {
         $this->countVisit();
@@ -291,6 +298,107 @@ class ArticleController extends AbstractActionController
             'form' => $form,
             'article' => $article,
         ));
+    }
+
+    public function editGalleryAction()
+    {
+        if (is_null($this->identity())) {
+            return $this->redirect()->toRoute('home');
+        }
+
+        $entityManager = $this->getEntityManager();
+
+        $id = (int) $this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('manage');
+        }
+
+        /** @var Article $article */
+        $article = $entityManager->getRepository('Blog\Entity\Article')->find($id);
+        if (!$article) {
+            return $this->redirect()->toRoute('manage');
+        }
+
+        $this->layout('layout/front');
+        return new ViewModel(array(
+            'article' => $article,
+        ));
+    }
+
+    public function uploadGalleryAction()
+    {
+        if (is_null($this->identity())) {
+            return $this->redirect()->toRoute('home');
+        }
+
+        $id = (int) $this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('manage');
+        }
+
+        $entityManager = $this->getEntityManager();
+
+        /** @var Article $article */
+        $article = $entityManager->getRepository('Blog\Entity\Article')->find($id);
+        if (!$article) {
+            return $this->redirect()->toRoute('manage');
+        }
+
+        $files = $this->params()->fromFiles('files');
+        $code = self::CODE_SUCCESS;
+
+        foreach ($files as $file) {
+            try {
+                $picture = new Picture();
+
+                /** Déplacement de la photo */
+                $directory = Article::BASE_UPLOAD_PATH . $article->getId() . '/' . Picture::FOLDER . '/';
+                // Créé le répertoire s'il n'existe pas
+                if (!is_dir($directory)) {
+                    mkdir($directory, 0775, true);
+                }
+
+                // Redimentionnement de l'image TODO décommenter
+  //              $image = new Imagick();
+  //              $image->readImage($file['tmp_name']);
+  //              if ($image->getImageWidth() > 1120) {
+  //                  $image->resizeImage(1120, 0, Imagick::FILTER_LANCZOS, 1);
+  //              }
+  //              $image->writeImage(realpath($directory) . DIRECTORY_SEPARATOR . 'img.tmp');
+  //              $image->clear();
+
+                $renamer = new Rename(
+                    array(
+                        'target' => $directory . $file['name'],
+                        'randomize' => true,
+                    )
+                );
+
+                $newPath = $renamer->filter($directory . 'img.tmp');
+                $newPathExplode = explode(DIRECTORY_SEPARATOR, $newPath);
+                $picture->setFilename($newPathExplode[sizeof($newPathExplode) - 1]);
+                $picture->setArticle($article);
+
+                // Suppression du fichier temporaire
+                unlink($directory . 'img.tmp');
+
+                // TODO corriger le folder not writable
+                $thumbnail = $directory . 'thumbnail_' . $picture->getFilename();
+                create_square_image($newPath, $thumbnail, 50);
+                chmod($thumbnail, 0775);
+
+                $medium_thumbnail = $directory . 'medium_' . $picture->getFilename();
+                create_square_image($newPath, $medium_thumbnail, 460);
+                chmod($medium_thumbnail, 0775);
+
+            } catch (Exception $e) {
+                $code = self::CODE_ERROR;
+            }
+        }
+        
+        return new JsonModel([
+            'code' => $code
+        ]);
     }
 
     public function deletePictureAction()

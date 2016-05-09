@@ -21,6 +21,8 @@ class Article extends AbstractEntity
     const CATEGORY_TRIP = '2';
     const CATEGORY_PLACE = '3';
     const CATEGORY_VIDEO = '4';
+    
+    const MAX_PICTURES_COUNT = 24;
 
     public static $categories = array(
         self::CATEGORY_RESTAURANT => 'Restaurant',
