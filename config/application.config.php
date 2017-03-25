@@ -9,7 +9,7 @@ switch ($_SERVER['SERVER_ADDR']) {
         define('APPLICATION_ENV', 'development');
         define('APPLICATION_CACHE', false);
         break;
-    case '178.62.66.77':
+    case '195.154.207.13':
         define('APPLICATION_ENV', 'production');
         define('APPLICATION_CACHE', true);
         break;
