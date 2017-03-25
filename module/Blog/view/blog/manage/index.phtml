@@ -9,14 +9,11 @@ use Blog\Entity\Article;
 
 $title = 'Gestion du Blog';
 $this->headTitle($title);
-
 ?>
-
+<br>
 <?php echo $this->partial('partial/flashmessenger') ?>
-
 <div class="row">
     <div class="box">
-
         <div class="row">
             <div class="col-lg-12">
                 <ul class="list-inline pull-right">
@@ -29,9 +26,6 @@ $this->headTitle($title);
                 <h4><?php echo $title ?></h4>
             </div>
         </div>
-
-        <hr class="long-hr"/>
-
         <div class="row">
             <div class="col-lg-12">
                 <span class="label label-danger pull-right">
@@ -39,9 +33,7 @@ $this->headTitle($title);
                 </span>
             </div>
         </div>
-
-        <hr class="long-hr"/>
-
+        <hr class="short-hr"/>
         <div class="row">
             <div class="col-lg-12">
 
@@ -63,8 +55,8 @@ $this->headTitle($title);
                                 <td>
                                     <?php if ($article->getMainPicture()) : ?>
                                         <?php $picture = $article->getMainPicture() ?>
-                                        <img src="<?php echo $this->url('picture', array('action' => 'images-medium', 'id' => $article->getId(), 'name' => $picture->getThumbnail())) ?>"
-                                             alt="<?php $article->getCompleteTitle() ?>" class="img-responsive img-left">
+                                        <img src="<?php echo $picture->getFlickrUrl() ?>" width="50" height="50"
+                                             alt="<?php $article->getCompleteTitle() ?>" class="img-circle">
                                     <?php endif ?>
                                 </td>
                                 <td>
@@ -109,30 +101,23 @@ $this->headTitle($title);
                         <?php endforeach ?>
                         </tbody>
                     </table>
-
                 <?php else : ?>
-
                     <p class="center-text">
                         Aucun article !
                     </p>
-
                 <?php endif ?>
-
             </div>
         </div>
 
     </div>
 </div>
 <script>
-
     $('[name="publish-switcher"]').bootstrapSwitch({
         size: 'mini',
         onColor: 'success',
         offColor: 'danger',
         onText: 'ON',
         offText: 'OFF'
-//        labelWidth: 20,
-//        handleWidth: 70
     });
 
     function switchPublication(articleId) {
@@ -155,5 +140,4 @@ $this->headTitle($title);
             }
         });
     }
-
 </script>

@@ -11,9 +11,6 @@ use Blog\Form\Filter\ArticleFilter;
 use Blog\Form\PictureForm;
 use Doctrine\Common\Collections\ArrayCollection;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
-use Imagick;
-use Zend\Filter\File\Rename;
-use Zend\Filter\File\RenameUpload;
 use Zend\Http\Request;
 use Zend\View\Model\ViewModel;
 
@@ -98,6 +95,22 @@ class ArticleController extends AbstractActionController
                     }
                     $article->setTags($tagsObjects);
                 }
+
+                // Traite les photos préchargées
+                if ($data['photos'] != '') {
+                    $photos = explode(PHP_EOL, $data['photos']);
+                    $rank = 1;
+                    foreach ($photos as $photo) {
+                        $picture = new Picture();
+                        $picture->setFlickrUrl($photo)
+                            ->setLegend('')
+                            ->setRank($rank)
+                            ->setArticle($article);
+                        $entityManager->persist($picture);
+                        $rank++;
+                    }
+                }
+
                 $article->setWriter($this->identity());
                 $article->unpublish();
                 $entityManager->persist($article);
@@ -182,6 +195,22 @@ class ArticleController extends AbstractActionController
                     }
                     $article->setTags($tagsObjects);
                 }
+
+                // Traite les photos préchargées
+                if ($data['photos'] != '') {
+                    $photos = explode(PHP_EOL, $data['photos']);
+                    $rank = $article->getPictures()->count() + 1;
+                    foreach ($photos as $photo) {
+                        $picture = new Picture();
+                        $picture->setFlickrUrl($photo)
+                            ->setLegend('')
+                            ->setRank($rank)
+                            ->setArticle($article);
+                        $entityManager->persist($picture);
+                        $rank++;
+                    }
+                }
+
                 $article->setWriter($this->identity());
                 $entityManager->flush();
 
@@ -233,48 +262,10 @@ class ArticleController extends AbstractActionController
         if ($request->isPost()) {
             /** @var \Zend\Stdlib\Parameters $data */
             $data = $request->getPost();
-            $data->set('filename', $request->getFiles()->get('filename'));
             $form->setData($data);
 
             if ($form->isValid()) {
-                /** Déplacement de la photo */
-                $directory = Article::BASE_UPLOAD_PATH . $article->getId() . '/' . Picture::FOLDER . '/';
-                // Créé le répertoire s'il n'existe pas
-                if (!is_dir($directory)) {
-                    mkdir($directory, 0775, true);
-                }
-
-                // Redimentionnement de l'image
-                $image = new Imagick();
-                $image->readImage($picture->getTempFilename());
-                if ($image->getImageWidth() > 1120) {
-                    $image->resizeImage(1120, 0, Imagick::FILTER_LANCZOS, 1);
-                }
-                $image->writeImage(realpath($directory) . DIRECTORY_SEPARATOR . 'img.tmp');
-                $image->clear();
-
-                $renamer = new Rename(
-                    array(
-                        'target' => $directory . $picture->getFilename(),
-                        'randomize' => true,
-                    )
-                );
-
-                $newPath = $renamer->filter($directory . 'img.tmp');
-                $newPathExplode = explode(DIRECTORY_SEPARATOR, $newPath);
-                $picture->setFilename($newPathExplode[sizeof($newPathExplode) - 1]);
                 $picture->setArticle($article);
-
-                // Suppression du fichier temporaire
-                unlink($directory . 'img.tmp');
-
-                $thumbnail = $directory . 'thumbnail_' . $picture->getFilename();
-                create_square_image($newPath, $thumbnail, 50);
-                chmod($thumbnail, 0775);
-
-                $medium_thumbnail = $directory . 'medium_' . $picture->getFilename();
-                create_square_image($newPath, $medium_thumbnail, 460);
-                chmod($medium_thumbnail, 0775);
 
                 $entityManager->persist($picture);
                 $entityManager->flush();
@@ -313,14 +304,6 @@ class ArticleController extends AbstractActionController
             return $this->redirect()->toRoute('project');
         }
 
-        // Suppression des fichiers
-        $file = Article::BASE_UPLOAD_PATH . $idArticle . '/' . Picture::FOLDER . '/' . $picture->getFilename();
-        $medium_file = Article::BASE_UPLOAD_PATH . $idArticle . '/' . Picture::FOLDER . '/medium_' . $picture->getFilename();
-        $thumbnail_file = Article::BASE_UPLOAD_PATH . $idArticle . '/' . Picture::FOLDER . '/thumbnail_' . $picture->getFilename();
-        unlink($file);
-        unlink($medium_file);
-        unlink($thumbnail_file);
-
         // Suppression de l'illustration en DB
         $entityManager->remove($picture);
         $entityManager->flush();
@@ -345,6 +328,30 @@ class ArticleController extends AbstractActionController
 
         // Switch l'état de publication de l'article
         $article->switchPublication();
+
+        $entityManager->flush();
+
+        return true;
+    }
+
+    public function ajaxReorderPicturesAction()
+    {
+        /** @var Request $request */
+        $request = $this->getRequest();
+        $data = $request->getPost();
+        
+        if (is_null($this->identity())) {
+            die;
+        }
+
+        $entityManager = $this->getEntityManager();
+        
+        $sortedIDs = $data['sortedIDs'];
+        foreach ($sortedIDs as $rank => $pictureId) {
+            /** @var Picture $picture */
+            $picture = $entityManager->getRepository('Blog\Entity\Picture')->find($pictureId);
+            $picture->setRank($rank);
+        }
 
         $entityManager->flush();
 

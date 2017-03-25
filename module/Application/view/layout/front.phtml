@@ -11,6 +11,7 @@
     <!-- Scripts -->
     <?php
     echo $this->headScript()
+        ->prependFile($this->basePath('/js/geays-globe.js'))
         ->prependFile($this->basePath('/js/bootstrap-switch.min.js'))
         ->prependFile($this->basePath('/js/jquery.mousewheel.pack.js'))
         ->prependFile($this->basePath('/css/jquery.fancybox.pack.js'))
@@ -41,7 +42,8 @@
         ->prependStylesheet($this->basePath('/css/magnific-popup.css'))
         ->prependStylesheet($this->basePath('/css/codrops/component.css'))
         ->prependStylesheet($this->basePath('/css/geay-globe.css'))
-        ->prependStylesheet($this->basePath('/css/business-casual.css'))
+        //->prependStylesheet($this->basePath('/css/custom.css'))
+        //->prependStylesheet($this->basePath('/css/business-casual.css'))
         ->prependStylesheet($this->basePath('/css/bootstrap.min.css'))
         ->prependStylesheet($this->basePath('/css/jquery.tag-editor.css'))
         ->prependStylesheet($this->basePath('/css/jquery-ui.min.css'))
@@ -64,13 +66,8 @@
 
 </script>
 
-<div class="brand">
-    <a class="yellowtitle" href="<?php echo $this->url('home') ?>">Geay's Globe</a>
-</div>
-<div class="address-bar">No Filter, No Problem.</div>
-
 <!-- Navigation -->
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-default navbar-clean" role="navigation">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -81,7 +78,7 @@
                 <span class="icon-bar"></span>
             </button>
             <!-- navbar-brand is hidden on larger screens, but visible when the menu is collapsed -->
-            <a class="navbar-brand yellowtail" href="<?php echo $this->url('home') ?>">Geay's Globe</a>
+            <a class="navbar-brand yellowtitle" href="<?php echo $this->url('home') ?>">Geay's Globe</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -93,7 +90,7 @@
                     <a href="<?php echo $this->url('histo') ?>">Historique</a>
                 </li>
                 <li class="<?php echo $this->navigation('navigation')->findById('tags')->isActive(true) ? 'active' : '' ?>">
-                    <a href="<?php echo $this->url('tags') ?>">#Tags</a>
+                    <a href="<?php echo $this->url('tags') ?>">#TAGS</a>
                 </li>
                 <li class="<?php echo $this->navigation('navigation')->findById('contact')->isActive(true) ? 'active' : '' ?>">
                     <a href="<?php echo $this->url('contact') ?>">Contact</a>
@@ -114,6 +111,12 @@
     </div>
     <!-- /.container -->
 </nav>
+
+<!-- Introduction -->
+<div class="intro">
+    <div class="container">
+    </div>
+</div>
 
 <div class="container">
     <?php echo $this->content ?>

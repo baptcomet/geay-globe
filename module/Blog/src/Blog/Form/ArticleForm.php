@@ -47,7 +47,20 @@ class ArticleForm extends Form
         $subtitle->setLabelAttributes(array('class' => 'control-label'));
         $this->add($subtitle);
 
-        // Catégorie
+        // Présentation
+        $presentation = new Select('presentation');
+        $presentation->setAttributes(
+            array(
+                'id' => 'presentation',
+                'class' => 'form-control',
+            )
+        );
+        $presentation->setValueOptions(Article::$presentations);
+        $presentation->setLabel('Présentation');
+        $presentation->setLabelAttributes(array('class' => 'control-label'));
+        $this->add($presentation);
+
+        // Mosaique
         $categorie = new Select('category');
         $categorie->setAttributes(
             array(
@@ -72,6 +85,8 @@ class ArticleForm extends Form
         $tags->setLabelAttributes(array('class' => 'control-label'));
         $this->add($tags);
 
+        //TODO add champ date
+
         // Youtube
         $youtube = new Text('youtube');
         $youtube->setAttributes(
@@ -83,7 +98,7 @@ class ArticleForm extends Form
         $youtube->setLabel('Vidéo YouTube (copier après ...watch?v=)');
         $youtube->setLabelAttributes(array('class' => 'control-label'));
         $this->add($youtube);
-
+        
         // Texte
         $text = new Textarea('text');
         $text->setAttributes(
@@ -91,36 +106,29 @@ class ArticleForm extends Form
                 'id' => 'text',
                 'class' => 'form-control',
                 'rows' => 5,
-                'required' => true,
             )
         );
         $text->setLabel('Texte');
         $text->setLabelAttributes(array('class' => 'control-label'));
         $this->add($text);
-
-        // Text Position
-        $textPosition = new Select('textPosition');
-        $textPosition->setAttributes(
+        
+        // Photos
+        $photos = new Textarea('photos');
+        $photos->setAttributes(
             array(
-                'id' => 'textPosition',
+                'id' => 'photos',
                 'class' => 'form-control',
+                'rows' => 5,
             )
         );
-        $textPosition->setValueOptions(
-            array(
-                'center' => 'Centrée',
-                'left' => 'Gauche',
-                'right' => 'Droite',
-            )
-        );
-        $textPosition->setLabel('Position Texte')
-            ->setLabelAttributes(array('class' => 'control-label'));
-        $this->add($textPosition);
+        $photos->setLabel('Précharger des photos (URL Flickr)');
+        $photos->setLabelAttributes(array('class' => 'control-label'));
+        $this->add($photos);
 
         // Submit
         $submit = new Submit('submit');
         $submit->setAttribute('id', 'submit');
-        $submit->setValue('Poster');
+        $submit->setValue('Enregistrer');
         $submit->setAttribute('class', 'btn btn-primary');
         $this->add($submit);
     }

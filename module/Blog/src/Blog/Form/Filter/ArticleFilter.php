@@ -47,17 +47,10 @@ class ArticleFilter extends InputFilter
 
         // TEXT
         $text = new Input('text');
+        $text->setRequired(false);
         $text->getFilterChain()
             ->attach(new StringTrim())
             ->attach(new StripTags());
-        $text->getValidatorChain()
-            ->attach(new NotEmpty())
-            ->attach(new StringLength(
-                array(
-                    'encoding' => 'UTF-8',
-                    'min' => 3,
-                )
-            ));
         $this->add($text);
     }
 }

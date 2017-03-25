@@ -2,7 +2,6 @@
 
 namespace Blog\Entity;
 
-use Blog\Entity\Article;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -11,17 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Picture
 {
-    const FOLDER = 'pictures';
-    const POSITION_LEFT = 'left';
-    const POSITION_RIGHT = 'right';
-    const POSITION_CENTER = 'center';
-
-    public static $positions = array(
-        self::POSITION_LEFT => 'Gauche',
-        self::POSITION_RIGHT => 'Droite',
-        self::POSITION_CENTER => 'Centrée',
-    );
-
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -32,20 +20,11 @@ class Picture
     /** @ORM\Column(name="legend", type="string", length=256) */
     protected $legend;
 
-    /** @ORM\Column(name="filename", type="string", length=250) */
-    protected $filename;
+    /** @ORM\Column(name="flickr_url", type="string", length=250) */
+    protected $flickrUrl;
 
-    /** @var String nom temporaire du fichier sauvegardé par PHP */
-    protected $tmpName;
-
-    /** @ORM\Column(name="position", type="string", nullable=false) */
-    protected $position;
-
-    /** @ORM\Column(name="text", type="text", nullable=true) */
-    protected $text;
-
-    /** @ORM\Column(name="text_position", type="text", nullable=false) */
-    protected $textPosition;
+    /** @ORM\Column(name="rank", type="integer") */
+    protected $rank;
 
     /**
      * @ORM\ManyToOne(targetEntity="Article", inversedBy="pictures", fetch="EXTRA_LAZY", cascade={"persist"})
@@ -80,134 +59,6 @@ class Picture
     }
 
     /**
-     * @return string
-     */
-    public function getFilename()
-    {
-        return $this->filename;
-    }
-
-    /**
-     * @return string
-     */
-    public function getThumbnail()
-    {
-        return 'thumbnail_' . $this->filename;
-    }
-
-    /**
-     * Sauvegarde également le fichier temporaire créé par PHP si le type est un array
-     * @param array|string $file
-     * @return Picture $this
-     */
-    public function setFilename($file)
-    {
-        if (is_array($file) && isset($file['name']) && isset($file['tmp_name'])) {
-            $this->tmpName = $file['tmp_name'];
-            $file = $file['name'];
-        }
-        $this->filename = $file;
-        return $this;
-    }
-
-    /**
-     * Retourne le fichier temporaire créé par PHP
-     * @return String
-     */
-    public function getTempFilename()
-    {
-        return $this->tmpName;
-    }
-
-    /**
-     * @param string $position
-     * @return Picture $this
-     */
-    public function setPosition($position)
-    {
-        $this->position = $position;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPosition()
-    {
-        return $this->position;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPositionLabel()
-    {
-        return self::$positions[$this->position];
-    }
-
-    /**
-     * @param string $text
-     * @return Picture $this
-     */
-    public function setText($text)
-    {
-        $this->text = $text;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getText()
-    {
-        return $this->text;
-    }
-
-    /**
-     * @param string $textPosition
-     * @return Picture $this
-     */
-    public function setTextPosition($textPosition)
-    {
-        $this->textPosition = $textPosition;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTextPosition()
-    {
-        return $this->textPosition;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTextPositionLabel()
-    {
-        return self::$positions[$this->textPosition];
-    }
-
-    /**
-     * @param string $tmpName
-     * @return Picture $this
-     */
-    public function setTmpName($tmpName)
-    {
-        $this->tmpName = $tmpName;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTmpName()
-    {
-        return $this->tmpName;
-    }
-
-    /**
      * @return Article
      */
     public function getArticle()
@@ -228,23 +79,36 @@ class Picture
     /**
      * @return string
      */
-    public function getPath()
+    public function getFlickrUrl()
     {
-        return Article::BASE_UPLOAD_PATH . $this->getArticle()->getId() . '/' . self::FOLDER . '/' . $this->filename;
+        return $this->flickrUrl;
     }
 
     /**
-     * Retourne la liste des extensions autorisés pour les illustrations
-     * @return array
+     * @param string $flickrUrl
+     * @return Picture $this
      */
-    public static function getStaticAuthorisedExtensionList()
+    public function setFlickrUrl($flickrUrl)
     {
-        return array(
-            'jpg',
-            'jpeg',
-            'gif',
-            'bmp',
-            'png',
-        );
+        $this->flickrUrl = $flickrUrl;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRank()
+    {
+        return $this->rank;
+    }
+
+    /**
+     * @param int $rank
+     * @return Picture $this
+     */
+    public function setRank($rank)
+    {
+        $this->rank = $rank;
+        return $this;
     }
 }

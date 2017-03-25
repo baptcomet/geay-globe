@@ -1,12 +1,9 @@
 <?php
-
 /**
  * @var Doctrine\Common\Collections\ArrayCollection $articles
  * @var Blog\Entity\Article $article
  */
-
 ?>
-
 <ul class="grid effect-2" id="grid">
     <?php foreach ($articles as $article) : ?>
         <?php $picture = $article->getMainPicture() ?>
@@ -14,37 +11,21 @@
             <div class="image">
                 <a href="<?php echo $this->url('article', array('action' => 'detail', 'id' => $article->getId())) ?>">
                     <?php if (!is_null($picture)) : ?>
-                        <img src="<?php echo $this->url('picture', array('action' => 'images', 'id' => $article->getId(), 'name' => $picture->getFilename())) ?>"
+                        <img src="<?php echo $picture->getFlickrUrl() ?>"
                              alt="<?php $picture->getLegend() ?>" class="img-polaroid-border-sm">
-                        <span class="book"><?php echo $article->getTitle() ?></span>
+                        <span class="caption-title-hoverable"><?php echo $article->getTitle() ?></span>
+                        <span class="caption-hoverable text-right"><?php echo $article->getDateFullString() ?></span>
                     <?php else : ?>
                         <img src="#" alt="<?php echo $article->getCompleteTitle() ?>" class="img-polaroid-border-sm">
-                        <span class="book"><?php echo $article->getTitle() ?></span>
+                        <span class="caption-title-hoverable"><?php echo $article->getTitle() ?></span>
                     <?php endif ?>
                 </a>
             </div>
         </li>
     <?php endforeach ?>
-    </ul>
-
-
-
+</ul>
 <script>
-    //whenTilesReady();
-
-    function whenTilesReady() {
-        var container = $('#container');
-        // initialize
-        container.masonry({
-            columnWidth: 200,
-            itemSelector: '.item'
-        });
-    }
-
-</script>
-
-<script>
-    new AnimOnScroll( document.getElementById( 'grid' ), {
+    new AnimOnScroll(document.getElementById('grid'), {
         minDuration : 0.2,
         maxDuration : 0.9,
         viewportFactor : 0.2

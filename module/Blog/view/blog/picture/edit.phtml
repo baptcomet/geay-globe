@@ -9,12 +9,10 @@ $title = $this->translate('Modifier une Photo');
 $this->headTitle($title);
 
 $articleId = $picture->getArticle()->getId();
-
-$pictureSource = $this->url('picture', array('action' => 'images', 'id' => $articleId, 'name' => 'thumbnail_' . $picture->getFilename()));
-
 $form->prepare();
 ?>
 
+<br>
 <?php echo $this->partial('partial/flashmessenger') ?>
 
 <div class="row">
@@ -34,63 +32,26 @@ $form->prepare();
             </div>
         </div>
 
-        <hr class="long-hr"/>
+        <hr class="short-hr"/>
 
         <div class="row">
             <div class="col-lg-12">
 
                 <?php echo $this->form()->openTag($form) ?>
 
-                <?php if ($form->hasError()) : ?>
-                    <p>
-                        <span class="glyphicon glyphicon-exclamation-sign"></span>
-                        Une erreur est survenue. Je pense à recharger le fichier.
-                    </p>
-                <?php endif ?>
-
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <div class="form-group">
-                            <label class="control-label">
-                                    <span>
-                                        <?php echo $form->get('filename')->getLabel() ?>
-                                    </span>
-                                <canvas id="canvas" class="img-thumbnail form-control<?php
-                                echo (sizeof($form->get('filename')->getMessages()) > 0) ? ' input-error' : '' ?>"
-                                        width="140" height="140" style="height: 140px!important; width: 140px!important;">
-                                </canvas>
-                                <?php echo $this->formFile($form->get('filename')) ?>
-                            </label>
-                            <?php if (sizeof($form->get('filename')->getMessages()) > 0) : ?>
-                                <ul class="text-danger">
-                                    <?php foreach ($form->get('filename')->getMessages() as $message) : ?>
-                                        <li>
-                                            <?php echo $message ?>
-                                        </li>
-                                    <?php endforeach ?>
-                                </ul>
-                            <?php endif ?>
+                            <?php echo $this->formRow($form->get('flickrUrl')) ?>
                         </div>
+                    </div>
+                    <div class="col-lg-4">
                         <div class="form-group">
                             <?php echo $this->formRow($form->get('legend')) ?>
                         </div>
-                        <div class="form-group">
-                            <?php echo $this->formRow($form->get('position')) ?>
-                        </div>
                     </div>
-
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <?php echo $this->formRow($form->get('text')) ?>
-                        </div>
-                        <div class="form-group">
-                            <?php echo $this->formRow($form->get('textPosition')) ?>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-4">
+                        <br>
                         <div class="form-group">
                             <ul class="list-inline pull-right">
                                 <li>
@@ -113,36 +74,3 @@ $form->prepare();
         </div>
     </div>
 </div>
-
-
-<script>
-    togglePicture(null);
-    handlePictureToggle();
-
-    function handlePictureToggle() {
-        $('input[type=file]').change(togglePicture);
-    }
-
-    /* A chaque changement d'état de l'input, change la miniature */
-    function togglePicture(event) {
-        var canvas = $('#canvas');
-        var ctx = canvas[0].getContext('2d');
-        var image = new Image();
-        image.onload = function() {
-            if(image.height > 140) {
-                image.width *= 140 / image.height;
-                image.height = 140;
-            } else if(image.width > 140) {
-                image.height *= 140 / image.width;
-                image.width = 140;
-            }
-            ctx.clearRect(0, 0, 140, 140);
-            ctx.drawImage(image, 0, 0, 140, 140);
-        };
-        if (event == null) {
-            image.src = "<?php echo $pictureSource ?>";
-        } else {
-            image.src = URL.createObjectURL(event.target.files[0]);
-        }
-    }
-</script>

@@ -5,8 +5,6 @@ namespace Blog\Form;
 use Blog\Form\Filter\PictureFilter;
 use Doctrine\ORM\EntityManager;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
-use Zend\Form\Element\File;
-use Zend\Form\Element\Select;
 use Zend\Form\Element\Submit;
 use Zend\Form\Element\Text;
 use Zend\Form\Element\Textarea;
@@ -16,7 +14,7 @@ class PictureForm extends Form
 {
     public function __construct(EntityManager $entityManager = null)
     {
-        parent::__construct('project');
+        parent::__construct('picture');
 
         $this->setAttribute('method', 'post');
         $this->setAttribute('role', 'form');
@@ -24,36 +22,15 @@ class PictureForm extends Form
         $this->setInputFilter(new PictureFilter());
         $this->setHydrator(new DoctrineObject($entityManager));
 
-        // PHOTO
-        $file = new File('filename');
-        $file->setLabel(_('Fichier'))->setLabelAttributes(array('class' => 'control-label'));
-        $file->setAttributes(
+        // FLICKR URL
+        $flickerUrl = new Text('flickrUrl');
+        $flickerUrl->setLabel(_('URL Flickr'))->setLabelAttributes(array('class' => 'control-label'));
+        $flickerUrl->setAttributes(
             array(
-                'id' => 'filename',
-                'accept' => 'image/*',
-                'class' => 'form-contol hide'
+                'class' => 'form-control'
             )
         );
-        $this->add($file);
-
-        // POSITION PHOTO
-        $photoPosition = new Select('position');
-        $photoPosition->setAttributes(
-            array(
-                'id' => 'position',
-                'class' => 'form-control',
-            )
-        );
-        $photoPosition->setValueOptions(
-            array(
-                'center' => 'Centrée',
-                'left' => 'Gauche',
-                'right' => 'Droite',
-            )
-        );
-        $photoPosition->setLabel('Position Photo')
-            ->setLabelAttributes(array('class' => 'control-label'));
-        $this->add($photoPosition);
+        $this->add($flickerUrl);
 
         // LEGENDE
         $legend = new Text('legend');
@@ -65,38 +42,6 @@ class PictureForm extends Form
                 )
             );
         $this->add($legend);
-
-        // TEXTE
-        $text = new Textarea('text');
-        $text->setAttributes(
-            array(
-                'id' => 'text',
-                'class' => 'form-control',
-                'rows' => 5,
-            )
-        );
-        $text->setLabel('Texte')
-            ->setLabelAttributes(array('class' => 'control-label'));
-        $this->add($text);
-
-        // POSITION TEXTE
-        $textPosition = new Select('textPosition');
-        $textPosition->setAttributes(
-            array(
-                'id' => 'textPosition',
-                'class' => 'form-control',
-            )
-        );
-        $textPosition->setValueOptions(
-            array(
-                'center' => 'Centrée',
-                'left' => 'Gauche',
-                'right' => 'Droite',
-            )
-        );
-        $textPosition->setLabel('Position Texte')
-            ->setLabelAttributes(array('class' => 'control-label'));
-        $this->add($textPosition);
 
         // SUBMIT
         $submit = new Submit('submit');
@@ -111,11 +56,8 @@ class PictureForm extends Form
 
     public function hasError()
     {
-        if (array_key_exists('filename', $this->getMessages())
-            || array_key_exists('position', $this->getMessages())
-            || array_key_exists('legend', $this->getMessages())
-            || array_key_exists('text', $this->getMessages())
-            || array_key_exists('textPosition', $this->getMessages())) {
+        if (array_key_exists('flickrUrl', $this->getMessages())
+            || array_key_exists('legend', $this->getMessages())) {
             return true;
         }
         return false;

@@ -12,10 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Article extends AbstractEntity
 {
-    const BASE_UPLOAD_PATH = './data/articles/';
-    const POSITION_LEFT = 'left';
-    const POSITION_RIGHT = 'right';
-    const POSITION_CENTER = 'center';
+    const MOSAIQUE_OFF = 0;
+    const MOSAIQUE_ON = 1;
 
     const CATEGORY_RESTAURANT = '1';
     const CATEGORY_TRIP = '2';
@@ -29,10 +27,9 @@ class Article extends AbstractEntity
         self::CATEGORY_VIDEO => 'Vidéo',
     );
 
-    public static $positions = array(
-        self::POSITION_LEFT => 'Gauche',
-        self::POSITION_RIGHT => 'Droite',
-        self::POSITION_CENTER => 'Centrée',
+    public static $presentations = array(
+        self::MOSAIQUE_OFF => 'Fil',
+        self::MOSAIQUE_ON => 'Mosaïque',
     );
 
     /**
@@ -65,17 +62,20 @@ class Article extends AbstractEntity
     /** @ORM\Column(name="subtitle", type="string", nullable=true) */
     protected $subtitle;
 
-    /** @ORM\Column(name="text", type="text", nullable=false) */
+    /** @ORM\Column(name="text", type="text", nullable=true) */
     protected $text;
 
-    /** @ORM\Column(name="text_position", type="text", nullable=false) */
-    protected $textPosition;
-
-    /** @ORM\OneToMany(targetEntity="Picture", mappedBy="article", cascade={"persist"}) */
+    /**
+     * @ORM\OneToMany(targetEntity="Picture", mappedBy="article", cascade={"persist"})
+     * @ORM\OrderBy({"rank" = "ASC"})
+     */
     protected $pictures;
 
     /** @ORM\Column(name="category", type="integer", nullable=true) */
     protected $category;
+
+    /** @ORM\Column(name="presentation", type="integer", nullable=true) */
+    protected $presentation;
 
     /** @ORM\Column(name="date", type="datetime", nullable=false) */
     protected $date;
@@ -96,7 +96,6 @@ class Article extends AbstractEntity
     public function __construct()
     {
         $this->setDate(new \DateTime());
-        $this->textPosition = self::POSITION_LEFT;
         $this->pictures = new ArrayCollection();
         $this->tags = new ArrayCollection();
         $this->comments = new ArrayCollection();
@@ -197,6 +196,29 @@ class Article extends AbstractEntity
     {
         $this->category = $category;
         return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPresentation()
+    {
+        return $this->presentation;
+    }
+
+    /**
+     * @param int $presentation
+     */
+    public function setPresentation($presentation)
+    {
+        $this->presentation = $presentation;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isMosaique() {
+        return $this->getPresentation() == self::MOSAIQUE_ON;
     }
 
     /**
@@ -409,14 +431,6 @@ class Article extends AbstractEntity
     }
 
     /**
-     * @return string
-     */
-    public function getThumbnail()
-    {
-        return $this->getMainPicture() ? $this->getMainPicture()->getThumbnail() : null;
-    }
-
-    /**
      * @return User
      */
     public function getWriter()
@@ -432,22 +446,6 @@ class Article extends AbstractEntity
     {
         $this->writer = $writer;
         return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTextPosition()
-    {
-        return $this->textPosition;
-    }
-
-    /**
-     * @param mixed $textPosition
-     */
-    public function setTextPosition($textPosition)
-    {
-        $this->textPosition = $textPosition;
     }
 
     /**

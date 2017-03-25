@@ -7,7 +7,6 @@ use Zend\View\Model\ViewModel;
 
 class ManageController extends AbstractActionController
 {
-
     public function indexAction()
     {
         if (is_null($this->identity())) {

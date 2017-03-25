@@ -14,6 +14,7 @@ $this->headTitle($title);
 
 ?>
 
+<br>
 <?php echo $this->partial('partial/flashmessenger') ?>
 
 <script>
@@ -32,7 +33,6 @@ $this->headTitle($title);
             <div class="col-lg-2">
             </div>
             <div class="col-lg-8 text-center">
-                <hr class="short-hr"/>
                 <h2><?php echo $title ?></h2>
                 <h3 class="intro-subtext"><?php echo $subtitle ?></h3>
                 <hr class="short-hr"/>
@@ -62,47 +62,62 @@ $this->headTitle($title);
                 </ul>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <p class="text-<?php echo $article->getTextPosition() ?>">
-                    <?php echo nl2br($article->getText()) ?>
-                </p>
-            </div>
-        </div>
-        <br/>
-
-        <?php if (!$article->getYoutube()) : ?>
-            <?php foreach ($article->getPictures() as $picture) : ?>
-                <?php $pictureSource = $this->url('picture', array('action' => 'images', 'id' => $article->getId(), 'name' => $picture->getFilename())) ?>
-                <div class="row">
-                    <div class="col-lg-12">
-
-                        <div id="picture-<?php echo $picture->getId() ?>"
-                             class="image img-<?php echo $picture->getPosition() ?>" style="max-width: 100%">
-
-                            <a class="fancybox" href="<?php echo $pictureSource ?>" rel="gallery"
-                               title="<?php echo $picture->getLegend() ?>">
-                                <img class="img-polaroid-border img-responsive"
-                                     alt="<?php echo $picture->getLegend() ?>"
-                                     style="max-width: 100%"
-                                     onload="onImageLoad(<?php echo $picture->getId() ?>);"
-                                     src="<?php echo $pictureSource ?>">
-                                <div class="caption">
-                                    <span class="book"><?php echo $picture->getLegend() ?></span>
-                                </div>
-                            </a>
-
-                        </div>
-
-                        <?php if ($picture->getText()) : ?>
-                            <p class="text-<?php echo $picture->getTextPosition() ?>">
-                                <br/><?php echo nl2br($picture->getText()) ?>
-                            </p>
-                        <?php endif ?>
-                    </div>
+        <?php if ($article->getText()) : ?>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p class="text-center">
+                        <?php echo nl2br($article->getText()) ?>
+                    </p>
                 </div>
-                <br/>
-            <?php endforeach ?>
+            </div>
+            <br/>
+        <?php endif ?>
+        <?php if (!$article->getYoutube()) : ?>
+            <?php if ($article->isMosaique()) : ?>
+                <ul class="grid effect-2" id="grid">
+                    <?php foreach ($article->getPictures() as $picture) : ?>
+                        <li>
+                            <div class="image">
+                                <img src="<?php echo $picture->getFlickrUrl() ?>" alt="<?php $picture->getLegend() ?>">
+                                <?php if ($picture->getLegend()) : ?>
+                                    <span class="caption-hoverable"><?php echo $picture->getLegend() ?></span>
+                                <?php endif ?>
+                            </div>
+                        </li>
+                    <?php endforeach ?>
+                </ul>
+                <script>
+                    new AnimOnScroll(document.getElementById('grid'), {
+                        minDuration : 0.2,
+                        maxDuration : 0.9,
+                        viewportFactor : 0.2
+                    });
+                </script>
+            <?php else : ?>
+                <?php foreach ($article->getPictures() as $picture) : ?>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div id="picture-<?php echo $picture->getId() ?>"
+                                 class="image img-center" style="max-width: 100%">
+                                <a class="fancybox" href="<?php echo $picture->getFlickrUrl() ?>" rel="gallery"
+                                   title="<?php echo $picture->getLegend() ?>">
+                                    <img class="img-polaroid-border img-responsive"
+                                         alt="<?php echo $picture->getLegend() ?>"
+                                         style="max-width: 100%"
+                                         onload="onImageLoad(<?php echo $picture->getId() ?>);"
+                                         src="<?php echo $picture->getFlickrUrl() ?>">
+                                </a>
+                            </div>
+                            <?php if ($picture->getLegend()) : ?>
+                                <p class="text-center">
+                                    <br/><?php echo nl2br($picture->getLegend()) ?>
+                                </p>
+                            <?php endif ?>
+                        </div>
+                    </div>
+                    <br/>
+                <?php endforeach ?>
+            <?php endif ?>
         <?php else : ?>
             <div class="row">
                 <div class="col-lg-12">
@@ -134,7 +149,7 @@ $this->headTitle($title);
         </div>
     </div>
 </div>
-
+<br><br>
 <script>
     $("a.fancybox").fancybox({
         'overlayShow' : false,

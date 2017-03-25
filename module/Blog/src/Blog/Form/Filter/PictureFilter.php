@@ -17,21 +17,15 @@ class PictureFilter extends InputFilter
 {
     public function __construct()
     {
-        // FILE
-        $file = new Input('filename');
-        $file->setRequired(false)
-            ->getFilterChain();
-        $file->getValidatorChain()
-            ->attach(new Extension(Picture::getStaticAuthorisedExtensionList()))
-            ->attach(
-                new Size(
-                    array(
-                        'max' => '16MB'
-                    )
-                )
-            )
-            ->attach(new UploadFile());
-        $this->add($file);
+        // FLICKR URL
+        $flickrUrl = new Input('flickrUrl');
+        $flickrUrl->setRequired(false)
+            ->getFilterChain()
+            ->attach(new StringTrim())
+            ->attach(new StripTags());
+        $flickrUrl->getValidatorChain()
+            ->attach(new NotEmpty());
+        $this->add($flickrUrl);
 
         // LEGEND
         $legend = new Input('legend');
@@ -49,21 +43,5 @@ class PictureFilter extends InputFilter
                 )
             );
         $this->add($legend);
-
-        // TEXTE
-        $text = new Input('text');
-        $text->setRequired(false)
-            ->getFilterChain()
-            ->attach(new StringTrim())
-            ->attach(new StripTags());
-        $text->getValidatorChain()
-            ->attach(new NotEmpty())
-            ->attach(new StringLength(
-                array(
-                    'encoding' => 'UTF-8',
-                    'min' => 1,
-                )
-            ));
-        $this->add($text);
     }
 }

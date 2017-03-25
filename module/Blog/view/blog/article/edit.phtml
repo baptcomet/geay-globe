@@ -13,6 +13,7 @@ $form->prepare();
 
 ?>
 
+<br>
 <?php echo $this->partial('partial/flashmessenger') ?>
 
 <div class="row">
@@ -38,7 +39,7 @@ $form->prepare();
             </div>
         </div>
 
-        <hr class="long-hr"/>
+        <hr class="short-hr"/>
 
         <div class="row">
             <div class="col-lg-12">
@@ -82,18 +83,25 @@ $form->prepare();
                 </div>
                 <hr/>
                 <div class="row">
-                    <div class="col-lg-8">
+                    <div class="col-lg-6">
                         <div class="form-group">
                             <?php echo $this->formRow($form->get('text')) ?>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                         <div class="form-group">
-                            <?php echo $this->formRow($form->get('textPosition')) ?>
+                            <?php echo $this->formRow($form->get('presentation')) ?>
                         </div>
                     </div>
                 </div>
-                <hr class="long-hr"/>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <?php echo $this->formRow($form->get('photos')) ?>
+                        </div>
+                    </div>
+                </div>
+                <hr class="short-hr"/>
 
                 <div class="form-group">
                     <ul class="list-inline pull-right">

@@ -39,8 +39,8 @@ class IndexController extends AbstractActionController
                 $authService = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
 
                 $adapter = $authService->getAdapter();
-                $adapter->setIdentityValue($data['nickname']);
-                $adapter->setCredentialValue($data['password']);
+                $adapter->setIdentity($data['nickname']);
+                $adapter->setCredential($data['password']);
                 $authResult = $authService->authenticate();
 
                 if ($authResult->isValid()) {
