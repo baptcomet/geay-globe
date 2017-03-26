@@ -252,7 +252,10 @@ class ArticleController extends AbstractActionController
             return $this->redirect()->toRoute('manage');
         }
 
+        $rank = $article->getPictures()->count() + 1;
+
         $picture = new Picture();
+        $picture->setRank($rank);
         // Création du formulaire
         $form = new PictureForm($entityManager);
         $form->bind($picture);
