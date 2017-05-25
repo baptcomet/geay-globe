@@ -5,7 +5,6 @@ return array(
             'orm_default' => array(
                 'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
                 'params' => array(
-                    // TODO trouver des bons params de connexion pour accéder à ma BDD sur DigitalOcean
                     'host' => '178.62.97.50',
                     'port' => '3306',
                     'user' => 'geaysglobe',
