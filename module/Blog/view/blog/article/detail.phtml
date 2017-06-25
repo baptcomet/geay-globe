@@ -17,16 +17,6 @@ $this->headTitle($title);
 <br>
 <?php echo $this->partial('partial/flashmessenger') ?>
 
-<script>
-    function onImageLoad(pictureId) {
-        var div = $('#picture-'+pictureId);
-        var imgWidth = div.find('img').width();
-        if (imgWidth) {
-            div.css('width', (20+imgWidth)+'px');
-        }
-    }
-</script>
-
 <div class="row">
     <div class="box">
         <div class="row">
@@ -74,37 +64,65 @@ $this->headTitle($title);
         <?php endif ?>
         <?php if (!$article->getYoutube()) : ?>
             <?php if ($article->isMosaique()) : ?>
-                <ul class="grid effect-2" id="grid">
-                    <?php foreach ($article->getPictures() as $picture) : ?>
-                        <li>
-                            <div class="image">
-                                <img src="<?php echo $picture->getFlickrUrl() ?>" alt="<?php $picture->getLegend() ?>">
-                                <?php if ($picture->getLegend()) : ?>
-                                    <span class="caption-hoverable"><?php echo $picture->getLegend() ?></span>
-                                <?php endif ?>
-                            </div>
-                        </li>
-                    <?php endforeach ?>
-                </ul>
-                <script>
-                    new AnimOnScroll(document.getElementById('grid'), {
-                        minDuration : 0.2,
-                        maxDuration : 0.9,
-                        viewportFactor : 0.2
-                    });
-                </script>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <?php foreach ($article->getPictures() as $key => $picture) : ?>
+                            <?php if ($key % 3 == 0) : ?>
+                                <div class="image">
+                                    <a class="fancybox" href="<?php echo $picture->getFlickrUrl() ?>" rel="gallery"
+                                       title="<?php echo $picture->getLegend() ?>">
+                                        <img src="<?php echo $picture->getFlickrUrl() ?>" alt="<?php $picture->getLegend() ?>" class="img-responsive">
+                                        <?php if ($picture->getLegend()) : ?>
+                                            <span class="caption-hoverable"><?php echo $picture->getLegend() ?></span>
+                                        <?php endif ?>
+                                    </a>
+                                </div>
+                                <br>
+                            <?php endif ?>
+                        <?php endforeach ?>
+                    </div>
+                    <div class="col-lg-4">
+                        <?php foreach ($article->getPictures() as $key => $picture) : ?>
+                            <?php if ($key % 3 == 1) : ?>
+                                <div class="image">
+                                    <a class="fancybox" href="<?php echo $picture->getFlickrUrl() ?>" rel="gallery"
+                                       title="<?php echo $picture->getLegend() ?>">
+                                        <img src="<?php echo $picture->getFlickrUrl() ?>" alt="<?php $picture->getLegend() ?>" class="img-responsive">
+                                        <?php if ($picture->getLegend()) : ?>
+                                            <span class="caption-hoverable"><?php echo $picture->getLegend() ?></span>
+                                        <?php endif ?>
+                                    </a>
+                                </div>
+                                <br>
+                            <?php endif ?>
+                        <?php endforeach ?>
+                    </div>
+                    <div class="col-lg-4">
+                        <?php foreach ($article->getPictures() as $key => $picture) : ?>
+                            <?php if ($key % 3 == 2) : ?>
+                                <div class="image">
+                                    <a class="fancybox" href="<?php echo $picture->getFlickrUrl() ?>" rel="gallery"
+                                       title="<?php echo $picture->getLegend() ?>">
+                                        <img src="<?php echo $picture->getFlickrUrl() ?>" alt="<?php $picture->getLegend() ?>" class="img-responsive">
+                                        <?php if ($picture->getLegend() && 0) : ?>
+                                            <span class="caption-hoverable"><?php echo $picture->getLegend() ?></span>
+                                        <?php endif ?>
+                                    </a>
+                                </div>
+                                <br>
+                            <?php endif ?>
+                        <?php endforeach ?>
+                    </div>
+                </div>
             <?php else : ?>
                 <?php foreach ($article->getPictures() as $picture) : ?>
                     <div class="row">
                         <div class="col-lg-12">
-                            <div id="picture-<?php echo $picture->getId() ?>"
-                                 class="image img-center" style="max-width: 100%">
+                            <div class="image">
                                 <a class="fancybox" href="<?php echo $picture->getFlickrUrl() ?>" rel="gallery"
                                    title="<?php echo $picture->getLegend() ?>">
-                                    <img class="img-polaroid-border img-responsive"
+                                    <img class="img-responsive img-center"
                                          alt="<?php echo $picture->getLegend() ?>"
-                                         style="max-width: 100%"
-                                         onload="onImageLoad(<?php echo $picture->getId() ?>);"
                                          src="<?php echo $picture->getFlickrUrl() ?>">
                                 </a>
                             </div>
@@ -151,12 +169,4 @@ $this->headTitle($title);
 </div>
 <br><br>
 <script>
-    $("a.fancybox").fancybox({
-        'overlayShow' : false,
-        helpers : {
-            title : {
-                type : 'over'
-            }
-        }
-    });
 </script>

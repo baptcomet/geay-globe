@@ -10,4 +10,13 @@ $(document).ready(function() {
         caption.slideUp("fast");
         captionTitle.slideUp("fast");
     });
+
+    $("a.fancybox").fancybox({
+        'overlayShow' : false,
+        helpers : {
+            title : {
+                type : 'over'
+            }
+        }
+    });
 });

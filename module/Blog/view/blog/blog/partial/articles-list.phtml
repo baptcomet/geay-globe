@@ -4,30 +4,69 @@
  * @var Blog\Entity\Article $article
  */
 ?>
-<ul class="grid effect-2" id="grid">
-    <?php foreach ($articles as $article) : ?>
-        <?php $picture = $article->getMainPicture() ?>
-        <li>
-            <div class="image">
-                <a href="<?php echo $this->url('article', array('action' => 'detail', 'id' => $article->getId())) ?>">
-                    <?php if (!is_null($picture)) : ?>
-                        <img src="<?php echo $picture->getFlickrUrl() ?>"
-                             alt="<?php $picture->getLegend() ?>" class="img-polaroid-border-sm">
-                        <span class="caption-title-hoverable"><?php echo $article->getTitle() ?></span>
-                        <span class="caption-hoverable text-right"><?php echo $article->getDateFullString() ?></span>
-                    <?php else : ?>
-                        <img src="#" alt="<?php echo $article->getCompleteTitle() ?>" class="img-polaroid-border-sm">
-                        <span class="caption-title-hoverable"><?php echo $article->getTitle() ?></span>
-                    <?php endif ?>
-                </a>
-            </div>
-        </li>
-    <?php endforeach ?>
-</ul>
-<script>
-    new AnimOnScroll(document.getElementById('grid'), {
-        minDuration : 0.2,
-        maxDuration : 0.9,
-        viewportFactor : 0.2
-    } );
-</script>
+
+<div class="row">
+    <div class="col-lg-4">
+        <?php foreach ($articles as $key => $article) : ?>
+            <?php if ($key % 3 == 0) : ?>
+                <?php $picture = $article->getMainPicture() ?>
+                <div class="image">
+                    <a href="<?php echo $this->url('article', array('action' => 'detail', 'id' => $article->getId())) ?>">
+                        <?php if (!is_null($picture)) : ?>
+                            <img src="<?php echo $picture->getFlickrUrl() ?>"
+                                 alt="<?php $picture->getLegend() ?>" class="img-polaroid-border-sm img-responsive">
+                            <span class="caption-title-hoverable"><?php echo $article->getTitle() ?></span>
+                            <span class="caption-hoverable text-right"><?php echo $article->getDateFullString() ?></span>
+                        <?php else : ?>
+                            <img src="#" alt="<?php echo $article->getCompleteTitle() ?>" class="img-polaroid-border-sm img-responsive">
+                            <span class="caption-title-hoverable"><?php echo $article->getTitle() ?></span>
+                        <?php endif ?>
+                    </a>
+                </div>
+                <br>
+            <?php endif ?>
+        <?php endforeach ?>
+    </div>
+    <div class="col-lg-4">
+        <?php foreach ($articles as $key => $article) : ?>
+            <?php if ($key % 3 == 1) : ?>
+                <?php $picture = $article->getMainPicture() ?>
+                <div class="image">
+                    <a href="<?php echo $this->url('article', array('action' => 'detail', 'id' => $article->getId())) ?>">
+                        <?php if (!is_null($picture)) : ?>
+                            <img src="<?php echo $picture->getFlickrUrl() ?>"
+                                 alt="<?php $picture->getLegend() ?>" class="img-polaroid-border-sm img-responsive">
+                            <span class="caption-title-hoverable"><?php echo $article->getTitle() ?></span>
+                            <span class="caption-hoverable text-right"><?php echo $article->getDateFullString() ?></span>
+                        <?php else : ?>
+                            <img src="#" alt="<?php echo $article->getCompleteTitle() ?>" class="img-polaroid-border-sm img-responsive">
+                            <span class="caption-title-hoverable"><?php echo $article->getTitle() ?></span>
+                        <?php endif ?>
+                    </a>
+                </div>
+                <br>
+            <?php endif ?>
+        <?php endforeach ?>
+    </div>
+    <div class="col-lg-4">
+        <?php foreach ($articles as $key => $article) : ?>
+            <?php if ($key % 3 == 2) : ?>
+                <?php $picture = $article->getMainPicture() ?>
+                <div class="image">
+                    <a href="<?php echo $this->url('article', array('action' => 'detail', 'id' => $article->getId())) ?>">
+                        <?php if (!is_null($picture)) : ?>
+                            <img src="<?php echo $picture->getFlickrUrl() ?>"
+                                 alt="<?php $picture->getLegend() ?>" class="img-polaroid-border-sm img-responsive">
+                            <span class="caption-title-hoverable"><?php echo $article->getTitle() ?></span>
+                            <span class="caption-hoverable text-right"><?php echo $article->getDateFullString() ?></span>
+                        <?php else : ?>
+                            <img src="#" alt="<?php echo $article->getCompleteTitle() ?>" class="img-polaroid-border-sm img-responsive">
+                            <span class="caption-title-hoverable"><?php echo $article->getTitle() ?></span>
+                        <?php endif ?>
+                    </a>
+                </div>
+                <br>
+            <?php endif ?>
+        <?php endforeach ?>
+    </div>
+</div>

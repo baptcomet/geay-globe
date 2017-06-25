@@ -80,8 +80,8 @@ a.inbox-link:hover {
 
 span.caption-hoverable {
     position: absolute;
-    bottom: 0;
-    width: 100%;
+    bottom: 15px;
+    right: 15px;
     padding: 8px;
     font-weight: normal;
     color: black;
