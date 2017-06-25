@@ -1,0 +1,20 @@
+<?php
+/**
+ * @var Blog\Entity\Article $article
+ */
+$picture = $article->getMainPicture();
+?>
+<div class="image">
+    <a href="<?php echo $this->url('article', array('action' => 'detail', 'id' => $article->getId())) ?>">
+        <?php if (!is_null($picture)) : ?>
+            <img src="<?php echo $picture->getFlickrUrl() ?>"
+                 alt="<?php $picture->getLegend() ?>" class="img-polaroid-border-sm img-responsive img-center">
+            <span class="caption-title-hoverable"><?php echo $article->getTitle() ?></span>
+            <span class="caption-hoverable text-right"><?php echo $article->getDateFullString() ?></span>
+        <?php else : ?>
+            <img src="#" alt="<?php echo $article->getCompleteTitle() ?>" class="img-polaroid-border-sm img-responsive">
+            <span class="caption-title-hoverable"><?php echo $article->getTitle() ?></span>
+        <?php endif ?>
+    </a>
+</div>
+<br>

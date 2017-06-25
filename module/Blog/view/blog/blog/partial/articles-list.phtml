@@ -4,69 +4,32 @@
  * @var Blog\Entity\Article $article
  */
 ?>
-
 <div class="row">
     <div class="col-md-4 col-sm-6 col-xs-12">
-        <?php foreach ($articles as $key => $article) : ?>
-            <?php if ($key % 3 == 0) : ?>
-                <?php $picture = $article->getMainPicture() ?>
-                <div class="image">
-                    <a href="<?php echo $this->url('article', array('action' => 'detail', 'id' => $article->getId())) ?>">
-                        <?php if (!is_null($picture)) : ?>
-                            <img src="<?php echo $picture->getFlickrUrl() ?>"
-                                 alt="<?php $picture->getLegend() ?>" class="img-polaroid-border-sm img-responsive img-center">
-                            <span class="caption-title-hoverable"><?php echo $article->getTitle() ?></span>
-                            <span class="caption-hoverable text-right"><?php echo $article->getDateFullString() ?></span>
-                        <?php else : ?>
-                            <img src="#" alt="<?php echo $article->getCompleteTitle() ?>" class="img-polaroid-border-sm img-responsive">
-                            <span class="caption-title-hoverable"><?php echo $article->getTitle() ?></span>
-                        <?php endif ?>
-                    </a>
-                </div>
-                <br>
-            <?php endif ?>
-        <?php endforeach ?>
+        <?php
+        foreach ($articles as $key => $article) {
+            if ($key % 3 == 0) {
+                echo $this->partial('blog/blog/partial/article-tile', array('article' => $article));
+            }
+        }
+        ?>
     </div>
     <div class="col-md-4 col-sm-6 col-xs-12">
-        <?php foreach ($articles as $key => $article) : ?>
-            <?php if ($key % 3 == 1) : ?>
-                <?php $picture = $article->getMainPicture() ?>
-                <div class="image">
-                    <a href="<?php echo $this->url('article', array('action' => 'detail', 'id' => $article->getId())) ?>">
-                        <?php if (!is_null($picture)) : ?>
-                            <img src="<?php echo $picture->getFlickrUrl() ?>"
-                                 alt="<?php $picture->getLegend() ?>" class="img-polaroid-border-sm img-responsive img-center">
-                            <span class="caption-title-hoverable"><?php echo $article->getTitle() ?></span>
-                            <span class="caption-hoverable text-right"><?php echo $article->getDateFullString() ?></span>
-                        <?php else : ?>
-                            <img src="#" alt="<?php echo $article->getCompleteTitle() ?>" class="img-polaroid-border-sm img-responsive">
-                            <span class="caption-title-hoverable"><?php echo $article->getTitle() ?></span>
-                        <?php endif ?>
-                    </a>
-                </div>
-                <br>
-            <?php endif ?>
-        <?php endforeach ?>
+        <?php
+        foreach ($articles as $key => $article) {
+            if ($key % 3 == 1) {
+                echo $this->partial('blog/blog/partial/article-tile', array('article' => $article));
+            }
+        }
+        ?>
     </div>
     <div class="col-md-4 col-sm-6 col-xs-12">
-        <?php foreach ($articles as $key => $article) : ?>
-            <?php if ($key % 3 == 2) : ?>
-                <?php $picture = $article->getMainPicture() ?>
-                <div class="image">
-                    <a href="<?php echo $this->url('article', array('action' => 'detail', 'id' => $article->getId())) ?>">
-                        <?php if (!is_null($picture)) : ?>
-                            <img src="<?php echo $picture->getFlickrUrl() ?>"
-                                 alt="<?php $picture->getLegend() ?>" class="img-polaroid-border-sm img-responsive img-center">
-                            <span class="caption-title-hoverable"><?php echo $article->getTitle() ?></span>
-                            <span class="caption-hoverable text-right"><?php echo $article->getDateFullString() ?></span>
-                        <?php else : ?>
-                            <img src="#" alt="<?php echo $article->getCompleteTitle() ?>" class="img-polaroid-border-sm img-responsive">
-                            <span class="caption-title-hoverable"><?php echo $article->getTitle() ?></span>
-                        <?php endif ?>
-                    </a>
-                </div>
-                <br>
-            <?php endif ?>
-        <?php endforeach ?>
+        <?php
+        foreach ($articles as $key => $article) {
+            if ($key % 3 == 2) {
+                echo $this->partial('blog/blog/partial/article-tile', array('article' => $article));
+            }
+        }
+        ?>
     </div>
 </div>

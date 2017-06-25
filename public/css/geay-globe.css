@@ -25,10 +25,28 @@
     color: #4b91c2 !important;
 }
 
-.intro {
+.intro-xs {
     width: 100%;
-    min-height: 324px;
-    background: url(../img/head-bg.jpg) #F7F7F7 center top;
+    min-height: 148px;
+    background: url(../img/head-bg-xs.jpg) #F7F7F7 center top;
+    background-size: cover;
+}
+.intro-sm {
+    width: 100%;
+    min-height: 191px;
+    background: url(../img/head-bg-sm.jpg) #F7F7F7 center top;
+    background-size: cover;
+}
+.intro-md {
+    width: 100%;
+    min-height: 226px;
+    background: url(../img/head-bg-md.jpg) #F7F7F7 center top;
+    background-size: cover;
+}
+.intro-lg {
+    width: 100%;
+    min-height: 268px;
+    background: url(../img/head-bg-lg.jpg) #F7F7F7 center top;
     background-size: cover;
 }
 

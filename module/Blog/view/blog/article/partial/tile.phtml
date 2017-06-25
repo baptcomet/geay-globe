@@ -1,0 +1,15 @@
+<?php
+/**
+ * @var Blog\Entity\Picture $picture
+ */
+?>
+<div class="image">
+    <a class="fancybox" href="<?php echo $picture->getFlickrUrl() ?>" rel="gallery"
+       title="<?php echo $picture->getLegend() ?>">
+        <img src="<?php echo $picture->getFlickrUrl() ?>" alt="<?php $picture->getLegend() ?>" class="img-responsive">
+        <?php if ($picture->getLegend()) : ?>
+            <span class="caption-hoverable"><?php echo $picture->getLegend() ?></span>
+        <?php endif ?>
+    </a>
+</div>
+<br>
