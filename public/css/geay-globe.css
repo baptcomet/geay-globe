@@ -12,7 +12,7 @@
 
 .yellowtitle:hover {
     text-decoration: none !important;
-    color: #327099 !important;
+    color: #9ac7de !important;
 }
 
 .yellowtail {
@@ -27,8 +27,8 @@
 
 .intro {
     width: 100%;
-    height: 272px;
-    background: url(../img/head-blue-bg.jpg) #F7F7F7 center top;
+    min-height: 324px;
+    background: url(../img/head-bg.jpg) #F7F7F7 center top;
     background-size: cover;
 }
 
@@ -50,12 +50,13 @@ nav.navbar-clean .navbar-nav>li>a {
 }
 
 nav.navbar-clean .navbar-nav>.active>a, nav.navbar-clean .navbar-nav>.active:focus>a {
-    background-color: #cee1ef;
+    background-color: #9ac7de;
+    color: white;
 }
 
 nav.navbar-clean .navbar-nav>.active:hover>a {
-    background-color: #cee1ef;
-    color: black;
+    background-color: #9ac7de;
+    color: white;
 }
 
 hr.long-hr {
