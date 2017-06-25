@@ -78,10 +78,13 @@ a.inbox-link:hover {
     color: #3465bd;
 }
 
+div.image {
+    position: relative;
+}
 span.caption-hoverable {
     position: absolute;
-    bottom: 15px;
-    right: 15px;
+    bottom: 5px;
+    right: 0;
     padding: 8px;
     font-weight: normal;
     color: black;
