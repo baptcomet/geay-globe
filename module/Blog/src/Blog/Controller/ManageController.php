@@ -16,7 +16,7 @@ class ManageController extends AbstractActionController
         $countVisit = $this->getCountVisit();
 
         $articles = $this->getEntityManager()->getRepository('\Blog\Entity\Article')
-            ->findBy(array('status' => array(Article::STATUS_ONLINE, Article::STATUS_ARCHIVED)));
+            ->findBy(array('status' => array(Article::STATUS_ONLINE, Article::STATUS_ARCHIVED)), array('date' => 'DESC'));
 
         $this->layout('layout/front');
         return new ViewModel(array(

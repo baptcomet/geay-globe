@@ -54,14 +54,29 @@ $form->prepare();
                 </div>
                 <hr/>
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <div class="form-group">
                             <?php echo $this->formRow($form->get('category')) ?>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <div class="form-group">
                             <?php echo $this->formRow($form->get('tagsString')) ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-1">
+                        <div class="form-group">
+                            <?php echo $this->formRow($form->get('day')) ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <?php echo $this->formRow($form->get('month')) ?>
+                        </div>
+                    </div>
+                    <div class="col-lg-1">
+                        <div class="form-group">
+                            <?php echo $this->formRow($form->get('year')) ?>
                         </div>
                     </div>
                 </div>

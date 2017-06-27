@@ -52,4 +52,22 @@ class Calendar
             self::DECEMBER => 'Déc',
         );
     }
+
+    public static function getStaticMonthNumbers()
+    {
+        return array(
+            self::JANUARY => '01',
+            self::FEBRUARY => '02',
+            self::MARCH => '03',
+            self::APRIL => '04',
+            self::MAY => '05',
+            self::JUNE => '06',
+            self::JULY => '07',
+            self::AUGUST => '08',
+            self::SEPTEMBER => '09',
+            self::OCTOBER => '10',
+            self::NOVEMBER => '11',
+            self::DECEMBER => '12',
+        );
+    }
 }

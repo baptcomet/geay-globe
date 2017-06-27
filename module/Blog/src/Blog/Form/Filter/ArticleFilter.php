@@ -4,7 +4,6 @@ namespace Blog\Form\Filter;
 
 use Zend\Filter\StringTrim;
 use Zend\Filter\StripTags;
-use Zend\InputFilter\FileInput;
 use Zend\InputFilter\Input;
 use Zend\InputFilter\InputFilter;
 use Zend\Validator\NotEmpty;

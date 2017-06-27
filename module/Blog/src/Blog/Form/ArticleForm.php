@@ -3,6 +3,7 @@
 namespace Blog\Form;
 
 use Blog\Entity\Article;
+use Blog\Model\Calendar;
 use Zend\Form\Element\Hidden;
 use Zend\Form\Element\Select;
 use Zend\Form\Element\Submit;
@@ -60,7 +61,7 @@ class ArticleForm extends Form
         $presentation->setLabelAttributes(array('class' => 'control-label'));
         $this->add($presentation);
 
-        // Mosaique
+        // Catégorie
         $categorie = new Select('category');
         $categorie->setAttributes(
             array(
@@ -85,7 +86,56 @@ class ArticleForm extends Form
         $tags->setLabelAttributes(array('class' => 'control-label'));
         $this->add($tags);
 
-        //TODO add champ date
+        // Jour
+        $joursOptions = array();
+        foreach (range(1, 9) as $d) {
+            $day = '0'.$d;
+            $joursOptions[$day] = $day;
+        }
+        foreach (range(10, 31) as $day) {
+            $joursOptions[$day] = $day;
+        }
+        $jour = new Select('day');
+        $jour->setAttributes(
+            array(
+                'id' => 'day',
+                'class' => 'form-control',
+            )
+        );
+        $jour->setValueOptions($joursOptions);
+        $jour->setLabel('Jour');
+        $jour->setLabelAttributes(array('class' => 'control-label'));
+        $this->add($jour);
+
+        // Mois
+        $mois = new Select('month');
+        $mois->setAttributes(
+            array(
+                'id' => 'month',
+                'class' => 'form-control',
+            )
+        );
+        $mois->setValueOptions(Calendar::getStaticMonthNames());
+        $mois->setLabel('Mois');
+        $mois->setLabelAttributes(array('class' => 'control-label'));
+        $this->add($mois);
+
+        // Annee
+        $anneesOptions = array();
+        foreach (range(date('Y'), 2000) as $year) {
+            $anneesOptions[$year] = $year;
+        }
+        $annee = new Select('year');
+        $annee->setAttributes(
+            array(
+                'id' => 'year',
+                'class' => 'form-control',
+            )
+        );
+        $annee->setValueOptions($anneesOptions);
+        $annee->setLabel('Année');
+        $annee->setLabelAttributes(array('class' => 'control-label'));
+        $this->add($annee);
 
         // Youtube
         $youtube = new Text('youtube');

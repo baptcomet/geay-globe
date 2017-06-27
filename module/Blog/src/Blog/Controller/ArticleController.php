@@ -112,6 +112,7 @@ class ArticleController extends AbstractActionController
                 }
 
                 $article->setWriter($this->identity());
+                $article->updateDate();
                 $article->unpublish();
                 $entityManager->persist($article);
                 $entityManager->flush();
@@ -212,6 +213,7 @@ class ArticleController extends AbstractActionController
                 }
 
                 $article->setWriter($this->identity());
+                $article->updateDate();
                 $entityManager->flush();
 
                 $this->flashMessenger()->addSuccessMessage(

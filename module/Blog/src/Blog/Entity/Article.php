@@ -285,6 +285,16 @@ class Article extends AbstractEntity
     }
 
     /**
+     * @return Article $this
+     */
+    public function updateDate()
+    {
+        $dateString = $this->getYear() . '-' . $this->getMonthNumber() . '-' . $this->getDay();
+        $this->date = DateTime::createFromFormat('Y-m-d', $dateString);
+        return $this;
+    }
+
+    /**
      * @param string $day
      * @return Article $this
      */
@@ -318,6 +328,14 @@ class Article extends AbstractEntity
     public function getMonth()
     {
         return $this->month;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMonthNumber()
+    {
+        return Calendar::getStaticMonthNumbers()[$this->month];
     }
 
     /**
