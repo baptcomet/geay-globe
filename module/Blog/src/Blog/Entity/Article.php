@@ -475,6 +475,16 @@ class Article extends AbstractEntity
     }
 
     /**
+     * @return ArrayCollection
+     */
+    public function getPicturesWithoutMain()
+    {
+        $pictures = $this->pictures;
+        $pictures->removeElement($this->getMainPicture());
+        return $pictures;
+    }
+
+    /**
      * @param ArrayCollection $pictures
      * @return Article $this
      */
