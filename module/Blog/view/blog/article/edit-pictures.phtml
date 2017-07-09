@@ -33,6 +33,13 @@ $form->prepare();
                             Modifier l'article
                         </a>
                     </li>
+                    <li>
+                        <a href="<?php echo $this->url('article', array('action' => 'detail', 'id' => $article->getId())) ?>"
+                           class="btn btn-info" target="_blank">
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                            Aperçu
+                        </a>
+                    </li>
                 </ul>
                 <h4><?php echo $title ?></h4>
             </div>
